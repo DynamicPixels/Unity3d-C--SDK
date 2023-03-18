@@ -1,0 +1,16 @@
+{
+    "name": "blueg.blueg-sdk.editor",
+    "rootNamespace": "BlueGInitializer",
+    "references": [
+        "blueg.blueg-sdk"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

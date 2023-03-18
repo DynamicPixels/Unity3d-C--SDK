@@ -1,0 +1,25 @@
+{
+    "name": "com.blueg.sdk",
+    "version": "1.0.0",
+    "displayName": "BlueG Unity SDk",
+    "description": "Connect your game to BlueG and implement best online features easily",
+    "unity": "2019.1",
+    "unityRelease": "0b5",
+    "documentationUrl": "https://blueg.com/docs",
+    "changelogUrl": "https://blueg.com/changelog.html",
+    "licensesUrl": "https://blueg.com/licensing.html",
+    "dependencies": {
+
+    },
+    "keywords": [
+        "online",
+        "leaderboard",
+        "multipleyer",
+        "cloud"
+    ],
+    "author": {
+        "name": "BlueG",
+        "email": "unity@blueg.com",
+        "url": "https://www.blueg.com"
+    }
+}
