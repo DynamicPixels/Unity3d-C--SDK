@@ -2,14 +2,12 @@ namespace models.inputs
 {
     public class GetMyFriendsParams
     {
-        public int UserId { get; set; }
         public int Skip { get; set; }
         public int Limit { get; set; }
     }
 
     public class GetMyFriendshipRequestsParams
     {
-        public int UserId { get; set; }
         public int Skip { get; set; }
         public int Limit { get; set; }
     }

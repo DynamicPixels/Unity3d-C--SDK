@@ -2,15 +2,15 @@ using System;
 
 namespace models
 {
-    public class BlueGException : Exception
+    public class DynamicPixelsException : Exception
     {
 
-        public BlueGException()
+        public DynamicPixelsException()
             : base("A Sdk Runtime error occurred!")
         {
         }
 
-        public BlueGException(string msg)
+        public DynamicPixelsException(string msg)
             : base(msg)
         {
         }

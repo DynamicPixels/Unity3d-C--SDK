@@ -9,6 +9,7 @@ using models.outputs;
 using Newtonsoft.Json;
 using ports;
 using ports.utils;
+using UnityEngine;
 
 namespace adapters.repositories.table.services.leaderboard
 {
@@ -26,7 +27,7 @@ namespace adapters.repositories.table.services.leaderboard
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowListResponse<Leaderboard>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
 
         }
 
@@ -37,7 +38,7 @@ namespace adapters.repositories.table.services.leaderboard
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowListResponse<Score>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<RowResponse<Score>> GetCurrentUserScore<T>(T input) where T : GetCurrentUserScoreParams
@@ -47,7 +48,7 @@ namespace adapters.repositories.table.services.leaderboard
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowResponse<Score>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<RowListResponse<Score>> GetFriendsScores<T>(T input) where T : GetFriendsScoresParams
@@ -57,7 +58,7 @@ namespace adapters.repositories.table.services.leaderboard
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowListResponse<Score>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<RowResponse<Score>> SubmitScore<T>(T input) where T : SubmitScoreParams
@@ -67,7 +68,7 @@ namespace adapters.repositories.table.services.leaderboard
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowResponse<Score>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
     }
 }

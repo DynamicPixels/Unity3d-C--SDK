@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using models;
+using models.dto;
 using UnityEngine;
 
 namespace adapters.utils.httpClient
@@ -13,7 +15,7 @@ namespace adapters.utils.httpClient
         private static string baseUrl = "http://localhost:5114";
 
         private static HttpClient _client;
-        private static readonly string UserAgent = "UnitySDK-" + BlueG.Version();
+        private static readonly string UserAgent = "UnitySDK-" + DynamicPixels.Version();
 
         private static void InitWebRequest()
         {
@@ -63,12 +65,19 @@ namespace adapters.utils.httpClient
 
         private static HttpClient Init(Dictionary<string, string> headers = null)
         {
-            if (headers == null) return _client;
             _client.DefaultRequestHeaders.Clear();
+
+            if (DynamicPixels.Token != string.Empty)
+            {
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", DynamicPixels.Token);
+            }
+            
+            _client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
+            
+            if (headers == null) return _client;
             foreach (var header in headers)
                 _client.DefaultRequestHeaders.Add(header.Key, header.Value);
-
-            _client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
+            
             return _client;
         }
 
@@ -87,16 +96,20 @@ namespace adapters.utils.httpClient
         }
 
 
-        private static async Task<HttpResponseMessage> DoRequest(string url,
+        private static async Task<HttpResponseMessage> DoRequest(
+            string url,
             WebRequestMethod method = WebRequestMethod.Get, 
             string body = null,
             Dictionary<string, string> headers = null
-            )
+        )
         {
             var httpClient = Init(headers);
             StringContent content = null;
             if (body != null) content = new StringContent(body, Encoding.UTF8, "application/json");
             url = baseUrl + url;
+            
+            Logger.Logger.LogNormal<string>(DebugLocation.Http, "DoRequest", url);
+            
             try
             {
                 switch (method)
@@ -110,13 +123,13 @@ namespace adapters.utils.httpClient
                     case WebRequestMethod.Delete:
                         return await httpClient.DeleteAsync(url);
                     default:
-                        throw new BlueGException();
+                        throw new DynamicPixelsException();
                 }
             }
             catch (Exception e)
             {
                 if (e is OperationCanceledException)
-                    throw new BlueGException("Request Timeout");
+                    throw new DynamicPixelsException("Request Timeout");
                 throw;
             }
         }

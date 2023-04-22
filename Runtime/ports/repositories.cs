@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using models.dto;
 using models.inputs;
@@ -80,11 +81,25 @@ namespace ports
     
     public interface IChatRepository
     {
-        
+        public Task<RowListResponse<Conversation>> GetSubscribedConversations<T>(T input) where T : GetSubscribedConversationsParams;
+        public Task<RowListResponse<Message>> GetConversationMessages<T>(T input) where T : GetConversationMessagesParams;
+        public Task<RowListResponse<ConversationMember>> GetConversationMembers<T>(T input) where T : GetConversationMembersParams;
+
     }
     
     public interface IPartyRepository
     {
-        
+        Task<RowListResponse<Party>> GetParties<T>(T input) where T: GetPartiesParams;
+        Task<RowResponse<Party>> CreateParty<T>(T input) where T: CreatePartyParams;
+        Task<RowListResponse<Party>> GetSubscribedParties<T>(T input) where T: GetSubscribedPartiesParams;
+        Task<RowResponse<Party>> GetPartyById<T>(T input) where T: GetPartyByIdParams;
+        Task<RowResponse<PartyMember>> JoinToParty<T>(T input) where T: JoinToPartyParams;
+        Task<RowResponse<Party>> EditParty<T>(T input) where T: EditPartyParams;
+        Task<ActionResponse> LeaveParty<T>(T input) where T: LeavePartyParams;
+        Task<RowListResponse<RichPartyMember>> GetPartyMembers<T>(T input) where T: GetPartyMembersParams;
+        Task<RowListResponse<PartyMember>> GetPartyWaitingMembers<T>(T input) where T: GetPartyWaitingMembersParams;
+        Task<RowResponse<PartyMember>> AcceptJoining<T>(T input) where T: AcceptJoiningParams;
+        Task<RowResponse<PartyMember>> RejectJoining<T>(T input) where T: RejectJoiningParams;
+
     }
 }

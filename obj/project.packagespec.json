@@ -1,0 +1,52 @@
+﻿{
+  "version": "1.0.0",
+  "restore": {
+    "projectUniqueName": "/home/amir/Development/unity3d_proj/ui/Packages/BlueG-SDK/BlueG.csproj",
+    "projectName": "BlueG",
+    "projectPath": "/home/amir/Development/unity3d_proj/ui/Packages/BlueG-SDK/BlueG.csproj",
+    "outputPath": "/home/amir/Development/unity3d_proj/ui/Packages/BlueG-SDK/obj/",
+    "projectStyle": "PackageReference",
+    "originalTargetFrameworks": [
+      "net60"
+    ],
+    "sources": {
+      "https://api.nuget.org/v3/index.json": {}
+    },
+    "frameworks": {
+      "netcoreapp6.0": {
+        "projectReferences": {}
+      }
+    },
+    "warningProperties": {
+      "warnAsError": [
+        "NU1605"
+      ]
+    }
+  },
+  "frameworks": {
+    "netcoreapp6.0": {
+      "dependencies": {
+        "Newtonsoft.Json": {
+          "target": "Package",
+          "version": "[13.0.2, )"
+        }
+      },
+      "imports": [
+        "net461",
+        "net462",
+        "net47",
+        "net471",
+        "net472",
+        "net48"
+      ],
+      "assetTargetFallback": true,
+      "warn": true,
+      "frameworkReferences": {
+        "Microsoft.NETCore.App": {
+          "privateAssets": "all"
+        }
+      },
+      "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/6.0.113/RuntimeIdentifierGraph.json"
+    }
+  }
+}

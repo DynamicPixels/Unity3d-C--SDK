@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace models.inputs
 {
     public class GetLeaderboardsParams
@@ -23,5 +25,11 @@ namespace models.inputs
     public class SubmitScoreParams
     {
         public string LeaderboardId { get; set; }
+        public int Score { get; set; }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }

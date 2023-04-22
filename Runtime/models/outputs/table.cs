@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using models.dto;
+using Newtonsoft.Json;
 
 namespace models.outputs
 {
@@ -23,6 +24,7 @@ namespace models.outputs
 
     public class RowResponse<T>
     {
+        [JsonProperty("row")]
         public T Row { get; set; }
     }
     public class ActionResponse

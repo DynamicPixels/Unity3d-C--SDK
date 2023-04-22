@@ -26,7 +26,7 @@ namespace adapters.repositories.authentication
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<LoginResponse>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<LoginResponse> LoginWithEmail<T>(T input) where T : LoginWithEmailParams
@@ -36,7 +36,7 @@ namespace adapters.repositories.authentication
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<LoginResponse>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<LoginResponse> LoginWithGoogle<T>(T input) where T : LoginWithGoogleParams
@@ -46,7 +46,7 @@ namespace adapters.repositories.authentication
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<LoginResponse>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
 
         }
 
@@ -57,7 +57,7 @@ namespace adapters.repositories.authentication
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<LoginResponse>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
 
         }
 
@@ -68,7 +68,7 @@ namespace adapters.repositories.authentication
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<bool>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
 
         }
 
@@ -79,7 +79,7 @@ namespace adapters.repositories.authentication
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<OtaResponse>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
 
         }
 
@@ -90,7 +90,7 @@ namespace adapters.repositories.authentication
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<LoginResponse>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
     }
 }

@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using adapters.repositories.table;
 using models.inputs;
 using models.outputs;
-using adapters.repositories.table;
 using adapters.services.table.services;
 using ports;
 using ports.services;
@@ -13,7 +12,8 @@ namespace adapters.services.table
     public class TableService: ITable
     {
         private TableRepository _repository;
-        
+        private DynamicPixelsServices _services; 
+            
         public static IAchievement Achievement;
         public static ILeaderboard Leaderboard;
         public static IChat Chat;
@@ -22,23 +22,23 @@ namespace adapters.services.table
         public static IFriendship Friendship;
         public static IParty Party;
 
-        public TableService()
+        public TableService(ISocketAgent agent)
         {
-            this._repository = new TableRepository();
+            _repository = new TableRepository();
+            _services = new DynamicPixelsServices(agent);
             
             Achievement = new AchievementService();
             Leaderboard = new LeaderboardService();
-            Chat = new ChatService();
             Device = new DeviceService();
             User = new UserService();
             Friendship = new FriendshipService();
             Party = new PartyService();
+            Chat = new ChatService(agent);
         }
 
-
-        public BlueGServices GetServices()
+        public DynamicPixelsServices GetServices()
         {
-            throw new System.NotImplementedException();
+            return _services;
         }
 
         public async Task<RowListResponse> Aggregation<T>(T param) where T : AggregationInput

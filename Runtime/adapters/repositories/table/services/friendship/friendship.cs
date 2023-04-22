@@ -9,6 +9,7 @@ using models.outputs;
 using Newtonsoft.Json;
 using ports;
 using ports.utils;
+using UnityEngine;
 
 namespace adapters.repositories.table.services.friendship
 {
@@ -26,7 +27,7 @@ namespace adapters.repositories.table.services.friendship
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowListResponse<Friendship>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
 
         }
 
@@ -37,7 +38,7 @@ namespace adapters.repositories.table.services.friendship
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowListResponse<Friendship>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<RowResponse<Friendship>> RequestFriendship<T>(T input) where T : RequestFriendshipParams
@@ -47,7 +48,7 @@ namespace adapters.repositories.table.services.friendship
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowResponse<Friendship>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<RowResponse<Friendship>> AcceptRequest<T>(T input) where T : AcceptRequestParams
@@ -57,7 +58,7 @@ namespace adapters.repositories.table.services.friendship
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowResponse<Friendship>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<RowResponse<Friendship>> RejectRequest<T>(T input) where T : RejectRequestParams
@@ -67,7 +68,7 @@ namespace adapters.repositories.table.services.friendship
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowResponse<Friendship>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<ActionResponse> RejectAllRequests<T>(T input) where T : RejectAllRequestsParams
@@ -77,7 +78,7 @@ namespace adapters.repositories.table.services.friendship
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ActionResponse>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<ActionResponse> DeleteFriend<T>(T input) where T : DeleteFriendParams
@@ -87,7 +88,7 @@ namespace adapters.repositories.table.services.friendship
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ActionResponse>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
     }
 }

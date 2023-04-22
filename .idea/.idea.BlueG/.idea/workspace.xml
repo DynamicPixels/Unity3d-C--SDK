@@ -3,12 +3,59 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="591b38ab-31d4-4493-b637-4a6865030fdb" name="Default Changelist" comment="" />
+    <list default="true" id="591b38ab-31d4-4493-b637-4a6865030fdb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Runtime/adapters/utils/Logger.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Runtime/adapters/utils/Logger/Logger.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Runtime/adapters/utils/Logger/Logger.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Runtime/models/dto/Debug.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Runtime/models/dto/Debug.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Runtime/models/dto/Packet.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Runtime/models/dto/Packet.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Runtime/ports/utils/Logger.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Runtime/ports/utils/Logger.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Runtime/ports/utils/SocketAgent.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Runtime/ports/utils/SocketAgent.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.BlueG/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BlueG/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.BlueG/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BlueG/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BlueG.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BlueG.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Editor/BlueGInitializer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Editor/BlueGInitializer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Runtime/BlueG.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Runtime/BlueG.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Runtime/adapters/repositories/table/table.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Runtime/adapters/repositories/table/table.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Runtime/adapters/services/authentication/authentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Runtime/adapters/services/authentication/authentication.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Runtime/adapters/services/table/BlueGServices.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Runtime/adapters/services/table/BlueGServices.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Runtime/adapters/services/table/Table.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Runtime/adapters/services/table/Table.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Runtime/adapters/services/table/services/Achievement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Runtime/adapters/services/table/services/Achievement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Runtime/adapters/services/table/services/Chat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Runtime/adapters/services/table/services/Chat.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Runtime/models/dto/user.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Runtime/models/dto/user.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Runtime/ports/table.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Runtime/ports/table.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Editor/BlueGInitializer.cs" root0="FORCE_HIGHLIGHTING" />
@@ -19,10 +66,12 @@
         <option value="$PROJECT_DIR$/BlueG.sln" />
         <option value="$PROJECT_DIR$/Runtime/models/dto/systemInfo.cs" />
         <option value="$PROJECT_DIR$/Editor/BlueGInitializer.cs" />
+        <option value="$PROJECT_DIR$/Runtime/adapters/utils/WebsocketClient/WebsocketClient.cs" />
       </list>
     </option>
   </component>
   <component name="ProjectId" id="2N21yGiKLNNTG6HeEVu3kyRlv45" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -45,6 +94,7 @@
       <workItem from="1678847827529" duration="145000" />
       <workItem from="1678848058093" duration="87000" />
       <workItem from="1678848509158" duration="611000" />
+      <workItem from="1679355674995" duration="539000" />
     </task>
     <servers />
   </component>
@@ -53,6 +103,17 @@
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>

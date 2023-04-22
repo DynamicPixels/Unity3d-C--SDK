@@ -1,8 +1,8 @@
 {
-    "name": "blueg.blueg-sdk.editor",
-    "rootNamespace": "BlueGInitializer",
+    "name": "dynamicpixels.unity-sdk.editor",
+    "rootNamespace": "DynamicPixelsInitializer",
     "references": [
-        "blueg.blueg-sdk"
+        "dynamicpixels.unity-sdk"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

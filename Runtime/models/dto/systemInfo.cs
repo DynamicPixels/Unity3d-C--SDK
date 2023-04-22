@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace models.dto
 {
     /// <summary>
-    ///     Represents System Info In BlueG
+    ///     Represents System Info In DynamicPixels
     /// </summary>
     [Serializable]
     public class SystemInfo

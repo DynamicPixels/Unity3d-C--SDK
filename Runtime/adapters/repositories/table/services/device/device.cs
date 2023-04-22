@@ -26,7 +26,7 @@ namespace adapters.repositories.table.services.device
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowListResponse<Device>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<ActionResponse> RevokeDevice<T>(T input) where T : RevokeDeviceParams
@@ -36,7 +36,7 @@ namespace adapters.repositories.table.services.device
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ActionResponse>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
     }
 }

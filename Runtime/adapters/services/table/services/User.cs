@@ -1,12 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using adapters.repositories.table.services.user;
 using models.dto;
 using models.inputs;
 using models.outputs;
+using Newtonsoft.Json;
 using ports;
 using ports.services;
 using ports.utils;
+using UnityEngine;
 
 namespace adapters.services.table.services
 {
@@ -28,9 +31,9 @@ namespace adapters.services.table.services
         {
             var result = await this._repository.FindUserById(new FindUserByIdParams
             {
-                UserId = BlueG.User.Id
+                UserId = DynamicPixels.User.Id
             });
-           
+            
             return result.Row;
         }
 

@@ -24,7 +24,7 @@ namespace adapters.repositories.table.services.achievement
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowListResponse<Achievement>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<RowListResponse<Unlock>> GetUserAchievements<T>(T input) where T : GetUserAchievementsParams
@@ -34,7 +34,7 @@ namespace adapters.repositories.table.services.achievement
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowListResponse<Unlock>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<RowResponse<Unlock>> UnlockAchievement<T>(T input) where T : UnlockAchievementParams
@@ -44,7 +44,7 @@ namespace adapters.repositories.table.services.achievement
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowResponse<Unlock>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
     }
 }

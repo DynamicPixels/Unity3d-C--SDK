@@ -1,17 +1,27 @@
 using adapters.services.table.services;
 using ports.services;
+using ports.utils;
 
 namespace adapters.services.table
 {
-    public class BlueGServices
+    public class DynamicPixelsServices
     {
-         
-        public ILeaderboard Leaderboard { get; set; } = new LeaderboardService();
-        public IAchievement Achievement { get; set; } = new AchievementService();
-        public IChat Chats { get; set; } = new ChatService();
-        public IFriendship Friendship { get; set; } = new FriendshipService();
-        public IParty Party { get; set; } = new PartyService();
-        public IUser Users { get; set; } = new UserService();
-        public IDevice Devices { get; set; } = new DeviceService();
+        public DynamicPixelsServices(ISocketAgent agent)
+        {
+            Leaderboard = new LeaderboardService();
+            Achievement = new AchievementService();
+            Chats = new ChatService(agent);
+            Friendship = new FriendshipService();
+            Party = new PartyService();
+            Users = new UserService();
+            Devices = new DeviceService();
+        }
+        public ILeaderboard Leaderboard { get; private set; }
+        public IAchievement Achievement { get; private set; }
+        public IChat Chats { get; private set; } 
+        public IFriendship Friendship { get; private set; }
+        public IParty Party { get; private set; }
+        public IUser Users { get; private set; } 
+        public IDevice Devices { get; private set; } 
     }
 }

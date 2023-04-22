@@ -2,12 +2,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using adapters.repositories.table.services.achievement;
 using models.inputs;
-using models.outputs;
-using adapters.repositories.table.services.achievement;
 using models.dto;
 using ports;
 using ports.services;
-using ports.utils;
 
 namespace adapters.services.table.services
 {

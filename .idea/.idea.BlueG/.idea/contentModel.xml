@@ -13,8 +13,8 @@
       <e p="Editor" t="Include">
         <e p="BlueGInitializer.cs" t="Include" />
         <e p="BlueGInitializer.cs.meta" t="Include" />
-        <e p="blueg.blueg-sdk.Editor.asmdef" t="Include" />
-        <e p="blueg.blueg-sdk.Editor.asmdef.meta" t="Include" />
+        <e p="blueg.blueg-sdk.editor.asmdef" t="Include" />
+        <e p="blueg.blueg-sdk.editor.asmdef.meta" t="Include" />
       </e>
       <e p="Editor.meta" t="Include" />
       <e p="LICENSE.md" t="Include" />
@@ -130,6 +130,16 @@
           </e>
           <e p="services.meta" t="Include" />
           <e p="utils" t="Include">
+            <e p="Logger" t="Include">
+              <e p="Logger.cs" t="Include" />
+              <e p="Logger.cs.meta" t="Include" />
+            </e>
+            <e p="Logger.meta" t="Include" />
+            <e p="WebsocketClient" t="Include">
+              <e p="WebsocketClient.cs" t="Include" />
+              <e p="WebsocketClient.cs.meta" t="Include" />
+            </e>
+            <e p="WebsocketClient.meta" t="Include" />
             <e p="httpClient" t="Include">
               <e p="WebRequest.cs" t="Include" />
               <e p="WebRequest.cs.meta" t="Include" />
@@ -162,6 +172,12 @@
           <e p="BluegException.cs" t="Include" />
           <e p="BluegException.cs.meta" t="Include" />
           <e p="dto" t="Include">
+            <e p="Debug.cs" t="Include" />
+            <e p="Debug.cs.meta" t="Include" />
+            <e p="Friendship.cs" t="Include" />
+            <e p="Friendship.cs.meta" t="Include" />
+            <e p="Packet.cs" t="Include" />
+            <e p="Packet.cs.meta" t="Include" />
             <e p="achievement.cs" t="Include" />
             <e p="achievement.cs.meta" t="Include" />
             <e p="device.cs" t="Include" />
@@ -172,9 +188,13 @@
             <e p="systemInfo.cs.meta" t="Include" />
             <e p="table.cs" t="Include" />
             <e p="table.cs.meta" t="Include" />
+            <e p="user.cs" t="Include" />
+            <e p="user.cs.meta" t="Include" />
           </e>
           <e p="dto.meta" t="Include" />
           <e p="inputs" t="Include">
+            <e p="Friendship.cs" t="Include" />
+            <e p="Friendship.cs.meta" t="Include" />
             <e p="achievement.cs" t="Include" />
             <e p="achievement.cs.meta" t="Include" />
             <e p="authentication.cs" t="Include" />
@@ -185,19 +205,15 @@
             <e p="leaderboard.cs.meta" t="Include" />
             <e p="table.cs" t="Include" />
             <e p="table.cs.meta" t="Include" />
+            <e p="user.cs" t="Include" />
+            <e p="user.cs.meta" t="Include" />
           </e>
           <e p="inputs.meta" t="Include" />
           <e p="outputs" t="Include">
-            <e p="achievement.cs" t="Include" />
-            <e p="achievement.cs.meta" t="Include" />
             <e p="authentication.cs" t="Include" />
             <e p="authentication.cs.meta" t="Include" />
-            <e p="device.cs" t="Include" />
-            <e p="device.cs.meta" t="Include" />
             <e p="error.cs" t="Include" />
             <e p="error.cs.meta" t="Include" />
-            <e p="leaderboard.cs" t="Include" />
-            <e p="leaderboard.cs.meta" t="Include" />
             <e p="storage.cs" t="Include" />
             <e p="storage.cs.meta" t="Include" />
             <e p="table.cs" t="Include" />
@@ -235,6 +251,10 @@
           <e p="utils" t="Include">
             <e p="HttpAgent.cs" t="Include" />
             <e p="HttpAgent.cs.meta" t="Include" />
+            <e p="Logger.cs" t="Include" />
+            <e p="Logger.cs.meta" t="Include" />
+            <e p="SocketAgent.cs" t="Include" />
+            <e p="SocketAgent.cs.meta" t="Include" />
           </e>
           <e p="utils.meta" t="Include" />
         </e>
@@ -243,10 +263,38 @@
       <e p="Runtime.meta" t="Include" />
       <e p="bin" t="ExcludeRecursive" />
       <e p="bin.meta" t="Include" />
-      <e p="obj" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="net6.0" t="Include">
+            <e p="BlueG.AssemblyInfo.cs" t="Include" />
+            <e p="BlueG.GlobalUsings.g.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="obj.meta" t="Include" />
       <e p="package.json" t="Include" />
       <e p="package.json.meta" t="Include" />
-      <e p="packages" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive">
+        <e p="Newtonsoft.Json.12.0.3" t="Include">
+          <e p="Newtonsoft.Json.dll" t="Include" />
+          <e p="Newtonsoft.Json.dll.meta" t="Include" />
+        </e>
+        <e p="Newtonsoft.Json.12.0.3.meta" t="Include" />
+        <e p="WebSocketSharp.1.0.3-rc11" t="Include">
+          <e p=".signature.p7s" t="Include" />
+          <e p="WebSocketSharp.1.0.3-rc11.nupkg" t="Include" />
+          <e p="WebSocketSharp.1.0.3-rc11.nupkg.meta" t="Include" />
+          <e p="lib" t="Include">
+            <e p="websocket-sharp.dll" t="Include" />
+            <e p="websocket-sharp.dll.meta" t="Include" />
+            <e p="websocket-sharp.xml" t="Include" />
+            <e p="websocket-sharp.xml.meta" t="Include" />
+          </e>
+          <e p="lib.meta" t="Include" />
+        </e>
+        <e p="WebSocketSharp.1.0.3-rc11.meta" t="Include" />
+      </e>
+      <e p="packages.meta" t="Include" />
     </e>
   </component>
 </project>

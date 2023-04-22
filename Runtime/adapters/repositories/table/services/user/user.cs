@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using adapters.utils.httpClient;
@@ -8,16 +9,12 @@ using models.outputs;
 using Newtonsoft.Json;
 using ports;
 using ports.utils;
+using UnityEngine;
 
 namespace adapters.repositories.table.services.user
 {
     public class UserRepository:IUserRepository
     {
-
-        public UserRepository()
-        {
-        }
-
         public async Task<RowListResponse<User>> Find<T>(T input) where T : FindUserParams
         {
             var response = await WebRequest.Post(UrlMap.FindUsersUrl, input.ToString());
@@ -25,7 +22,7 @@ namespace adapters.repositories.table.services.user
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowListResponse<User>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<RowResponse<User>> FindUserById<T>(T input) where T : FindUserByIdParams
@@ -35,7 +32,7 @@ namespace adapters.repositories.table.services.user
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowResponse<User>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<RowResponse<User>> EditUserById<T>(T input) where T : EditUserByIdParams
@@ -45,7 +42,7 @@ namespace adapters.repositories.table.services.user
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowResponse<User>>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
         public async Task<ActionResponse> BanUserById<T>(T input) where T : BanUserByIdParams
@@ -55,7 +52,7 @@ namespace adapters.repositories.table.services.user
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ActionResponse>(await reader.ReadToEndAsync());
 
-            throw new BlueGException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
     }
 }

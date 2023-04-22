@@ -1,6 +1,6 @@
 {
-	"name": "blueg.blueg-sdk",
-	"rootNamespace": "BlueG",
+	"name": "dynamicpixels.unity-sdk",
+	"rootNamespace": "DynamicPixels",
 	"references": [],
 	"includePlatforms": [],
 	"excludePlatforms": [],

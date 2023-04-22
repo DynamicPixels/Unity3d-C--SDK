@@ -4,27 +4,27 @@ using UnityEngine;
 using Debug = UnityEngine.Debug;
 using SystemInfo = models.dto.SystemInfo;
 
-namespace BlueGInitializer
+namespace DynamicPixelsInitializer
 {
-    public class BlueGInitializer : MonoBehaviour
+    public class DynamicPixelsInitializer : MonoBehaviour
     {
         public string clientId;
         public string clientSecret;
         public bool debugMode = false;
         public bool verboseMode = false;
-
+        
         private static bool _isInit = false;
 
         void OnDisable()
         {
-            Debug.Log("BlueG was disabled");
+            Debug.Log("DynamicPixels was disabled");
         }
 
         void OnEnable()
         {
             // dont initialize SDK multiple time 
-            if (_isInit || BlueG.IsAuthenticated()) return;
-            Debug.Log("BlueG Initializing");
+            if (_isInit || DynamicPixels.IsAuthenticated()) return;
+            Debug.Log("DynamicPixels Initializing");
 
             // getting system info
             var systemInfo = new SystemInfo()
@@ -44,9 +44,9 @@ namespace BlueGInitializer
             };
 
             // configure Sdk instance
-            BlueG.Configure(clientId, clientSecret, systemInfo);
+            DynamicPixels.Configure(clientId, clientSecret, systemInfo, debugMode, verboseMode);
 
-            Debug.Log("BlueG Initialized");
+            Debug.Log("DynamicPixels Initialized");
         }
 
     }

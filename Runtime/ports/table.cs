@@ -7,7 +7,7 @@ namespace ports
 {
     public interface ITable
     {
-        public BlueGServices GetServices(); 
+        public DynamicPixelsServices GetServices(); 
         public Task<RowListResponse> Aggregation<T>(T param) where T: AggregationInput;
         public Task<RowListResponse> Find<T>(T param) where T: FindInput;
         public Task<RowResponse> FindById<T>(T param) where T: FindByIdInput;

@@ -12,6 +12,19 @@ namespace models.outputs
 
         [JsonProperty("token")]
         public string Token { get; set; }
+        
+        [JsonProperty("connection")]
+        public ConnectionInfo Connection { get; set; }
+    }
+
+    public class ConnectionInfo
+    {
+        [JsonProperty("endpoint")]
+        public string Endpoint { get; set; }
+        [JsonProperty("protocol")]
+        public string Protocol { get; set; }
+        [JsonProperty("version")]
+        public string Version { get; set; }
     }
 
     [Serializable]

@@ -7,6 +7,6 @@ namespace models.inputs
 
     public class RevokeDeviceParams
     {
-        public string DeviceId { get; set; }
+        public int DeviceId { get; set; }
     }
 }
