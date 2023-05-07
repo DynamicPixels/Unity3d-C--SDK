@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace models.dto
 {
@@ -7,7 +8,7 @@ namespace models.dto
     {
         
         [JsonProperty("device_id")]
-        public string DeviceId { get; set; } = null!;
+        public string DeviceId { get; set; } = UnityEngine.SystemInfo.deviceUniqueIdentifier;
 
         [JsonProperty("first_login")]
         public DateTime? FirstLogin { get; set; }
@@ -15,8 +16,8 @@ namespace models.dto
         public DateTime? LastLogin { get; set; }
         [JsonProperty("package_name")]
         public string? PackageName { get; set; }
-        [JsonProperty("sdk_version")]
-        public string? SdkVersion { get; set; }
+
+        [JsonProperty("sdk_version")] public string SdkVersion { get; set; } = DynamicPixels.Version();
         [JsonProperty("version_name")]
         public string? VersionName { get; set; }
         [JsonProperty("version_code")]
@@ -45,32 +46,40 @@ namespace models.dto
         public string? SdcardState { get; set; }
         [JsonProperty("game_orientation")]
         public string? GameOrientation { get; set; }
+
         [JsonProperty("network_type")]
-        public string? NetworkType { get; set; }
+        public string? NetworkType { get; set; } = Application.internetReachability.ToString();
         [JsonProperty("mac_address")]
         public string? MacAddress { get; set; }
         [JsonProperty("ip_address")]
         public string? IpAddress { get; set; }
-        [JsonProperty("device_name")]
-        public string? DeviceName { get; set; }
-        [JsonProperty("device_model")]
-        public string? DeviceModel { get; set; }
+
+        [JsonProperty("device_name")] public string DeviceName { get; set; } = UnityEngine.SystemInfo.deviceName;
+        [JsonProperty("device_model")] public string DeviceModel { get; set; } = UnityEngine.SystemInfo.deviceModel;
+
         [JsonProperty("device_type")]
-        public string? DeviceType { get; set; }
+        public string DeviceType { get; set; } = UnityEngine.SystemInfo.deviceType.ToString();
+
         [JsonProperty("operating_system")]
-        public string? OperatingSystem { get; set; }
+        public string OperatingSystem { get; set; } = UnityEngine.SystemInfo.operatingSystem;
+
         [JsonProperty("processor_type")]
-        public string? ProcessorType { get; set; }
+        public string ProcessorType { get; set; } = UnityEngine.SystemInfo.processorType;
+
         [JsonProperty("processor_count")]
-        public string? ProcessorCount { get; set; }
+        public int ProcessorCount { get; set; } = UnityEngine.SystemInfo.processorCount;
+
         [JsonProperty("processor_frequency")]
-        public string? ProcessorFrequency { get; set; }
+        public int ProcessorFrequency { get; set; } = UnityEngine.SystemInfo.processorFrequency;
+
         [JsonProperty("graphic_device_name")]
-        public string? GraphicsDeviceName { get; set; }
+        public string GraphicsDeviceName { get; set; } = UnityEngine.SystemInfo.graphicsDeviceName;
+
         [JsonProperty("graphic_device_vendor")]
-        public string? GraphicsDeviceVendor { get; set; }
+        public string GraphicsDeviceVendor { get; set; } = UnityEngine.SystemInfo.graphicsDeviceVendor;
+
         [JsonProperty("graphic_memory_size")]
-        public string? GraphicsMemorySize { get; set; }
+        public int GraphicsMemorySize { get; set; } = UnityEngine.SystemInfo.graphicsMemorySize;
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);

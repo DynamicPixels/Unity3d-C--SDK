@@ -40,10 +40,7 @@ namespace Tests.Runtime
             Debug.Log("Logging in: ");
             var result = await DynamicPixels.Authentication.LoginAsGuest(new LoginAsGuestParams()
             {
-               Device = new Device()
-               {
-                   DeviceId = "12345"
-               }
+               
             });
             
             Debug.Log("Token:" + result.Token);
@@ -62,10 +59,6 @@ namespace Tests.Runtime
             await DynamicPixels.Authentication.LoginWithToken(new LoginWithTokenParams()
             {
                 Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNCIsImdhbWUiOiI2NDQ3ZDE5ODA2M2U5MjVhZmZjNThlNDIiLCJuYmYiOjE2ODMzMjM5MzMsImV4cCI6MTY4NjAwMjMzMywiaWF0IjoxNjgzMzIzOTMzfQ.fbW2yhzp0jeiZov1uMadbRlV5IpPq2CGRry7g8ycLo8",
-                Device = new Device()
-                {
-                    DeviceId = "12345"
-                }
             });
         }
     }

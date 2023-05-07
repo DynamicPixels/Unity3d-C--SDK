@@ -47,7 +47,7 @@ namespace models.inputs
     public class LoginAsGuestParams
     {
         [JsonProperty("device_info")]
-        public Device Device { get; set; }
+        public Device Device { get; } = new Device();
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
@@ -58,7 +58,7 @@ namespace models.inputs
     public class LoginWithTokenParams
     {
         public string Token { get; set; }
-        public Device Device { get; set; }
+        public Device Device { get; } = new Device();
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
