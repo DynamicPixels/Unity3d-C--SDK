@@ -15,12 +15,12 @@ namespace DynamicPixelsInitializer
         
         private static bool _isInit = false;
 
-        void OnDisable()
+        public void OnDisable()
         {
             Debug.Log("DynamicPixels was disabled");
         }
 
-        void OnEnable()
+        public void OnEnable()
         {
             // dont initialize SDK multiple time 
             if (_isInit || DynamicPixels.IsAuthenticated()) return;

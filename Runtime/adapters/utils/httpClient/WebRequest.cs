@@ -12,7 +12,12 @@ namespace adapters.utils.httpClient
 {
      internal static class WebRequest
     {
-        private static string baseUrl = "http://localhost:5114";
+        private static string baseUrl = 
+            // Environment.GetEnvironmentVariable("MODE") != "DEV" 
+            // ?
+            //     $"https://s1.dynamicpixels.dev/game/{DynamicPixels.ClientId}" 
+            // :
+                "http://localhost:5114";
 
         private static HttpClient _client;
         private static readonly string UserAgent = "UnitySDK-" + DynamicPixels.Version();

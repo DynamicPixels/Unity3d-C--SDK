@@ -1,0 +1,20 @@
+{
+	"name": "dynamicpixels.unity-sdk.RuntimeTests",
+	"rootNamespace": "DynamicPixels",
+	"references": [
+		"dynamicpixels.unity-sdk.editor",
+		"dynamicpixels.unity-sdk"
+	],
+	"optionalUnityReferences": [
+		"TestAssemblies"
+	],
+	"includePlatforms": [],
+	"excludePlatforms": [],
+	"allowUnsafeCode": false,
+	"overrideReferences": false,
+	"precompiledReferences": [],
+	"autoReferenced": true,
+	"defineConstraints": [],
+	"versionDefines": [],
+	"noEngineReferences": false
+}

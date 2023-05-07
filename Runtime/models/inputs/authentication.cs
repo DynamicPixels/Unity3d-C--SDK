@@ -1,4 +1,5 @@
 using System;
+using models.dto;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -45,7 +46,8 @@ namespace models.inputs
     [Serializable]
     public class LoginAsGuestParams
     {
-        public string DeviceId { get; set; }
+        [JsonProperty("device_info")]
+        public Device Device { get; set; }
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
@@ -56,6 +58,7 @@ namespace models.inputs
     public class LoginWithTokenParams
     {
         public string Token { get; set; }
+        public Device Device { get; set; }
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);

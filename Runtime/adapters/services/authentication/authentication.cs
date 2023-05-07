@@ -65,10 +65,11 @@ namespace adapters.services.authentication
             return result;
         }
 
-        public async void LoginWithToken<T>(T input) where T : LoginWithTokenParams
+        public async Task<LoginResponse> LoginWithToken<T>(T input) where T : LoginWithTokenParams
         {
+            var result = await this._repository.LoginWithToken(input);
             await SetupSdk(input.Token, new User(), new ConnectionInfo());
-            // load user
+            return result;
         }
 
         public async Task<bool> IsOtaReady<T>(T input) where T : IsOtaReadyParams

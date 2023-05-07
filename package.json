@@ -6,11 +6,18 @@
     "unity": "2019.1",
     "unityRelease": "0b5",
     "documentationUrl": "https://docs.dynamicpixels.dev",
-    "changelogUrl": "https://blueg.com/changelog.html",
-    "licensesUrl": "https://blueg.com/licensing.html",
+    "changelogUrl": "https://dynamicpixels.dev/changelog.html",
+    "licensesUrl": "https://dynamicpixels.dev/licensing.html",
     "dependencies": {
 
     },
+    "samples": [
+        {
+            "displayName": "Toolkit",
+            "description": "Contains sample scenes to test and call functions",
+            "path": "Samples/toolkit"
+        }
+    ],
     "keywords": [
         "online",
         "leaderboard",
@@ -20,6 +27,6 @@
     "author": {
         "name": "DynamicPixels",
         "email": "unity@dynamicpixels.dev",
-        "url": "https://www.dynamicpixels.dev"
+        "url": "dynamicpixels.dev"
     }
 }
