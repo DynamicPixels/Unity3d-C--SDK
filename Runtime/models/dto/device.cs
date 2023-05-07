@@ -5,7 +5,8 @@ namespace models.dto
 {
     public class Device
     {
-          [JsonProperty("device_id")]
+        
+        [JsonProperty("device_id")]
         public string DeviceId { get; set; } = null!;
 
         [JsonProperty("first_login")]
