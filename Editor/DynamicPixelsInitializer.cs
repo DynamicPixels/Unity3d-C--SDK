@@ -10,6 +10,7 @@ namespace DynamicPixelsInitializer
     {
         public string clientId;
         public string clientSecret;
+        public bool developmentMode;
         public bool debugMode = false;
         public bool verboseMode = false;
         
@@ -44,7 +45,7 @@ namespace DynamicPixelsInitializer
             };
 
             // configure Sdk instance
-            DynamicPixels.Configure(clientId, clientSecret, systemInfo, debugMode, verboseMode);
+            DynamicPixels.Configure(clientId, clientSecret, systemInfo, debugMode, developmentMode, verboseMode);
 
             Debug.Log("DynamicPixels Initialized");
         }

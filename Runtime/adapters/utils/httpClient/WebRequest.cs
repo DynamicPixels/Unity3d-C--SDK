@@ -13,7 +13,7 @@ namespace adapters.utils.httpClient
      internal static class WebRequest
     {
         private static string baseUrl = 
-            Environment.GetEnvironmentVariable("MODE") != "DEV" 
+            !DynamicPixels.DevelopmentMode
             ?
                 $"https://s1.dynamicpixels.dev/game/{DynamicPixels.ClientId}" 
             :
@@ -113,6 +113,7 @@ namespace adapters.utils.httpClient
             if (body != null) content = new StringContent(body, Encoding.UTF8, "application/json");
             url = baseUrl + url;
             
+
             Logger.Logger.LogNormal<string>(DebugLocation.Http, "DoRequest", url);
             
             try

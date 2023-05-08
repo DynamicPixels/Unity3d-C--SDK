@@ -20,7 +20,7 @@ public static class DynamicPixels
     internal static string Token { get; set; } = String.Empty;
     internal static User User { get; set; }
     internal static bool IsAvailable;
-    
+    internal static bool DevelopmentMode = false;
     public static bool DebugMode = false;
     public static bool VerboseMode = false;
 
@@ -32,7 +32,7 @@ public static class DynamicPixels
     public static IStorage Storage;
     public static ITable Table;
     
-    public static void Configure(string clientId, string clientSecret, SystemInfo systemInfo, bool debugMode, bool verboseMode)
+    public static void Configure(string clientId, string clientSecret, SystemInfo systemInfo, bool debugMode, bool developmentMode,bool verboseMode)
     {
         if (IsAvailable)
             Logger.LogException<DynamicPixelsException>(new DynamicPixelsException("Sdk is already initialized, logout first"), DebugLocation.All, "Configure");
@@ -41,6 +41,7 @@ public static class DynamicPixels
         ClientSecret = clientSecret;
         DebugMode = debugMode;
         VerboseMode = verboseMode;
+        DevelopmentMode = developmentMode;
         
         Logger.onDebugReceived += LoggerOnDebugReceived;
         

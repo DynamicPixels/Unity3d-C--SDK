@@ -1,4 +1,5 @@
 
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using adapters.utils.httpClient;
@@ -9,6 +10,7 @@ using models.outputs;
 using Newtonsoft.Json;
 using ports;
 using ports.utils;
+using UnityEngine;
 
 namespace adapters.repositories.table.services.leaderboard
 {
@@ -34,20 +36,22 @@ namespace adapters.repositories.table.services.leaderboard
         {
             var response = await WebRequest.Get(UrlMap.GetScoresUrl(input.LeaderboardId));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<Score>>(await reader.ReadToEndAsync());
+                return JsonConvert.DeserializeObject<RowListResponse<Score>>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
         }
 
         public async Task<RowResponse<Score>> GetCurrentUserScore<T>(T input) where T : GetCurrentUserScoreParams
         {
             var response = await WebRequest.Get(UrlMap.GetCurrentUserScoreUrl(input.LeaderboardId));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowResponse<Score>>(await reader.ReadToEndAsync());
+                return JsonConvert.DeserializeObject<RowResponse<Score>>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
         }
 
         public async Task<RowListResponse<Score>> GetFriendsScores<T>(T input) where T : GetFriendsScoresParams
