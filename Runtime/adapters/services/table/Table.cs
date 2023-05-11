@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using adapters.repositories.table;
-using models.inputs;
 using models.outputs;
 using adapters.services.table.services;
+using models.inputs;
 using ports;
 using ports.services;
 using ports.utils;
@@ -41,61 +41,61 @@ namespace adapters.services.table
             return _services;
         }
 
-        public async Task<RowListResponse> Aggregation<T>(T param) where T : AggregationInput
+        public async Task<RowListResponse> Aggregation<T>(T param) where T : AggregationParams
         {
             var result = await this._repository.Aggregation(param);
             return result;
         }
 
-        public async Task<RowListResponse> Find<T>(T param) where T : FindInput
+        public async Task<RowListResponse> Find<T>(T param) where T : FindParams
         {
             var result = await this._repository.Find(param);
             return result;
         }
 
-        public async Task<RowResponse> FindById<T>(T param) where T : FindByIdInput
+        public async Task<RowResponse> FindById<T>(T param) where T : FindByIdParams
         {
             var result = await this._repository.FindById(param);
             return result;
         }
 
-        public async Task<RowResponse> FindByIdAndDelete<T>(T param) where T : FindByIdAndDeleteInput
+        public async Task<RowResponse> FindByIdAndDelete<T>(T param) where T : FindByIdAndDeleteParams
         {
             var result = await this._repository.FindByIdAndDelete(param);
             return result;
         }
 
-        public async Task<RowResponse> FindByIdAndUpdate<T>(T param) where T : FindByIdAndUpdateInput
+        public async Task<RowResponse> FindByIdAndUpdate<T>(T param) where T : FindByIdAndUpdateParams
         {
             var result = await this._repository.FindByIdAndUpdate(param);
             return result;
         }
 
-        public async Task<RowResponse> Insert<T>(T param) where T : InsertInput
+        public async Task<RowResponse> Insert<T>(T param) where T : InsertParams
         {
             var result = await this._repository.Insert(param);
             return result;
         }
 
-        public async Task<RowResponse> InsertMany<T>(T param) where T : InsertManyInput
+        public async Task<RowResponse> InsertMany<T>(T param) where T : InsertManyParams
         {
             var result = await this._repository.InsertMany(param);
             return result;
         }
 
-        public async Task<ActionResponse> UpdateMany<T>(T param) where T : UpdateManyInput
+        public async Task<ActionResponse> UpdateMany<T>(T param) where T : UpdateManyParams
         {
             var result = await this._repository.UpdateMany(param);
             return result;
         }
 
-        public async Task<ActionResponse> Delete<T>(T param) where T : DeleteInput
+        public async Task<ActionResponse> Delete<T>(T param) where T : DeleteParams
         {
             var result = await this._repository.Delete(param);
             return result;
         }
 
-        public async Task<ActionResponse> DeleteMany<T>(T param) where T : DeleteManyInput
+        public async Task<ActionResponse> DeleteMany<T>(T param) where T : DeleteManyParams
         {
             var result = await this._repository.DeleteMany(param);
             return result;

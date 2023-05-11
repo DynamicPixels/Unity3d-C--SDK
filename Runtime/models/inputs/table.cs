@@ -1,65 +1,87 @@
 using System.Collections.Generic;
 using models.dto;
+using Newtonsoft.Json;
 
 namespace models.inputs
 {
-    public class AggregationInput
+    public class AggregationParams
     {
         public string TableId { get; set; }
         public string[] Stack { get; set; }
     }
 
-    public class FindInput
+    public class FindParams
     {
         public string tableId { get; set; }
         public FindOptions options { get; set; }
     }
 
-    public class FindByIdInput
+    public class FindByIdParams
     {
         public string TableId { get; set; } 
         public int RowId { get; set; }
     }
 
-    public class FindByIdAndDeleteInput
+    public class FindByIdAndDeleteParams
     {
         public string TableId { get; set; } 
         public int RowId { get; set; }
     }
     
-    public class FindByIdAndUpdateInput
+    public class FindByIdAndUpdateParams
     {
         public string TableId { get; set; } 
         public int RowId { get; set; }
-        public Row Data { get; set; }
+        public dynamic Data { get; set; }
+        
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
-    public class InsertInput
+    public class InsertParams
     {
         public string TableId { get; set; }
-        public Row Data { get; set; }
+        [JsonProperty("data")]
+        public dynamic Data { get; set; }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
-    public class InsertManyInput
+    public class InsertManyParams
     {
         public string TableId { get; set; }
-        public List<Row> Data { get; set; }
+        [JsonProperty("data")]
+        public List<dynamic> Data { get; set; }
+        
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
-    public class UpdateManyInput
+    public class UpdateManyParams 
     {
         public string TableId { get; set; }
         public UpdateOptions Options { get; set; }
-        public Row Data { get; set; }
     }
 
-    public class DeleteInput
+    public class DeleteParams
     {
         public string TableId { get; set; }
+        [JsonProperty("ids")]
         public int[] RowIds { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
-    public class DeleteManyInput
+    public class DeleteManyParams
     {
         public string TableId { get; set; }
         public DeleteOptions Options { get; set; }

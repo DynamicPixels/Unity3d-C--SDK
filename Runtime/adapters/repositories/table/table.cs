@@ -1,10 +1,10 @@
 using System.IO;
 using System.Threading.Tasks;
-using models.inputs;
 using models.outputs;
 using adapters.utils.httpClient;
 using ports;
 using models;
+using models.inputs;
 using UnityEngine;
 
 namespace adapters.repositories.table
@@ -16,9 +16,9 @@ namespace adapters.repositories.table
         {
         }
 
-        public async Task<RowListResponse> Aggregation<T>(T input) where T : AggregationInput
+        public async Task<RowListResponse> Aggregation<T>(T Params) where T : AggregationParams
         {
-            var response = await WebRequest.Post(UrlMap.AggregationUrl(input.TableId), input.ToString());
+            var response = await WebRequest.Post(UrlMap.AggregationUrl(Params.TableId), Params.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             if (response.IsSuccessStatusCode)
                 return JsonUtility.FromJson<RowListResponse>(await reader.ReadToEndAsync());
@@ -26,39 +26,31 @@ namespace adapters.repositories.table
             throw new DynamicPixelsException(JsonUtility.FromJson<ErrorResponse>(await reader.ReadToEndAsync()).ToString());
         }
 
-        public async Task<RowListResponse> Find<T>(T input) where T : FindInput
+        public async Task<RowListResponse> Find<T>(T Params) where T : FindParams
         {
-            var response = await WebRequest.Post( UrlMap.FindUrl(input.tableId), input.ToString());
+            var response = await WebRequest.Put( UrlMap.FindUrl(Params.tableId, Params.options.Skip, Params.options.Limit), Params.options.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonUtility.FromJson<RowListResponse>(await reader.ReadToEndAsync());
+                return JsonUtility.FromJson<RowListResponse>(body);
 
-            throw new DynamicPixelsException(JsonUtility.FromJson<ErrorResponse>(await reader.ReadToEndAsync()).ToString());
+            throw new DynamicPixelsException(JsonUtility.FromJson<ErrorResponse>(body).ToString());
         }
 
-        public async Task<RowResponse> FindById<T>(T input) where T : FindByIdInput
+        public async Task<RowResponse> FindById<T>(T Params) where T : FindByIdParams
         {
-            var response = await WebRequest.Post(UrlMap.FindByIdUrl(input.TableId, input.RowId), input.ToString());
+            var response = await WebRequest.Get(UrlMap.FindByIdUrl(Params.TableId, Params.RowId));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonUtility.FromJson<RowResponse>(await reader.ReadToEndAsync());
+                return JsonUtility.FromJson<RowResponse>(body);
 
-            throw new DynamicPixelsException(JsonUtility.FromJson<ErrorResponse>(await reader.ReadToEndAsync()).ToString());
+            throw new DynamicPixelsException(JsonUtility.FromJson<ErrorResponse>(body).ToString());
         }
 
-        public async Task<RowResponse> FindByIdAndDelete<T>(T input) where T : FindByIdAndDeleteInput
+        public async Task<RowResponse> FindByIdAndDelete<T>(T Params) where T : FindByIdAndDeleteParams
         {
-            var response = await WebRequest.Post(UrlMap.FindByIdAndDeleteUrl(input.TableId, input.RowId), input.ToString());
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            if (response.IsSuccessStatusCode)
-                return JsonUtility.FromJson<RowResponse>(await reader.ReadToEndAsync());
-
-            throw new DynamicPixelsException(JsonUtility.FromJson<ErrorResponse>(await reader.ReadToEndAsync()).ToString());
-        }
-
-        public async Task<RowResponse> FindByIdAndUpdate<T>(T input) where T : FindByIdAndUpdateInput
-        {
-            var response = await WebRequest.Post(UrlMap.FindByIdAndUpdateUrl(input.TableId, input.RowId), input.ToString());
+            var response = await WebRequest.Delete(UrlMap.FindByIdAndDeleteUrl(Params.TableId, Params.RowId));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             if (response.IsSuccessStatusCode)
                 return JsonUtility.FromJson<RowResponse>(await reader.ReadToEndAsync());
@@ -66,9 +58,33 @@ namespace adapters.repositories.table
             throw new DynamicPixelsException(JsonUtility.FromJson<ErrorResponse>(await reader.ReadToEndAsync()).ToString());
         }
 
-        public async Task<RowResponse> Insert<T>(T input) where T : InsertInput
+        public async Task<RowResponse> FindByIdAndUpdate<T>(T Params) where T : FindByIdAndUpdateParams
         {
-            var response = await WebRequest.Post(UrlMap.InsertUrl(input.TableId), input.ToString());
+            var response = await WebRequest.Put(UrlMap.FindByIdAndUpdateUrl(Params.TableId, Params.RowId), Params.ToString());
+            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonUtility.FromJson<RowResponse>(body);
+
+            Debug.Log(body);
+            throw new DynamicPixelsException(JsonUtility.FromJson<ErrorResponse>(body).ToString());
+        }
+
+        public async Task<RowResponse> Insert<T>(T Params) where T : InsertParams
+        {
+            var response = await WebRequest.Post(UrlMap.InsertUrl(Params.TableId), Params.ToString());
+            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonUtility.FromJson<RowResponse>(body);
+
+            Debug.Log(body);
+            throw new DynamicPixelsException(JsonUtility.FromJson<ErrorResponse>(body).ToString());
+        }
+
+        public async Task<RowResponse> InsertMany<T>(T Params) where T : InsertManyParams
+        {
+            var response = await WebRequest.Post(UrlMap.InsertManyUrl(Params.TableId), Params.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             if (response.IsSuccessStatusCode)
                 return JsonUtility.FromJson<RowResponse>(await reader.ReadToEndAsync());
@@ -76,19 +92,9 @@ namespace adapters.repositories.table
             throw new DynamicPixelsException(JsonUtility.FromJson<ErrorResponse>(await reader.ReadToEndAsync()).ToString());
         }
 
-        public async Task<RowResponse> InsertMany<T>(T input) where T : InsertManyInput
+        public async Task<ActionResponse> UpdateMany<T>(T Params) where T : UpdateManyParams
         {
-            var response = await WebRequest.Post(UrlMap.InsertManyUrl(input.TableId), input.ToString());
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            if (response.IsSuccessStatusCode)
-                return JsonUtility.FromJson<RowResponse>(await reader.ReadToEndAsync());
-
-            throw new DynamicPixelsException(JsonUtility.FromJson<ErrorResponse>(await reader.ReadToEndAsync()).ToString());
-        }
-
-        public async Task<ActionResponse> UpdateMany<T>(T input) where T : UpdateManyInput
-        {
-            var response = await WebRequest.Post( UrlMap.UpdateManyUrl(input.TableId), input.ToString());
+            var response = await WebRequest.Post( UrlMap.UpdateManyUrl(Params.TableId), Params.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             if (response.IsSuccessStatusCode)
                 return JsonUtility.FromJson<ActionResponse>(await reader.ReadToEndAsync());
@@ -96,19 +102,21 @@ namespace adapters.repositories.table
             throw new DynamicPixelsException(JsonUtility.FromJson<ErrorResponse>(await reader.ReadToEndAsync()).ToString());
         }
 
-        public async Task<ActionResponse> Delete<T>(T input) where T : DeleteInput
+        public async Task<ActionResponse> Delete<T>(T Params) where T : DeleteParams
         {
-            var response = await WebRequest.Post(UrlMap.DeleteUrl(input.TableId, input.RowIds), input.ToString());
+            var response = await WebRequest.Post(UrlMap.DeleteManyUrl(Params.TableId), Params.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonUtility.FromJson<ActionResponse>(await reader.ReadToEndAsync());
+                return JsonUtility.FromJson<ActionResponse>(body);
 
-            throw new DynamicPixelsException(JsonUtility.FromJson<ErrorResponse>(await reader.ReadToEndAsync()).ToString());
+            Debug.Log(body);
+            throw new DynamicPixelsException(JsonUtility.FromJson<ErrorResponse>(body).ToString());
         }
 
-        public async Task<ActionResponse> DeleteMany<T>(T input) where T : DeleteManyInput
+        public async Task<ActionResponse> DeleteMany<T>(T Params) where T : DeleteManyParams
         {
-            var response = await WebRequest.Post(UrlMap.DeleteManyUrl(input.TableId), input.ToString());
+            var response = await WebRequest.Put(UrlMap.DeleteManyUrl(Params.TableId), Params.Options.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             if (response.IsSuccessStatusCode)
                 return JsonUtility.FromJson<ActionResponse>(await reader.ReadToEndAsync());
