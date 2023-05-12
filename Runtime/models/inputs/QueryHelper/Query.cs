@@ -21,6 +21,16 @@ namespace models.inputs.QueryHelper
         [JsonProperty("values")] [CanBeNull] public dynamic[]? Values { get; set; }
         [JsonProperty("list")] [CanBeNull] public List<QueryParam>? list { get; set; }
     }
+    
+    public class JoinParams
+    {
+        [JsonProperty("table_name")]
+        public string TableName { get; set; }
+        [JsonProperty("local_field")]
+        public string localField { get; set; }
+        [JsonProperty("foreign_field")]
+        public string foreignField { get; set; }
+    }
 
     public class And: Query
     {

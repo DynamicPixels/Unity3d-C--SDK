@@ -14,6 +14,8 @@ namespace models.dto
         [JsonProperty("sorts")]
         public Dictionary<string, Order>? Sorts { get; set; } = new Dictionary<string, Order>();
 
+        public List<JoinParams>? Joins { get; set; }
+
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
