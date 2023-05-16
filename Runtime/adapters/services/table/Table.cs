@@ -41,45 +41,45 @@ namespace adapters.services.table
             return _services;
         }
 
-        public async Task<RowListResponse> Aggregation<T>(T param) where T : AggregationParams
+        public async Task<RowListResponse<TY>> Aggregation<TY, T>(T param) where T : AggregationParams
         {
-            var result = await this._repository.Aggregation(param);
+            var result = await this._repository.Aggregation<TY, AggregationParams>(param);
             return result;
         }
 
-        public async Task<RowListResponse> Find<T>(T param) where T : FindParams
+        public async Task<RowListResponse<TY>> Find<TY, T>(T param) where T : FindParams
         {
-            var result = await this._repository.Find(param);
+            var result = await this._repository.Find<TY, FindParams>(param);
             return result;
         }
 
-        public async Task<RowResponse> FindById<T>(T param) where T : FindByIdParams
+        public async Task<RowResponse<TY>> FindById<TY, T>(T param) where T : FindByIdParams
         {
-            var result = await this._repository.FindById(param);
+            var result = await this._repository.FindById<TY, FindByIdParams>(param);
             return result;
         }
 
-        public async Task<RowResponse> FindByIdAndDelete<T>(T param) where T : FindByIdAndDeleteParams
+        public async Task<RowResponse<TY>> FindByIdAndDelete<TY, T>(T param) where T : FindByIdAndDeleteParams
         {
-            var result = await this._repository.FindByIdAndDelete(param);
+            var result = await this._repository.FindByIdAndDelete<TY, FindByIdAndDeleteParams>(param);
             return result;
         }
 
-        public async Task<RowResponse> FindByIdAndUpdate<T>(T param) where T : FindByIdAndUpdateParams
+        public async Task<RowResponse<TY>> FindByIdAndUpdate<TY, T>(T param) where T : FindByIdAndUpdateParams
         {
-            var result = await this._repository.FindByIdAndUpdate(param);
+            var result = await this._repository.FindByIdAndUpdate<TY, FindByIdAndUpdateParams>(param);
             return result;
         }
 
-        public async Task<RowResponse> Insert<T>(T param) where T : InsertParams
+        public async Task<RowResponse<TY>> Insert<TY, T>(T param) where T : InsertParams
         {
-            var result = await this._repository.Insert(param);
+            var result = await this._repository.Insert<TY, InsertParams>(param);
             return result;
         }
 
-        public async Task<RowResponse> InsertMany<T>(T param) where T : InsertManyParams
+        public async Task<RowResponse<TY>> InsertMany<TY, T>(T param) where T : InsertManyParams
         {
-            var result = await this._repository.InsertMany(param);
+            var result = await this._repository.InsertMany<TY, InsertManyParams>(param);
             return result;
         }
 

@@ -8,13 +8,13 @@ namespace ports
 {
     public interface ITableRepositories
     {
-        public Task<RowListResponse> Aggregation<T>(T Params) where T: AggregationParams;
-        public Task<RowListResponse> Find<T>(T Params) where T: FindParams;
-        public Task<RowResponse> FindById<T>(T Params) where T: FindByIdParams;
-        public Task<RowResponse> FindByIdAndDelete<T>(T Params) where T: FindByIdAndDeleteParams;
-        public Task<RowResponse> FindByIdAndUpdate<T>(T Params) where T: FindByIdAndUpdateParams;
-        public Task<RowResponse> Insert<T>(T Params) where T: InsertParams;
-        public Task<RowResponse> InsertMany<T>(T Params) where T: InsertManyParams;
+        public Task<RowListResponse<TY>> Aggregation<TY, T>(T Params) where T: AggregationParams;
+        public Task<RowListResponse<TY>> Find<TY, T>(T Params) where T: FindParams;
+        public Task<RowResponse<TY>> FindById<TY, T>(T Params) where T: FindByIdParams;
+        public Task<RowResponse<TY>> FindByIdAndDelete<TY, T>(T Params) where T: FindByIdAndDeleteParams;
+        public Task<RowResponse<TY>> FindByIdAndUpdate<TY, T>(T Params) where T: FindByIdAndUpdateParams;
+        public Task<RowResponse<TY>> Insert<TY, T>(T Params) where T: InsertParams;
+        public Task<RowResponse<TY>> InsertMany<TY, T>(T Params) where T: InsertManyParams;
         public Task<ActionResponse> UpdateMany<T>(T Params) where T: UpdateManyParams;
         public Task<ActionResponse> Delete<T>(T Params) where T: DeleteParams;
         public Task<ActionResponse> DeleteMany<T>(T Params) where T: DeleteManyParams;
