@@ -43,43 +43,43 @@ namespace adapters.services.table
 
         public async Task<RowListResponse<TY>> Aggregation<TY, T>(T param) where T : AggregationParams
         {
-            var result = await this._repository.Aggregation<TY, AggregationParams>(param);
+            var result = await this._repository.Aggregation<TY, T>(param);
             return result;
         }
 
         public async Task<RowListResponse<TY>> Find<TY, T>(T param) where T : FindParams
         {
-            var result = await this._repository.Find<TY, FindParams>(param);
+            var result = await this._repository.Find<TY, T>(param);
             return result;
         }
 
         public async Task<RowResponse<TY>> FindById<TY, T>(T param) where T : FindByIdParams
         {
-            var result = await this._repository.FindById<TY, FindByIdParams>(param);
+            var result = await this._repository.FindById<TY, T>(param);
             return result;
         }
 
         public async Task<RowResponse<TY>> FindByIdAndDelete<TY, T>(T param) where T : FindByIdAndDeleteParams
         {
-            var result = await this._repository.FindByIdAndDelete<TY, FindByIdAndDeleteParams>(param);
+            var result = await this._repository.FindByIdAndDelete<TY, T>(param);
             return result;
         }
 
         public async Task<RowResponse<TY>> FindByIdAndUpdate<TY, T>(T param) where T : FindByIdAndUpdateParams
         {
-            var result = await this._repository.FindByIdAndUpdate<TY, FindByIdAndUpdateParams>(param);
+            var result = await this._repository.FindByIdAndUpdate<TY, T>(param);
             return result;
         }
 
         public async Task<RowResponse<TY>> Insert<TY, T>(T param) where T : InsertParams
         {
-            var result = await this._repository.Insert<TY, InsertParams>(param);
+            var result = await this._repository.Insert<TY, T>(param);
             return result;
         }
 
         public async Task<RowResponse<TY>> InsertMany<TY, T>(T param) where T : InsertManyParams
         {
-            var result = await this._repository.InsertMany<TY, InsertManyParams>(param);
+            var result = await this._repository.InsertMany<TY, T>(param);
             return result;
         }
 

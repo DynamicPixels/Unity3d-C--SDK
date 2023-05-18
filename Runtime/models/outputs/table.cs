@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using models.dto;
@@ -7,14 +8,18 @@ namespace models.outputs
 {
     public class RowListResponse
     {
-        public List<Row> List { get; set; }
-        public BigInteger TotalCount { get; set; }
+        [JsonProperty("list")]
+        public List<Row> List { get; set; } = new List<Row>();
+        [JsonProperty("totalCount")]
+        public Int64 TotalCount { get; set; }
     }
     
     public class RowListResponse<T>
     {
-        public List<T> List { get; set; }
-        public BigInteger TotalCount { get; set; }
+        [JsonProperty("list")]
+        public List<T> List { get; set; } = new List<T>();
+        [JsonProperty("totalCount")]
+        public Int64 TotalCount { get; set; }
     }
 
     public class RowResponse
