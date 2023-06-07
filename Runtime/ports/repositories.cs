@@ -40,10 +40,11 @@ namespace ports
     public interface ILeaderboardRepository
     {
         Task<RowListResponse<Leaderboard>> GetLeaderBoards<T>(T Params) where T: GetLeaderboardsParams;
-        Task<RowListResponse<Score>> GetScores<T>(T Params) where T: GetScoresParams;
-        Task<RowResponse<Score>> GetCurrentUserScore<T>(T Params) where T: GetCurrentUserScoreParams;
-        Task<RowListResponse<Score>> GetFriendsScores<T>(T Params) where T: GetFriendsScoresParams;
-        Task<RowResponse<Score>> SubmitScore<T>(T Params) where T: SubmitScoreParams;
+        Task<RowListResponse<UserScore>> GetUsersScores<T>(T Params) where T: GetScoresParams;
+        Task<RowListResponse<PartyScore>> GetPartiesScores<T>(T Params) where T: GetScoresParams;
+        Task<RowResponse<UserScore>> GetCurrentUserScore<T>(T Params) where T: GetCurrentUserScoreParams;
+        Task<RowListResponse<UserScore>> GetFriendsScores<T>(T Params) where T: GetFriendsScoresParams;
+        Task<RowResponse<BaseScore>> SubmitScore<T>(T Params) where T: SubmitScoreParams;
     }
     
     public interface IAchievementRepository

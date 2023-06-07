@@ -32,44 +32,55 @@ namespace adapters.repositories.table.services.leaderboard
 
         }
 
-        public async Task<RowListResponse<Score>> GetScores<T>(T input) where T : GetScoresParams
+        public async Task<RowListResponse<PartyScore>> GetPartiesScores<T>(T input) where T : GetScoresParams
         {
-            var response = await WebRequest.Get(UrlMap.GetScoresUrl(input.LeaderboardId));
+            var response = await WebRequest.Get(UrlMap.GetPartiesScoresUrl(input.LeaderboardId));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<Score>>(body);
+                return JsonConvert.DeserializeObject<RowListResponse<PartyScore>>(body);
 
             throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
         }
 
-        public async Task<RowResponse<Score>> GetCurrentUserScore<T>(T input) where T : GetCurrentUserScoreParams
+        public async Task<RowListResponse<UserScore>> GetUsersScores<T>(T input) where T : GetScoresParams
+        {
+            var response = await WebRequest.Get(UrlMap.GetUsersScoresUrl(input.LeaderboardId));
+            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<RowListResponse<UserScore>>(body);
+
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
+        }
+
+        public async Task<RowResponse<UserScore>> GetCurrentUserScore<T>(T input) where T : GetCurrentUserScoreParams
         {
             var response = await WebRequest.Get(UrlMap.GetCurrentUserScoreUrl(input.LeaderboardId));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowResponse<Score>>(body);
+                return JsonConvert.DeserializeObject<RowResponse<UserScore>>(body);
 
             throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
         }
 
-        public async Task<RowListResponse<Score>> GetFriendsScores<T>(T input) where T : GetFriendsScoresParams
+        public async Task<RowListResponse<UserScore>> GetFriendsScores<T>(T input) where T : GetFriendsScoresParams
         {
             var response = await WebRequest.Get(UrlMap.GetMyFriendsScoreUrl(input.LeaderboardId));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<Score>>(await reader.ReadToEndAsync());
+                return JsonConvert.DeserializeObject<RowListResponse<UserScore>>(await reader.ReadToEndAsync());
 
             throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
-        public async Task<RowResponse<Score>> SubmitScore<T>(T input) where T : SubmitScoreParams
+        public async Task<RowResponse<BaseScore>> SubmitScore<T>(T input) where T : SubmitScoreParams
         {
             var response = await WebRequest.Post(UrlMap.SubmitScoreUrl(input.LeaderboardId), input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowResponse<Score>>(await reader.ReadToEndAsync());
+                return JsonConvert.DeserializeObject<RowResponse<BaseScore>>(await reader.ReadToEndAsync());
 
             throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }

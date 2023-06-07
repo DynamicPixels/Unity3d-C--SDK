@@ -12,6 +12,8 @@ namespace models.dto
         public int Order { get; set; }
         public int Course { get; set; }
         public int TimeFrame { get; set; }
+        public int Participants { get; set; }
+        public int Round { get; set; }
         [JsonProperty("ttl")]
         public int TimeToLive { get; set; }
         public DateTime LastWipe { get; set; }
@@ -22,12 +24,10 @@ namespace models.dto
         }
     }
 
-    public class Score
+    public class UserScore: BaseScore
     {
         [JsonProperty("name")]
         public string? Name { get; set; } 
-        [JsonProperty("desc")]
-        public string Desc { get; set; } = "";
         [JsonProperty("image")]
         public string? Image { get; set; }
         [JsonProperty("username")]
@@ -50,10 +50,24 @@ namespace models.dto
         public bool IsMe { get; set; }
         [JsonProperty("is_friend")]
         public bool IsFriend { get; set; }
-        [JsonProperty("value")]
-        public int Value { get; set; }
-        [JsonProperty("tries")]
-        public int Tries { get; set; }
+        
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+
+    }
+    
+    public class PartyScore: BaseScore
+    {
+        [JsonProperty("name")]
+        public string? Name { get; set; } 
+        [JsonProperty("desc")]
+        public string Desc { get; set; } = "";
+        [JsonProperty("image")]
+        public string? Image { get; set; }
+        [JsonProperty("is_me")]
+        public bool IsMe { get; set; }
         [JsonProperty("is_private")]
         public bool IsPrivate { get; set; }
         [JsonProperty("data")]
@@ -62,10 +76,18 @@ namespace models.dto
         public Dictionary<string, string> Variables { get; set; } = new Dictionary<string, string>();
         [JsonProperty("owner")]
         public int Owner { get; set; }
-       
+        
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
         }
+    }
+    
+    public class BaseScore
+    {
+        [JsonProperty("value")]
+        public int Value { get; set; }
+        [JsonProperty("tries")]
+        public int Tries { get; set; }
     }
 }

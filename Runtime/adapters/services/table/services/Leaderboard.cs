@@ -24,25 +24,31 @@ namespace adapters.services.table.services
             return result.List;
         }
 
-        public async Task<List<Score>> GetScores<T>(T param) where T : GetScoresParams
+        public async Task<List<PartyScore>> GetPartiesScores<T>(T param) where T : GetScoresParams
         {
-            var result = await this._repository.GetScores(param);
+            var result = await this._repository.GetPartiesScores(param);
+            return result.List;
+        }
+        
+        public async Task<List<UserScore>> GetUsersScores<T>(T param) where T : GetScoresParams
+        {
+            var result = await this._repository.GetUsersScores(param);
             return result.List;
         }
 
-        public async Task<List<Score>> GetFriendsScores<T>(T param) where T : GetFriendsScoresParams
+        public async Task<List<UserScore>> GetFriendsScores<T>(T param) where T : GetFriendsScoresParams
         {
             var result = await this._repository.GetFriendsScores(param);
             return result.List;
         }
 
-        public async Task<Score> GetMyScore<T>(T param) where T : GetCurrentUserScoreParams
+        public async Task<UserScore> GetMyScore<T>(T param) where T : GetCurrentUserScoreParams
         {
             var result = await this._repository.GetCurrentUserScore(param);
             return result.Row;
         }
 
-        public async Task<Score> SubmitScore<T>(T param) where T : SubmitScoreParams
+        public async Task<BaseScore> SubmitScore<T>(T param) where T : SubmitScoreParams
         {
             var result = await this._repository.SubmitScore(param);
             return result.Row;
