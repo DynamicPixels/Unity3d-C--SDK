@@ -30,7 +30,7 @@ namespace adapters.services.authentication
             switch (connInfo?.Protocol)
             {
                 case "wss":
-                    DynamicPixels.Agent.Connect(connInfo.Endpoint, token);
+                    // DynamicPixels.Agent.Connect(connInfo.Endpoint, token);
                 break;       
             }
             

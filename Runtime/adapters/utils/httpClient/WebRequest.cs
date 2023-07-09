@@ -15,9 +15,9 @@ namespace adapters.utils.httpClient
         private static string baseUrl = 
             !DynamicPixels.DevelopmentMode
             ?
-                $"https://s1.dynamicpixels.dev/game/{DynamicPixels.ClientId}" 
+                $"https://link.dynamicpixels.dev/game/{DynamicPixels.ClientId}" 
             :
-                "http://localhost:5114";
+                $"http://localhost:5114/game/{DynamicPixels.ClientId}";
 
         private static HttpClient _client;
         private static readonly string UserAgent = "UnitySDK-" + DynamicPixels.Version();
