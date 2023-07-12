@@ -4,7 +4,7 @@ namespace models.inputs
 {
     public class FindUserParams
     {
-        
+        public Dictionary<string, string> Query { get; set; }
     }
 
     public class FindUserByIdParams
@@ -12,10 +12,9 @@ namespace models.inputs
         public int UserId { get; set; }
     }
 
-    public class EditUserByIdParams
+    public class EditCurrentUserParams
     {
-        public int UserId { get; set; }
-        public Dictionary<string, dynamic> Values { get; set; }
+        public string Name { get; set; }
     }
     
     public class BanUserByIdParams

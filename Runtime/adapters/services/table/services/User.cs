@@ -47,12 +47,11 @@ namespace adapters.services.table.services
             return result.Row;
         }
 
-        public async Task<User> EditUserById<T>(T input) where T : EditUserByIdParams
+        public async Task<User> EditCurrentUser<T>(T input) where T : EditCurrentUserParams
         {
-            var result = await this._repository.EditUserById(new EditUserByIdParams
+            var result = await this._repository.EditCurrentUser(new EditCurrentUserParams
             {
-                UserId = input.UserId,
-                Values = input.Values
+                Name = input.Name
             });
            
             return result.Row;

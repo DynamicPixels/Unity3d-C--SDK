@@ -24,12 +24,6 @@ namespace adapters.services.table.services
             return result.List;
         }
 
-        public async Task<List<Unlock>> GetUserAchievements<T>(T param) where T : GetUserAchievementsParams
-        {
-            var result = await this._repository.GetUserAchievements(param);
-            return result.List;
-        }
-
         public async Task<Unlock> UnlockAchievement<T>(T param) where T : UnlockAchievementParams
         {
             var result = await this._repository.UnlockAchievement(param);

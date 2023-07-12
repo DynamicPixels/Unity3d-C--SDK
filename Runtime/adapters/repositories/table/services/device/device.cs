@@ -14,14 +14,9 @@ namespace adapters.repositories.table.services.device
 {
     public class DeviceRepository:IDeviceRepository
     {
-
-        public DeviceRepository()
-        {
-        }
-
         public async Task<RowListResponse<Device>> FindMyDevices<T>(T input) where T : FindMyDeviceParams
         {
-            var response = await WebRequest.Get(UrlMap.FindMyDevicesUrl(input.Skip, input.Limit));
+            var response = await WebRequest.Get(UrlMap.FindMyDevicesUrl);
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowListResponse<Device>>(await reader.ReadToEndAsync());

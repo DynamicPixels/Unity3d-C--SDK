@@ -6,16 +6,25 @@ namespace models.dto
 {
     public class Leaderboard
     {
+        [JsonProperty("id")]
         public int Id { get; set; }
+        [JsonProperty("name")]
         public string Name { get; set; }
+        [JsonProperty("desc")]
         public string Desc { get; set; }
+        [JsonProperty("order")]
         public int Order { get; set; }
+        [JsonProperty("course")]
         public int Course { get; set; }
+        [JsonProperty("timeframe")]
         public int TimeFrame { get; set; }
+        [JsonProperty("participants")]
         public int Participants { get; set; }
+        [JsonProperty("round")]
         public int Round { get; set; }
-        [JsonProperty("ttl")]
-        public int TimeToLive { get; set; }
+        [JsonProperty("winners_count")]
+        public int WinnersCount { get; set; }
+        [JsonProperty("last_wipe")]
         public DateTime LastWipe { get; set; }
         
         public override string ToString()
@@ -89,5 +98,7 @@ namespace models.dto
         public int Value { get; set; }
         [JsonProperty("tries")]
         public int Tries { get; set; }
+        [JsonProperty("rank")]
+        public int Rank { get; set; }
     }
 }

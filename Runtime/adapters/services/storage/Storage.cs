@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using adapters.repositories;
 using models.outputs;
 using adapters.repositories.storage;
@@ -25,7 +26,7 @@ namespace adapters.services.storage
             throw new System.NotImplementedException();
         }
 
-        public FileMetadata GetFileInfo()
+        public Task<FileMetadata> GetFileInfo()
         {
             throw new System.NotImplementedException();
         }

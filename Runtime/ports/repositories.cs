@@ -33,7 +33,8 @@ namespace ports
 
     public interface IStorageRepositories
     {
-        
+        Task<FileMetadata> GetFileInfo(string fileName);
+        Task Download(string fileName);
     }
 
 
@@ -50,7 +51,6 @@ namespace ports
     public interface IAchievementRepository
     {
         Task<RowListResponse<Achievement>> GetAchievements<T>(T Params) where T: GetAchievementParams;
-        Task<RowListResponse<Unlock>> GetUserAchievements<T>(T Params) where T: GetUserAchievementsParams;
         Task<RowResponse<Unlock>> UnlockAchievement<T>(T Params) where T: UnlockAchievementParams;
     }
     
@@ -69,7 +69,7 @@ namespace ports
     {
         public Task<RowListResponse<User>> Find<T>(T Params) where T: FindUserParams;
         public Task<RowResponse<User>> FindUserById<T>(T Params) where T: FindUserByIdParams;
-        public Task<RowResponse<User>> EditUserById<T>(T Params) where T: EditUserByIdParams;
+        public Task<RowResponse<User>> EditCurrentUser<T>(T Params) where T: EditCurrentUserParams;
         public Task<ActionResponse> BanUserById<T>(T Params) where T: BanUserByIdParams;
 
     }

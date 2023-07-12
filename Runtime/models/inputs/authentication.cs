@@ -36,6 +36,7 @@ namespace models.inputs
     [Serializable]
     public class LoginWithGoogleParams
     {
+        [JsonProperty("access_token")]
         public string AccessToken { get; set; }
         public override string ToString()
         {
@@ -46,8 +47,8 @@ namespace models.inputs
     [Serializable]
     public class LoginAsGuestParams
     {
-        [JsonProperty("device_info")]
-        public Device Device { get; } = new Device();
+        [JsonProperty("device_id")]
+        public string deviceId = "";
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
@@ -57,8 +58,9 @@ namespace models.inputs
     [Serializable]
     public class LoginWithTokenParams
     {
+        [JsonProperty("token")]
         public string Token { get; set; }
-        public Device Device { get; } = new Device();
+
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
@@ -74,7 +76,9 @@ namespace models.inputs
     [Serializable]
     public class SendOtaTokenParams
     {
+        [JsonProperty("phone_number")]
         public string PhoneNumber { get; set; } 
+
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
@@ -84,8 +88,13 @@ namespace models.inputs
     [Serializable]
     public class VerifyOtaTokenParams
     {
+        [JsonProperty("phone_number")]
         public string PhoneNumber { get; set; } 
+
+        [JsonProperty("name")]
         public string Name { get; set; }
+
+        [JsonProperty("token")]
         public string Token { get; set; }
         public override string ToString()
         {

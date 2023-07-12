@@ -13,26 +13,12 @@ namespace adapters.repositories.table.services.achievement
     public class AchievementRepository: IAchievementRepository
     {
 
-        public AchievementRepository()
-        {
-        }
-
         public async Task<RowListResponse<Achievement>> GetAchievements<T>(T input) where T : GetAchievementParams
         {
             var response = await WebRequest.Get(UrlMap.GetAchievementsUrl);
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowListResponse<Achievement>>(await reader.ReadToEndAsync());
-
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
-        }
-
-        public async Task<RowListResponse<Unlock>> GetUserAchievements<T>(T input) where T : GetUserAchievementsParams
-        {
-            var response = await WebRequest.Get(UrlMap.GetUserAchievementsUrl);
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<Unlock>>(await reader.ReadToEndAsync());
 
             throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }

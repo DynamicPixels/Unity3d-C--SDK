@@ -11,7 +11,6 @@ namespace ports.services
         Task<List<User>> Find<T>(T input) where T : FindUserParams;
         Task<User> GetCurrentUser();
         Task<User> FindUserById<T>(T input) where T : FindUserByIdParams;
-        Task<User> EditUserById<T>(T input) where T : EditUserByIdParams;
-        Task<bool> BanUserById<T>(T input) where T : BanUserByIdParams;
+        Task<User> EditCurrentUser<T>(T input) where T : EditCurrentUserParams;
     }
 }

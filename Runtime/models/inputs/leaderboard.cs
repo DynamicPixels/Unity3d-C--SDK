@@ -9,24 +9,26 @@ namespace models.inputs
 
     public class GetScoresParams
     {
-        public string LeaderboardId { get; set; }
+        public int LeaderboardId { get; set; }
         public int Skip { get; set; }
         public int Limit { get; set; }
     }
 
     public class GetCurrentUserScoreParams
     {
-        public string LeaderboardId { get; set; }
+        public int LeaderboardId { get; set; }
     }
 
     public class GetFriendsScoresParams
     {
-        public string LeaderboardId { get; set; }
+        public int LeaderboardId { get; set; }
+        public int Skip { get; set; }
+        public int Limit { get; set; }
     }
 
     public class SubmitScoreParams
     {
-        public string LeaderboardId { get; set; }
+        public int LeaderboardId { get; set; }
         public int Score { get; set; }
 
         public override string ToString()

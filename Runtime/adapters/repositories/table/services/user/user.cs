@@ -35,7 +35,7 @@ namespace adapters.repositories.table.services.user
             throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
 
-        public async Task<RowResponse<User>> EditUserById<T>(T input) where T : EditUserByIdParams
+        public async Task<RowResponse<User>> EditCurrentUser<T>(T input) where T : EditCurrentUserParams
         {
             var response = await WebRequest.Put(UrlMap.EditCurrentUserUrl, input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());

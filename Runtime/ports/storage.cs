@@ -1,4 +1,5 @@
 
+using System.Threading.Tasks;
 using models.outputs;
 
 namespace ports
@@ -6,7 +7,6 @@ namespace ports
     public interface IStorage
     {
         void Download();
-        void Upload();
-        FileMetadata GetFileInfo();
+        Task<FileMetadata> GetFileInfo();
     }
 }

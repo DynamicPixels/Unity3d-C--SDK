@@ -17,10 +17,6 @@ namespace adapters.repositories.table.services.leaderboard
     public class LeaderboardRepository : ILeaderboardRepository
     {
 
-        public LeaderboardRepository()
-        {
-        }
-
         public async Task<RowListResponse<Leaderboard>> GetLeaderBoards<T>(T input) where T : GetLeaderboardsParams
         {
             var response = await WebRequest.Get(UrlMap.GetLeaderboardsUrl);

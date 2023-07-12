@@ -15,11 +15,7 @@ namespace adapters.repositories.table.services.friendship
 {
     public class FriendshipRepository:IFriendshipRepository
     {
-
-        public FriendshipRepository()
-        {
-        }
-
+        
         public async Task<RowListResponse<Friendship>> GetMyFriends<T>(T input) where T : GetMyFriendsParams
         {
             var response = await WebRequest.Get(UrlMap.GetMyFriendsUrl);

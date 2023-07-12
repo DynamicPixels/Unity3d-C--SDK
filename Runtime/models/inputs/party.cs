@@ -6,15 +6,22 @@ namespace models.inputs
 {
     public class PartyInput
     {
+        [JsonProperty("name")]
         public string Name { get; set; } = null!;
+        [JsonProperty("desc")]
         public string Desc { get; set; } = "";
-        public string Image { get; set; } = "";
+//        public string Image { get; set; } = "";
+        [JsonProperty("max_member_count")]
         public int MaxMemberCount { get; set; }
+        [JsonProperty("is_private")]
         public bool IsPrivate { get; set; } = false;
 
+        [JsonProperty("teams")]
         public string[] Teams { get; set; } = new string[]{};
+        [JsonProperty("channels")]
         public string[] Channels { get; set; } = new string[]{};
 
+        [JsonProperty("variables")]
         public Dictionary<string, string> Variables { get; set; } = new Dictionary<string, string>();
         
         public override string ToString()
@@ -86,7 +93,7 @@ namespace models.inputs
     public class EditPartyParams
     {
         public int PartyId;
-        public Party Party;
+        public PartyInput Party;
     }
 
     public class AcceptJoiningParams

@@ -5,12 +5,9 @@ namespace models.inputs
         
     }
 
-    public class GetUserAchievementsParams
-    {
-        
-    }
     public class UnlockAchievementParams
     {
         public int AchievementId { get; set; }
+        public int StepId { get; set; }
     }
 }
