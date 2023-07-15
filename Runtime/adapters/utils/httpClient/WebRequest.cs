@@ -136,7 +136,7 @@ namespace adapters.utils.httpClient
             {
                 if (e is OperationCanceledException)
                     throw new DynamicPixelsException("Request Timeout");
-                throw;
+                throw e;
             }
         }
     }

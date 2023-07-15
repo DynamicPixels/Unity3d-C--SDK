@@ -23,7 +23,7 @@ public static class DynamicPixels
     internal static bool DevelopmentMode = false;
     public static bool DebugMode = false;
     public static bool VerboseMode = false;
-
+    public static SystemInfo SystemInfo;
     // transports
     internal static ISocketAgent Agent = new WebsocketClient();
     
@@ -42,6 +42,7 @@ public static class DynamicPixels
         DebugMode = debugMode;
         VerboseMode = verboseMode;
         DevelopmentMode = developmentMode;
+        SystemInfo = systemInfo;
         
         Logger.onDebugReceived += LoggerOnDebugReceived;
         

@@ -91,9 +91,9 @@ namespace adapters.services.authentication
             return result;
         }
 
-        public Task<bool> IsLoggedIn()
+        public bool IsLoggedIn()
         {
-            throw new NotImplementedException();
+            return DynamicPixels.Token != String.Empty;
         }
 
         public void Logout()
