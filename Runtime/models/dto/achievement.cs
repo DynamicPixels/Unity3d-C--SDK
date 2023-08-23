@@ -1,3 +1,5 @@
+
+using Newtonsoft.Json;
 namespace models.dto
 {
     public class Achievement
@@ -9,6 +11,10 @@ namespace models.dto
         public string StartAt = "";
         public string EndAt = "";
         public Step[] Steps = new Step[]{};
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
 
     }
 
@@ -18,6 +24,10 @@ namespace models.dto
         public int Point = 0;
         public string Payload = "";
         public bool Unlocked = false;
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Unlock
@@ -25,5 +35,9 @@ namespace models.dto
         public int Player = 0;
         public int Achievement = 0;
         public int Step = 0;
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }

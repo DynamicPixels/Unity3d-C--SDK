@@ -29,7 +29,7 @@ namespace adapters.repositories.table.services.achievement
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<RowResponse<Unlock>>(await reader.ReadToEndAsync());
-
+            
             throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }
     }
