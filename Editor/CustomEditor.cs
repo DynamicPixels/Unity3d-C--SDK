@@ -11,7 +11,7 @@ public class CustomEditor : EditorWindow
     [MenuItem("MyMenu/Open Panel")]
     private static void OpenPanel()
     {
-        CustomEditorPan window = GetWindow<CustomEditorPan>();
+        CustomEditor window = GetWindow<CustomEditor>();
         window.titleContent = new GUIContent("Custom Panel");
         window.Show();
     }
