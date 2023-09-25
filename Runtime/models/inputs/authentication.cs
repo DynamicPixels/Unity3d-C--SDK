@@ -57,8 +57,11 @@ namespace models.inputs
     [Serializable]
     public class LoginAsGuestParams
     {
+
         [JsonProperty("device_id")]
         public string deviceId = "";
+        [JsonProperty("name")]
+        public string name = "";
         [JsonProperty("device_info")]
         public readonly Device DeviceInfo = new Device(DynamicPixels.SystemInfo);
 
