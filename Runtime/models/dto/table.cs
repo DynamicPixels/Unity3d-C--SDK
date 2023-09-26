@@ -48,6 +48,7 @@ namespace models.dto
     
     public class Row
     {
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int Id { get; set; }
     }
 }

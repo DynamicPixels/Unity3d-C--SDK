@@ -96,12 +96,14 @@ namespace adapters.repositories.table
 
         public async Task<ActionResponse> UpdateMany<T>(T Params) where T : UpdateManyParams
         {
-            var response = await WebRequest.Post( UrlMap.UpdateManyUrl(Params.TableId), Params.ToString());
+            var response = await WebRequest.Put(UrlMap.UpdateManyUrl(Params.TableId), Params.Options.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ActionResponse>(await reader.ReadToEndAsync());
+            Debug.Log(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync()).ToString());
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body).ToString());
         }
 
         public async Task<ActionResponse> Delete<T>(T Params) where T : DeleteParams
@@ -120,10 +122,11 @@ namespace adapters.repositories.table
         {
             var response = await WebRequest.Put(UrlMap.DeleteManyUrl(Params.TableId), Params.Options.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ActionResponse>(await reader.ReadToEndAsync());
-
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync()).ToString());
+            Debug.Log(body);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body).ToString());
         }
     }
 }
