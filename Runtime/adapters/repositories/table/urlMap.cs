@@ -9,7 +9,7 @@ namespace adapters.repositories.table
         public static string FindByIdAndUpdateUrl(string tableId, int rowId) => $"/api/table/{tableId}/{rowId}";
         public static string InsertUrl(string tableId) => $"/api/table/{tableId}";
         public static string InsertManyUrl(string tableId) => $"/api/table/{tableId}/insert";
-        public static string UpdateManyUrl(string tableId) => $"/api/table/{tableId}";
+        public static string UpdateManyUrl(string tableId) => $"/api/table/{tableId}/update";
         public static string DeleteUrl(string tableId, int[] rowId) => $"/api/table/{tableId}/{rowId}";
         public static string DeleteManyUrl(string tableId) => $"/api/table/{tableId}/delete";
     }
