@@ -24,15 +24,16 @@ namespace adapters.services.table.services
             return result.List;
         }
 
-        public async Task<List<PartyScore>> GetPartiesScores<T>(T param) where T : GetScoresParams
+        public async Task<List<TOutput>> GetPartiesScores<TInput, TOutput>(TInput param) where TInput : GetScoresParams where TOutput : UserScore
         {
-            var result = await this._repository.GetPartiesScores(param);
+            var result = await this._repository.GetPartiesScores<TInput, TOutput>(param);
             return result.List;
         }
-        
-        public async Task<List<UserScore>> GetUsersScores<T>(T param) where T : GetScoresParams
+
+        public async Task<List<TOutput>> GetUsersScores<TInput, TOutput>(TInput param) where TInput : GetScoresParams where TOutput : UserScore
         {
-            var result = await this._repository.GetUsersScores(param);
+            var result = await this._repository.GetUsersScores<TInput, TOutput>(param);
+
             return result.List;
         }
 

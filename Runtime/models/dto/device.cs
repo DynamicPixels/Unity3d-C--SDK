@@ -15,9 +15,9 @@ namespace models.dto
                         this.DeviceId = info.DeviceUniqueId;
                         this.GraphicsDeviceName = info.GraphicsDeviceName;
                         this.GraphicsDeviceVendor = info.GraphicsDeviceVendor;
-                        this.GraphicsMemorySize = info.GraphicsMemorySize;
-                        this.ProcessorCount = info.ProcessorCount;
-                        this.ProcessorFrequency = info.ProcessorFrequency;
+                        this.GraphicsMemorySize = info.GraphicsMemorySize.ToString();
+                        this.ProcessorCount = info.ProcessorCount.ToString();
+                        this.ProcessorFrequency = info.ProcessorFrequency.ToString();
                         this.ProcessorType = info.ProcessorType;
                         this.NetworkType = info.NetworkType;
                         this.OperatingSystem = info.OperatingSystem;
@@ -83,10 +83,10 @@ namespace models.dto
                 public string ProcessorType { get; set; } = UnityEngine.SystemInfo.processorType;
 
                 [JsonProperty("processor_count")]
-                public int ProcessorCount { get; set; } = UnityEngine.SystemInfo.processorCount;
+                public string ProcessorCount { get; set; } = UnityEngine.SystemInfo.processorCount.ToString();
 
                 [JsonProperty("processor_frequency")]
-                public int ProcessorFrequency { get; set; } = UnityEngine.SystemInfo.processorFrequency;
+                public string ProcessorFrequency { get; set; } = UnityEngine.SystemInfo.processorFrequency.ToString();
 
                 [JsonProperty("graphic_device_name")]
                 public string GraphicsDeviceName { get; set; } = UnityEngine.SystemInfo.graphicsDeviceName;
@@ -95,7 +95,7 @@ namespace models.dto
                 public string GraphicsDeviceVendor { get; set; } = UnityEngine.SystemInfo.graphicsDeviceVendor;
 
                 [JsonProperty("graphic_memory_size")]
-                public int GraphicsMemorySize { get; set; } = UnityEngine.SystemInfo.graphicsMemorySize;
+                public string GraphicsMemorySize { get; set; } = UnityEngine.SystemInfo.graphicsMemorySize.ToString();
 
                 public override string ToString()
                 {

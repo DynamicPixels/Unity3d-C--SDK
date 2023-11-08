@@ -79,20 +79,27 @@ namespace adapters.repositories.authentication
         {
             var response = await WebRequest.Post(urlMap.IsOtaReadyUrl, input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
+            Debug.Log(body);
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<bool>(await reader.ReadToEndAsync());
-
+            Debug.Log(body);
             throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
 
         }
 
-        public async Task<OtaResponse> SendOtaToken<T>(T input) where T : SendOtaTokenParams
+        public async Task<ActionResponse> SendOtaToken<T>(T input) where T : SendOtaTokenParams
         {
             var response = await WebRequest.Post(urlMap.SendOtaUrl, input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
+            Debug.Log(body);
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<OtaResponse>(await reader.ReadToEndAsync());
-
+            {
+                Debug.Log(body);
+                return JsonConvert.DeserializeObject<ActionResponse>(body);
+            }
+            Debug.Log(body);
             throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
 
         }
@@ -101,8 +108,11 @@ namespace adapters.repositories.authentication
         {
             var response = await WebRequest.Post(urlMap.VerifyOtaUrl, input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
+            Debug.Log(body);
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<LoginResponse>(await reader.ReadToEndAsync());
+                return JsonConvert.DeserializeObject<LoginResponse>(body);
+            Debug.Log(body);
 
             throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }

@@ -120,4 +120,5 @@ namespace models.inputs
             return JsonConvert.SerializeObject(this);
         }
     }
+
 }

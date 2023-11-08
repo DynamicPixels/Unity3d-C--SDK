@@ -49,11 +49,12 @@ namespace adapters.services.table.services
 
         public async Task<User> EditCurrentUser<T>(T input) where T : EditCurrentUserParams
         {
+            Debug.Log(input.Data);
             var result = await this._repository.EditCurrentUser(new EditCurrentUserParams
             {
-                Name = input.Name
+               Data=input.Data
             });
-           
+            Debug.Log(result);
             return result.Row;
         }
 

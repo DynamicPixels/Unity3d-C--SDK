@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
-public class CustomEditor : EditorWindow
+#if UNITY_EDITOR
+public class CustomEditor : UnityEditor.EditorWindow
 {
     private string ClientID = "";
     private string ClientSecret = "";
@@ -12,6 +12,7 @@ public class CustomEditor : EditorWindow
     private bool verboseMode = false;
     private const string PackageFirstTimeKey = "PackageFirstTimeOpenedCounter";
     public Texture2D logoTexture;
+
 
     [InitializeOnLoadMethod]
     private static void MyInit()
@@ -84,4 +85,6 @@ public class CustomEditor : EditorWindow
         Undo.RegisterCreatedObjectUndo(emptyObject, "Create Empty Object");
         Selection.activeGameObject = emptyObject;
     }
+
 }
+#endif
