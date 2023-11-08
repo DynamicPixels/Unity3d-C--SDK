@@ -15,6 +15,10 @@ namespace models.outputs
         
         [JsonProperty("connection")]
         public ConnectionInfo Connection { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class ConnectionInfo
@@ -25,6 +29,11 @@ namespace models.outputs
         public string Protocol { get; set; }
         [JsonProperty("version")]
         public string Version { get; set; }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     [Serializable]
@@ -32,5 +41,10 @@ namespace models.outputs
     {
         [JsonProperty("status")]
         public bool Status { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
+    
 }

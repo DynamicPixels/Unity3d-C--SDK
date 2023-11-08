@@ -81,7 +81,9 @@ namespace adapters.services.authentication
         public async Task<bool> SendOtaToken<T>(T input) where T : SendOtaTokenParams
         {
             var result = await this._repository.SendOtaToken(input);
-            return result.Status;
+            return result.Affected>0;
+          
+            
         }
 
         public async Task<LoginResponse> VerifyOtaToken<T>(T input) where T : VerifyOtaTokenParams
@@ -89,6 +91,8 @@ namespace adapters.services.authentication
             var result = await this._repository.VerifyOtaToken(input);
             await SetupSdk(result.Token, result.User, result.Connection);
             return result;
+            
+            
         }
 
         public bool IsLoggedIn()

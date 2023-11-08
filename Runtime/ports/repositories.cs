@@ -27,7 +27,7 @@ namespace ports
         Task<LoginResponse> LoginWithGoogle<T>(T Params) where T: LoginWithGoogleParams;
         Task<LoginResponse> LoginAsGuest<T>(T Params) where T: LoginAsGuestParams;
         Task<bool> IsOtaReady<T>(T Params) where T: IsOtaReadyParams;
-        Task<OtaResponse> SendOtaToken<T>(T Params) where T: SendOtaTokenParams;
+        Task<ActionResponse> SendOtaToken<T>(T Params) where T: SendOtaTokenParams;
         Task<LoginResponse> VerifyOtaToken<T>(T Params) where T: VerifyOtaTokenParams;
     }
 
@@ -41,8 +41,12 @@ namespace ports
     public interface ILeaderboardRepository
     {
         Task<RowListResponse<Leaderboard>> GetLeaderBoards<T>(T Params) where T: GetLeaderboardsParams;
-        Task<RowListResponse<UserScore>> GetUsersScores<T>(T Params) where T: GetScoresParams;
-        Task<RowListResponse<PartyScore>> GetPartiesScores<T>(T Params) where T: GetScoresParams;
+        Task<RowListResponse<TOutput>> GetUsersScores<TInput, TOutput>(TInput input)
+            where TInput : GetScoresParams
+            where TOutput : UserScore;
+        Task<RowListResponse<TOutput>> GetPartiesScores<TInput, TOutput>(TInput input)
+            where TInput : GetScoresParams
+            where TOutput : UserScore;
         Task<RowResponse<UserScore>> GetCurrentUserScore<T>(T Params) where T: GetCurrentUserScoreParams;
         Task<RowListResponse<UserScore>> GetFriendsScores<T>(T Params) where T: GetFriendsScoresParams;
         Task<RowResponse<BaseScore>> SubmitScore<T>(T Params) where T: SubmitScoreParams;

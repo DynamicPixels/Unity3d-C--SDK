@@ -38,9 +38,12 @@ namespace adapters.repositories.table.services.user
         public async Task<RowResponse<User>> EditCurrentUser<T>(T input) where T : EditCurrentUserParams
         {
             var response = await WebRequest.Put(UrlMap.EditCurrentUserUrl, input.ToString());
+            Debug.Log(input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
+            Debug.Log(body);
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowResponse<User>>(await reader.ReadToEndAsync());
+                return JsonConvert.DeserializeObject<RowResponse<User>>(body);
 
             throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
         }

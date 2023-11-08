@@ -28,24 +28,30 @@ namespace adapters.repositories.table.services.leaderboard
 
         }
 
-        public async Task<RowListResponse<PartyScore>> GetPartiesScores<T>(T input) where T : GetScoresParams
+        public async Task<RowListResponse<TOutput>> GetPartiesScores<TInput, TOutput>(TInput input)
+           where TInput : GetScoresParams
+           where TOutput : UserScore
         {
-            var response = await WebRequest.Get(UrlMap.GetPartiesScoresUrl(input.LeaderboardId));
+            var response = await WebRequest.Post(UrlMap.GetPartiesScoresUrl(input.Leaderboardid, input.skip, input.limit), input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<PartyScore>>(body);
+                return JsonConvert.DeserializeObject<RowListResponse<TOutput>>(body);
 
             throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
         }
 
-        public async Task<RowListResponse<UserScore>> GetUsersScores<T>(T input) where T : GetScoresParams
+        public async Task<RowListResponse<TOutput>> GetUsersScores<TInput, TOutput>(TInput input)
+            where TInput : GetScoresParams
+            where TOutput : UserScore
         {
-            var response = await WebRequest.Get(UrlMap.GetUsersScoresUrl(input.LeaderboardId));
+            Debug.Log(input.ToString());
+            var response = await WebRequest.Post(UrlMap.GetUsersScoresUrl(input.Leaderboardid, input.skip, input.limit), input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
+            Debug.Log(body);
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<UserScore>>(body);
+                return JsonConvert.DeserializeObject<RowListResponse<TOutput>>(body);
 
             throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
         }
