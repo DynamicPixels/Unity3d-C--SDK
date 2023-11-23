@@ -12,21 +12,6 @@ namespace adapters.repositories.table
 {
     public class TableRepository :ITableRepositories
     {
-
-        public TableRepository()
-        {
-        }
-
-        public async Task<RowListResponse<TY>> Aggregation<TY, T>(T Params) where T : AggregationParams
-        {
-            var response = await WebRequest.Post(UrlMap.AggregationUrl(Params.TableId), Params.ToString());
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<TY>>(await reader.ReadToEndAsync());
-
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync()).ToString());
-        }
-
         public async Task<RowListResponse<TY>> Find<TY, T>(T Params) where T : FindParams
         {
             var response = await WebRequest.Put( UrlMap.FindUrl(Params.tableId, Params.options.Skip, Params.options.Limit), Params.options.ToString());

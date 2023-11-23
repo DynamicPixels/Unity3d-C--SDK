@@ -6,9 +6,13 @@ using models.outputs;
 
 namespace ports
 {
+    public interface ISynchroniseRepositories
+    {
+        public Task<long> GetServerTime();
+    }
+
     public interface ITableRepositories
     {
-        public Task<RowListResponse<TY>> Aggregation<TY, T>(T Params) where T: AggregationParams;
         public Task<RowListResponse<TY>> Find<TY, T>(T Params) where T: FindParams;
         public Task<RowResponse<TY>> FindById<TY, T>(T Params) where T: FindByIdParams;
         public Task<RowResponse<TY>> FindByIdAndDelete<TY, T>(T Params) where T: FindByIdAndDeleteParams;

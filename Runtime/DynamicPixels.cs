@@ -2,6 +2,7 @@ using System;
 using models.dto;
 using adapters.services.authentication;
 using adapters.services.storage;
+using adapters.services.synchronise;
 using adapters.services.table;
 using adapters.utils.WebsocketClient;
 using ports;
@@ -28,6 +29,7 @@ public static class DynamicPixels
     internal static ISocketAgent Agent = new WebsocketClient();
     
     // services
+    public static ISynchronise Synchronise;
     public static IAuthentication Authentication;
     public static IStorage Storage;
     public static ITable Table;
@@ -45,7 +47,8 @@ public static class DynamicPixels
         SystemInfo = systemInfo;
         
         Logger.onDebugReceived += LoggerOnDebugReceived;
-        
+
+        Synchronise = new SynchroniseService();
         Authentication = new AuthenticationService();
         Table = new TableService(Agent);
         Storage = new StorageService();
