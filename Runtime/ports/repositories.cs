@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using models.dto;
 using models.inputs;
 using models.outputs;
-
+using System;
 namespace ports
 {
     public interface ISynchroniseRepositories
     {
-        public Task<long> GetServerTime();
+        public Task<DateTime> GetServerTime();
     }
 
     public interface ITableRepositories
