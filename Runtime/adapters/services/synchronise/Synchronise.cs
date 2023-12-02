@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using adapters.repositories.synchronise;
 using ports;
-
+using System;
 namespace adapters.services.synchronise
 {
     public class SynchroniseService : ISynchronise
@@ -13,7 +13,7 @@ namespace adapters.services.synchronise
             _repository = new SynchroniseRepository();
         }
 
-        public Task<long> GetServerTime()
+        public Task<DateTime> GetServerTime()
         {
             return this._repository.GetServerTime();
         }
