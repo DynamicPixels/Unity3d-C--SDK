@@ -43,15 +43,15 @@ namespace adapters.services.table.services
             return result.List;
         }
 
-        public async Task<UserScore> GetMyScore<T>(T param) where T : GetCurrentUserScoreParams
+        public async Task<TOutput> GetMyScore<TInput, TOutput>(TInput param) where TInput : GetCurrentUserScoreParams where TOutput : UserScore
         {
-            var result = await this._repository.GetCurrentUserScore(param);
+            var result = await this._repository.GetCurrentUserScore<TInput, TOutput>(param);
             return result.Row;
         }
 
-        public async Task<BaseScore> SubmitScore<T>(T param) where T : SubmitScoreParams
+        public async Task<TOutput> SubmitScore<TInput, TOutput>(TInput param) where TInput : SubmitScoreParams where TOutput : UserScore
         {
-            var result = await this._repository.SubmitScore(param);
+            var result = await this._repository.SubmitScore<TInput, TOutput>(param);
             return result.Row;
         }
     }

@@ -7,8 +7,8 @@ namespace models.dto
    
     public class FindOptions
     {
-        public int Skip { get; set; } = 0;
-        public int Limit { get; set; } = 25;
+        public int Skip { get; set; } 
+        public int Limit { get; set; } 
         [JsonProperty("conditions")]
         public QueryParam? Conditions{ get; set; }
         [JsonProperty("sorts")]

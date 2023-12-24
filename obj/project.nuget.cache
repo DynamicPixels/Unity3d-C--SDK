@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "rrpPsx4icmH0nqqIPMhxv9pXlnZHyL8SVs+FeqvdNDYpWQkSozan6LMvxQ1LxS9d0PqxgYWJnZSxqaJKIYdMMQ==",
+  "dgSpecHash": "7RtrAJXsAj4NcMCmCzB/LZK/XYThyEd/KMpGL9IpnHaK191tshGajbRqLZkz4okpgWbyzlD0JE6RzJcfXl34cg==",
   "success": true,
-  "projectFilePath": "/home/amir/Development/unity3d_proj/ui/Packages/BlueG-SDK/BlueG.csproj",
+  "projectFilePath": "C:\\Users\\Mg\\Piranest-UI-Test\\Library\\PackageCache\\com.dynamicpixels.sdk@b682c4a370\\DynamicPixels.csproj",
   "expectedPackageFiles": [
-    "/home/amir/.nuget/packages/newtonsoft.json/13.0.2/newtonsoft.json.13.0.2.nupkg.sha512"
+    "C:\\Users\\Mg\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512",
+    "C:\\Users\\Mg\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.20\\microsoft.netcore.app.ref.6.0.20.nupkg.sha512",
+    "C:\\Users\\Mg\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.20\\microsoft.windowsdesktop.app.ref.6.0.20.nupkg.sha512",
+    "C:\\Users\\Mg\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.20\\microsoft.aspnetcore.app.ref.6.0.20.nupkg.sha512"
   ],
   "logs": []
 }

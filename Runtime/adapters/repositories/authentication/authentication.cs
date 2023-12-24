@@ -35,6 +35,7 @@ namespace adapters.repositories.authentication
             var response = await WebRequest.Post(urlMap.SigninUrl, input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
+            Debug.Log(body);
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<LoginResponse>(body);
 
@@ -46,6 +47,7 @@ namespace adapters.repositories.authentication
             var response = await WebRequest.Post(urlMap.LoginWithToken, input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
+            Debug.Log(body);
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<LoginResponse>(body);
 
@@ -68,6 +70,7 @@ namespace adapters.repositories.authentication
             var response = await WebRequest.Post(urlMap.GuestAuthUrl, input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
+            Debug.Log(body);
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<LoginResponse>(body);
 

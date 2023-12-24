@@ -47,6 +47,7 @@ namespace adapters.repositories.table.services.leaderboard
         {
             Debug.Log(input.ToString());
             var response = await WebRequest.Post(UrlMap.GetUsersScoresUrl(input.Leaderboardid, input.skip, input.limit), input.ToString());
+            Debug.Log("reponse: "+ UrlMap.GetUsersScoresUrl(input.Leaderboardid, input.skip, input.limit).ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             Debug.Log(body);
@@ -56,13 +57,16 @@ namespace adapters.repositories.table.services.leaderboard
             throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
         }
 
-        public async Task<RowResponse<UserScore>> GetCurrentUserScore<T>(T input) where T : GetCurrentUserScoreParams
+        public async Task<RowResponse<TOutput>> GetCurrentUserScore<TInput, TOutput>(TInput input)
+           where TInput : GetCurrentUserScoreParams
+           where TOutput : UserScore
         {
-            var response = await WebRequest.Get(UrlMap.GetCurrentUserScoreUrl(input.LeaderboardId));
+
+            var response = await WebRequest.Post(UrlMap.GetCurrentUserScoreUrl(input.LeaderboardId), input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowResponse<UserScore>>(body);
+                return JsonConvert.DeserializeObject<RowResponse<TOutput>>(body);
 
             throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
         }
@@ -71,20 +75,29 @@ namespace adapters.repositories.table.services.leaderboard
         {
             var response = await WebRequest.Get(UrlMap.GetMyFriendsScoreUrl(input.LeaderboardId));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
+            Debug.Log(body);
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<UserScore>>(await reader.ReadToEndAsync());
+                return JsonConvert.DeserializeObject<RowListResponse<UserScore>>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
         }
 
-        public async Task<RowResponse<BaseScore>> SubmitScore<T>(T input) where T : SubmitScoreParams
+        public async Task<RowResponse<TOutput>> SubmitScore<TInput, TOutput>(TInput input)
+           where TInput : SubmitScoreParams
+           where TOutput : UserScore
         {
+            Debug.Log(input.ToString());
             var response = await WebRequest.Post(UrlMap.SubmitScoreUrl(input.LeaderboardId), input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
+            Debug.Log(body);
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowResponse<BaseScore>>(await reader.ReadToEndAsync());
+                return JsonConvert.DeserializeObject<RowResponse<TOutput>>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
         }
+
+
     }
 }
