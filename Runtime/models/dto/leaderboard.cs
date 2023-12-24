@@ -35,30 +35,30 @@ namespace models.dto
 
     public class UserScore: BaseScore
     {
-        [JsonProperty("name")]
+        [JsonProperty("name", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? Name { get; set; } 
-        [JsonProperty("image")]
+        [JsonProperty("image", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? Image { get; set; }
-        [JsonProperty("username")]
+        [JsonProperty("username", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? Username { get; set; }
-        [JsonProperty("label")]
+        [JsonProperty("label", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? Label { get; set; }
-        [JsonProperty("tags")]
+        [JsonProperty("tags", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? Tags { get; set; }
-        [JsonProperty("is_ban")]
-        public bool IsBan { get; set; }
-        [JsonProperty("is_tester")]
-        public bool IsTester { get; set; }
-        [JsonProperty("is_guest")]
-        public bool IsGuest { get; set; }
-        [JsonProperty("first_login")]
+        [JsonProperty("is_ban", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public bool? IsBan { get; set; }
+        [JsonProperty("is_tester", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public bool? IsTester { get; set; }
+        [JsonProperty("is_guest", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public bool? IsGuest { get; set; }
+        [JsonProperty("first_login", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public DateTime? FirstLogin { get; set; }
-        [JsonProperty("last_login")]
+        [JsonProperty("last_login", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public DateTime? LastLogin { get; set; }
-        [JsonProperty("is_me")]
-        public bool IsMe { get; set; }
-        [JsonProperty("is_friend")]
-        public bool IsFriend { get; set; }
+        [JsonProperty("is_me", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public bool? IsMe { get; set; }
+        [JsonProperty("is_friend", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public bool? IsFriend { get; set; }
         
         public override string ToString()
         {
@@ -94,11 +94,11 @@ namespace models.dto
     
     public class BaseScore
     {
-        [JsonProperty("value")]
+        [JsonProperty("value", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int Value { get; set; }
-        [JsonProperty("tries")]
+        [JsonProperty("tries", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int Tries { get; set; }
-        [JsonProperty("rank")]
+        [JsonProperty("rank", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int Rank { get; set; }
     }
 }

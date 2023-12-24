@@ -41,6 +41,12 @@ namespace adapters.services.table
             return _services;
         }
 
+        public async Task<RowListResponse<TY>> Aggregation<TY, T>(T param) where T : AggregationParams
+        {
+            var result = await this._repository.Aggregation<TY, T>(param);
+            return result;
+        }
+
         public async Task<RowListResponse<TY>> Find<TY, T>(T param) where T : FindParams
         {
             var result = await this._repository.Find<TY, T>(param);

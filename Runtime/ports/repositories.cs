@@ -3,16 +3,12 @@ using System.Threading.Tasks;
 using models.dto;
 using models.inputs;
 using models.outputs;
-using System;
+
 namespace ports
 {
-    public interface ISynchroniseRepositories
-    {
-        public Task<DateTime> GetServerTime();
-    }
-
     public interface ITableRepositories
     {
+        public Task<RowListResponse<TY>> Aggregation<TY, T>(T Params) where T: AggregationParams;
         public Task<RowListResponse<TY>> Find<TY, T>(T Params) where T: FindParams;
         public Task<RowResponse<TY>> FindById<TY, T>(T Params) where T: FindByIdParams;
         public Task<RowResponse<TY>> FindByIdAndDelete<TY, T>(T Params) where T: FindByIdAndDeleteParams;
@@ -44,18 +40,22 @@ namespace ports
 
     public interface ILeaderboardRepository
     {
-        Task<RowListResponse<Leaderboard>> GetLeaderBoards<T>(T Params) where T: GetLeaderboardsParams;
+        Task<RowListResponse<Leaderboard>> GetLeaderBoards<T>(T Params) where T : GetLeaderboardsParams;
         Task<RowListResponse<TOutput>> GetUsersScores<TInput, TOutput>(TInput input)
             where TInput : GetScoresParams
             where TOutput : UserScore;
         Task<RowListResponse<TOutput>> GetPartiesScores<TInput, TOutput>(TInput input)
             where TInput : GetScoresParams
             where TOutput : UserScore;
-        Task<RowResponse<UserScore>> GetCurrentUserScore<T>(T Params) where T: GetCurrentUserScoreParams;
-        Task<RowListResponse<UserScore>> GetFriendsScores<T>(T Params) where T: GetFriendsScoresParams;
-        Task<RowResponse<BaseScore>> SubmitScore<T>(T Params) where T: SubmitScoreParams;
+        Task<RowResponse<TOutput>> GetCurrentUserScore<TInput, TOutput>(TInput input)
+           where TInput : GetCurrentUserScoreParams
+           where TOutput : UserScore;
+        Task<RowListResponse<UserScore>> GetFriendsScores<T>(T Params) where T : GetFriendsScoresParams;
+        Task<RowResponse<TOutput>> SubmitScore<TInput, TOutput>(TInput input)
+           where TInput : SubmitScoreParams
+           where TOutput : UserScore;
+
     }
-    
     public interface IAchievementRepository
     {
         Task<RowListResponse<Achievement>> GetAchievements<T>(T Params) where T: GetAchievementParams;

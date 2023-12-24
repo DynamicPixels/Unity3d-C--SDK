@@ -5,23 +5,22 @@ using Newtonsoft.Json;
 
 namespace models.inputs.QueryHelper
 {
-
     public interface Query
     {
         public QueryParam ToQuery();
     }
-    
+
     public class QueryParam
     {
         [JsonProperty("op")]
         public string Op { get; set; }
         [JsonProperty("field")]
-        public string Field { get; set; }
+        public string? Field { get; set; }
         [JsonProperty("value")] [CanBeNull] public dynamic? Value { get; set; }
         [JsonProperty("values")] [CanBeNull] public dynamic[]? Values { get; set; }
-        [JsonProperty("list")] [CanBeNull] public List<QueryParam>? list { get; set; }
+        [JsonProperty("list")] [CanBeNull] public QueryParam[]? list { get; set; }
     }
-    
+
     public class JoinParams
     {
         [JsonProperty("table_name")]
@@ -32,7 +31,7 @@ namespace models.inputs.QueryHelper
         public string foreignField { get; set; }
     }
 
-    public class And: Query
+    public class And : Query
     {
         private List<QueryParam> _queries = new List<QueryParam>();
 
@@ -50,12 +49,12 @@ namespace models.inputs.QueryHelper
             return new QueryParam
             {
                 Op = "AND",
-                list = _queries,
+                list = _queries.ToArray(), // Convert List to Array
             };
         }
     }
 
-    public class Or: Query
+    public class Or : Query
     {
         private List<QueryParam> _queries = new List<QueryParam>();
 
@@ -73,12 +72,12 @@ namespace models.inputs.QueryHelper
             return new QueryParam
             {
                 Op = "OR",
-                list = _queries,
+                list = _queries.ToArray(), // Convert List to Array
             };
         }
     }
 
-    public class Eq: Query
+    public class Eq : Query
     {
         private string Field { get; set; }
         private dynamic Value { get; set; }
@@ -100,7 +99,7 @@ namespace models.inputs.QueryHelper
         }
     }
 
-    public class Neq: Query
+    public class Neq : Query
     {
         public string Field { get; set; }
         public dynamic Value { get; set; }
@@ -110,25 +109,24 @@ namespace models.inputs.QueryHelper
             Field = field;
             Value = value;
         }
-        
+
         public QueryParam ToQuery()
         {
             return new QueryParam
             {
-                Op = "=",
+                Op = "!=",
                 Field = Field,
                 Value = Value
             };
         }
     }
 
-    public class Compare: Query
+    public class Compare : Query
     {
-       
         public string Field { get; set; }
         public dynamic Value { get; set; }
         public string Operator { get; set; }
-        
+
         public QueryParam ToQuery()
         {
             return new QueryParam
@@ -140,7 +138,7 @@ namespace models.inputs.QueryHelper
         }
     }
 
-    public class In: Query
+    public class In : Query
     {
         public string Field { get; set; }
         public dynamic[] Values { get; set; }
@@ -150,7 +148,7 @@ namespace models.inputs.QueryHelper
             Field = field;
             Values = values;
         }
-        
+
         public QueryParam ToQuery()
         {
             return new QueryParam
@@ -162,7 +160,7 @@ namespace models.inputs.QueryHelper
         }
     }
 
-    public class Nin: Query
+    public class Nin : Query
     {
         public string Field;
         public dynamic[] Values;
@@ -172,7 +170,7 @@ namespace models.inputs.QueryHelper
             Field = field;
             Values = values;
         }
-        
+
         public QueryParam ToQuery()
         {
             return new QueryParam

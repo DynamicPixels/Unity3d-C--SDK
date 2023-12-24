@@ -5,10 +5,14 @@
       "Newtonsoft.Json/13.0.2": {
         "type": "package",
         "compile": {
-          "lib/net6.0/Newtonsoft.Json.dll": {}
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net6.0/Newtonsoft.Json.dll": {}
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       }
     }
@@ -51,19 +55,19 @@
     ]
   },
   "packageFolders": {
-    "/home/amir/.nuget/packages/": {}
+    "C:\\Users\\Mg\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/amir/Development/unity3d_proj/ui/Packages/BlueG-SDK/BlueG.csproj",
-      "projectName": "BlueG",
-      "projectPath": "/home/amir/Development/unity3d_proj/ui/Packages/BlueG-SDK/BlueG.csproj",
-      "packagesPath": "/home/amir/.nuget/packages/",
-      "outputPath": "/home/amir/Development/unity3d_proj/ui/Packages/BlueG-SDK/obj/",
+      "projectUniqueName": "C:\\Users\\Mg\\Piranest-UI-Test\\Library\\PackageCache\\com.dynamicpixels.sdk@b682c4a370\\DynamicPixels.csproj",
+      "projectName": "DynamicPixels",
+      "projectPath": "C:\\Users\\Mg\\Piranest-UI-Test\\Library\\PackageCache\\com.dynamicpixels.sdk@b682c4a370\\DynamicPixels.csproj",
+      "packagesPath": "C:\\Users\\Mg\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Mg\\Piranest-UI-Test\\Library\\PackageCache\\com.dynamicpixels.sdk@b682c4a370\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/amir/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Mg\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -98,16 +102,31 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.20, 6.0.20]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.20, 6.0.20]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[6.0.20, 6.0.20]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/6.0.113/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\Mg\\.dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
       }
     }
   }
