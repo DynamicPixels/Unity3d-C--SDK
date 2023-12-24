@@ -3,9 +3,13 @@ using System.Threading.Tasks;
 using models.dto;
 using models.inputs;
 using models.outputs;
-
+using System;
 namespace ports
 {
+    public interface ISynchroniseRepositories
+    {
+        public Task<DateTime> GetServerTime();
+    }
     public interface ITableRepositories
     {
         public Task<RowListResponse<TY>> Aggregation<TY, T>(T Params) where T: AggregationParams;
