@@ -4,6 +4,7 @@ using adapters.services.authentication;
 using adapters.services.storage;
 using adapters.services.table;
 using adapters.utils.WebsocketClient;
+using adapters.services.synchronise;
 using ports;
 using models;
 using ports.utils;
@@ -26,29 +27,31 @@ public static class DynamicPixels
     public static SystemInfo SystemInfo;
     // transports
     internal static ISocketAgent Agent = new WebsocketClient();
-    
+
     // services
+    public static ISynchronise Synchronise;
     public static IAuthentication Authentication;
     public static IStorage Storage;
     public static ITable Table;
-    
-    public static void Configure(string clientId, string clientSecret, SystemInfo systemInfo, bool debugMode, bool developmentMode,bool verboseMode)
+
+    public static void Configure(string clientId, string clientSecret, SystemInfo systemInfo, bool debugMode, bool developmentMode, bool verboseMode)
     {
         if (IsAvailable)
             Logger.LogException<DynamicPixelsException>(new DynamicPixelsException("Sdk is already initialized, logout first"), DebugLocation.All, "Configure");
-        
+
         ClientId = clientId;
         ClientSecret = clientSecret;
         DebugMode = debugMode;
         VerboseMode = verboseMode;
         DevelopmentMode = developmentMode;
         SystemInfo = systemInfo;
-        
+
         Logger.onDebugReceived += LoggerOnDebugReceived;
-        
+
         Authentication = new AuthenticationService();
         Table = new TableService(Agent);
         Storage = new StorageService();
+        Synchronise = new SynchroniseService();
     }
 
     private static void LoggerOnDebugReceived(object sender, DebugArgs debug)
@@ -69,7 +72,7 @@ public static class DynamicPixels
         }
 
         // if (!EnableSaveDebugLogs) return;
-            
+
         // if (Directory.Exists(_appPath + DebugPath))
         //     File.AppendAllText(_appPath + DebugPath + _logFile,debug.Data + "\r\n");
     }
