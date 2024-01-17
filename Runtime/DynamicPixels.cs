@@ -37,7 +37,10 @@ public static class DynamicPixels
     public static void Configure(string clientId, string clientSecret, SystemInfo systemInfo, bool debugMode, bool developmentMode, bool verboseMode)
     {
         if (IsAvailable)
-            Logger.LogException<DynamicPixelsException>(new DynamicPixelsException("Sdk is already initialized, logout first"), DebugLocation.All, "Configure");
+            Logger.LogException<DynamicPixelsException>(
+     new DynamicPixelsException(ErrorCode.SdkAlreadyInitialized, "Sdk is already initialized, logout first"),
+     DebugLocation.All,
+     "Configure");
 
         ClientId = clientId;
         ClientSecret = clientSecret;

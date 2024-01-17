@@ -18,5 +18,23 @@ namespace models.outputs
         public string Expire = "";
         [JsonProperty("version_id")]
         public int VersionId = 0;
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+
+    }
+    public class FileMetaForUpload
+    {
+        [JsonProperty("name")]
+        public string Name = "";
+        [JsonProperty("content_type")]
+        public string ContentType = "";
+        public string row { get; set; }
+        public string FileContent { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }
