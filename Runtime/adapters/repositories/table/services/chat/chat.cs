@@ -17,30 +17,66 @@ namespace adapters.repositories.table.services
         {
             var response = await WebRequest.Get(UrlMap.GetSubscribedConversationsUrl);
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<Conversation>>(await reader.ReadToEndAsync());
+            {
+                return JsonConvert.DeserializeObject<RowListResponse<Conversation>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
         public async Task<RowListResponse<Message>> GetConversationMessages<T>(T input) where T : GetConversationMessagesParams
         {
             var response = await WebRequest.Get(UrlMap.GetConversationMessagesUrl(input.ConversationId));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<Message>>(await reader.ReadToEndAsync());
+            {
+                return JsonConvert.DeserializeObject<RowListResponse<Message>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
         public async Task<RowListResponse<ConversationMember>> GetConversationMembers<T>(T input) where T : GetConversationMembersParams
         {
             var response = await WebRequest.Get(UrlMap.GetConversationMembersUrl(input.ConversationId));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<ConversationMember>>(await reader.ReadToEndAsync());
+            {
+                return JsonConvert.DeserializeObject<RowListResponse<ConversationMember>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
     }
 }

@@ -28,9 +28,17 @@ namespace adapters.repositories.synchronise
                 var serverTime = ConvertUnixTimestampToDateTime(timestamp);
                 return serverTime;
             }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body).ToString());        
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
         private DateTime ConvertUnixTimestampToDateTime(long timestamp)
         {

@@ -21,10 +21,22 @@ namespace adapters.repositories.table
         {
             var response = await WebRequest.Post(UrlMap.AggregationUrl(Params.TableId), Params.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<TY>>(await reader.ReadToEndAsync());
+            {
+                return JsonConvert.DeserializeObject<RowListResponse<TY>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync()).ToString());
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
         public async Task<RowListResponse<TY>> Find<TY, T>(T Params) where T : FindParams
@@ -36,9 +48,20 @@ namespace adapters.repositories.table
             var body = await reader.ReadToEndAsync();
             Debug.Log(body);
             if (response.IsSuccessStatusCode)
+            {
                 return JsonConvert.DeserializeObject<RowListResponse<TY>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body).ToString());
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
         public async Task<RowResponse<TY>> FindById<TY, T>(T Params) where T : FindByIdParams
@@ -47,19 +70,42 @@ namespace adapters.repositories.table
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
+            {
                 return JsonConvert.DeserializeObject<RowResponse<TY>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body).ToString());
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
         public async Task<RowResponse<TY>> FindByIdAndDelete<TY, T>(T Params) where T : FindByIdAndDeleteParams
         {
             var response = await WebRequest.Delete(UrlMap.FindByIdAndDeleteUrl(Params.TableId, Params.RowId));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowResponse<TY>>(await reader.ReadToEndAsync());
+            {
+                return JsonConvert.DeserializeObject<RowResponse<TY>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync()).ToString());
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
         public async Task<RowResponse<TY>> FindByIdAndUpdate<TY, T>(T Params) where T : FindByIdAndUpdateParams
@@ -68,10 +114,20 @@ namespace adapters.repositories.table
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
+            {
                 return JsonConvert.DeserializeObject<RowResponse<TY>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            Debug.Log(body);
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body).ToString());
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
         public async Task<RowResponse<TY>> Insert<TY, T>(T Params) where T : InsertParams
@@ -80,20 +136,42 @@ namespace adapters.repositories.table
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
+            {
                 return JsonConvert.DeserializeObject<RowResponse<TY>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            Debug.Log(body);
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body).ToString());
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
         public async Task<RowResponse<TY>> InsertMany<TY, T>(T Params) where T : InsertManyParams
         {
             var response = await WebRequest.Post(UrlMap.InsertManyUrl(Params.TableId), Params.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowResponse<TY>>(await reader.ReadToEndAsync());
+            {
+                return JsonConvert.DeserializeObject<RowResponse<TY>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync()).ToString());
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
         public async Task<ActionResponse> UpdateMany<T>(T Params) where T : UpdateManyParams
@@ -103,10 +181,20 @@ namespace adapters.repositories.table
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ActionResponse>(await reader.ReadToEndAsync());
-            Debug.Log(body);
+            {
+                return JsonConvert.DeserializeObject<ActionResponse>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body).ToString());
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
         public async Task<ActionResponse> Delete<T>(T Params) where T : DeleteParams
@@ -115,10 +203,20 @@ namespace adapters.repositories.table
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
+            {
                 return JsonConvert.DeserializeObject<ActionResponse>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            Debug.Log(body);
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body).ToString());
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
         public async Task<ActionResponse> DeleteMany<T>(T Params) where T : DeleteManyParams
@@ -127,9 +225,20 @@ namespace adapters.repositories.table
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ActionResponse>(await reader.ReadToEndAsync());
-            Debug.Log(body);
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body).ToString());
+            {
+                return JsonConvert.DeserializeObject<ActionResponse>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
+
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
     }
 }

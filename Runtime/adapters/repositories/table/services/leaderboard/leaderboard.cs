@@ -21,10 +21,22 @@ namespace adapters.repositories.table.services.leaderboard
         {
             var response = await WebRequest.Get(UrlMap.GetLeaderboardsUrl);
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<Leaderboard>>(await reader.ReadToEndAsync());
+            {
+                return JsonConvert.DeserializeObject<RowListResponse<Leaderboard>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
 
         }
 
@@ -36,9 +48,20 @@ namespace adapters.repositories.table.services.leaderboard
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
+            {
                 return JsonConvert.DeserializeObject<RowListResponse<TOutput>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
         public async Task<RowListResponse<TOutput>> GetUsersScores<TInput, TOutput>(TInput input)
@@ -47,17 +70,27 @@ namespace adapters.repositories.table.services.leaderboard
         {
             Debug.Log(input.ToString());
             var response = await WebRequest.Post(UrlMap.GetUsersScoresUrl(input.Leaderboardid, input.skip, input.limit), input.ToString());
-            Debug.Log("reponse: "+ UrlMap.GetUsersScoresUrl(input.Leaderboardid, input.skip, input.limit).ToString());
+            Debug.Log("reponse: " + UrlMap.GetUsersScoresUrl(input.Leaderboardid, input.skip, input.limit).ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
-            Debug.Log(body);
             if (response.IsSuccessStatusCode)
+            {
                 return JsonConvert.DeserializeObject<RowListResponse<TOutput>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
+
         }
-
-        public async Task<RowResponse<TOutput>> GetCurrentUserScore<TInput, TOutput>(TInput input)
+            public async Task<RowResponse<TOutput>> GetCurrentUserScore<TInput, TOutput>(TInput input)
            where TInput : GetCurrentUserScoreParams
            where TOutput : UserScore
         {
@@ -66,9 +99,20 @@ namespace adapters.repositories.table.services.leaderboard
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
+            {
                 return JsonConvert.DeserializeObject<RowResponse<TOutput>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
         public async Task<RowListResponse<UserScore>> GetFriendsScores<T>(T input) where T : GetFriendsScoresParams
@@ -76,11 +120,21 @@ namespace adapters.repositories.table.services.leaderboard
             var response = await WebRequest.Get(UrlMap.GetMyFriendsScoreUrl(input.LeaderboardId));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
-            Debug.Log(body);
             if (response.IsSuccessStatusCode)
+            {
                 return JsonConvert.DeserializeObject<RowListResponse<UserScore>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
         public async Task<RowResponse<TOutput>> SubmitScore<TInput, TOutput>(TInput input)
@@ -91,11 +145,21 @@ namespace adapters.repositories.table.services.leaderboard
             var response = await WebRequest.Post(UrlMap.SubmitScoreUrl(input.LeaderboardId), input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
-            Debug.Log(body);
             if (response.IsSuccessStatusCode)
+            {
                 return JsonConvert.DeserializeObject<RowResponse<TOutput>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(body)?.Message);
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
 

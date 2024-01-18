@@ -18,20 +18,44 @@ namespace adapters.repositories.table.services.device
         {
             var response = await WebRequest.Get(UrlMap.FindMyDevicesUrl);
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<Device>>(await reader.ReadToEndAsync());
+            {
+                return JsonConvert.DeserializeObject<RowListResponse<Device>>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
 
         public async Task<ActionResponse> RevokeDevice<T>(T input) where T : RevokeDeviceParams
         {
             var response = await WebRequest.Post(UrlMap.RevokeDeviceUrl(input.DeviceId), input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ActionResponse>(await reader.ReadToEndAsync());
+            {
+                return JsonConvert.DeserializeObject<ActionResponse>(body);
+            }
+            else
+            {
+                // Deserialize the error response
+                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
 
-            throw new DynamicPixelsException(JsonConvert.DeserializeObject<ErrorResponse>(await reader.ReadToEndAsync())?.Message);
+                // Get the corresponding ErrorCode from the error message
+                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+                // Throw the DynamicPixelsException with the ErrorCode
+                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            }
         }
     }
 }

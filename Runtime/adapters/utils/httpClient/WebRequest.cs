@@ -129,15 +129,16 @@ namespace adapters.utils.httpClient
                     case WebRequestMethod.Delete:
                         return await httpClient.DeleteAsync(url);
                     default:
-                        throw new DynamicPixelsException();
+                        throw new DynamicPixelsException(ErrorCode.UnknownError, "Invalid request method");
                 }
             }
             catch (Exception e)
             {
                 if (e is OperationCanceledException)
-                    throw new DynamicPixelsException("Request Timeout");
-                throw new DynamicPixelsException("Request Timeout");
+                    throw new DynamicPixelsException(ErrorCode.UnknownError, "Request failed: " + e.Message);
 
+                // You might want to provide more information or a different error code here
+                throw new DynamicPixelsException(ErrorCode.UnknownError, "Request failed: " + e.Message);
             }
         }
     }

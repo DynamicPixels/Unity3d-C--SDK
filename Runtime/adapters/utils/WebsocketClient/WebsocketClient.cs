@@ -46,15 +46,20 @@ namespace adapters.utils.WebsocketClient
             if (onMessage != null) 
                 onMessage(this, JsonConvert.DeserializeObject<Request>(message.Data));
         }
-        
+
         private void OnError(object sender, ErrorEventArgs error)
         {
-            if(error.Exception != null)
+            if (error.Exception != null)
+            {
                 Logger.Logger.LogException<Exception>(error.Exception, DebugLocation.Connection, "onError");
-            else 
-                Logger.Logger.LogException<DynamicPixelsException>(new DynamicPixelsException(error.Message), DebugLocation.Connection, "onError");
+            }
+            else
+            {
+                // Use a generic error code for errors without a specific exception
+                var exception = new DynamicPixelsException(ErrorCode.UnknownError, error.Message);
+                Logger.Logger.LogException<DynamicPixelsException>(exception, DebugLocation.Connection, "onError");
+            }
         }
-        
         private void OnClose(object sender, CloseEventArgs close)
         {
             if (!_isAvailable || close.WasClean) return;
@@ -70,7 +75,10 @@ namespace adapters.utils.WebsocketClient
         public Task Send(Request request)
         {
             if (!_isAvailable)
-                Logger.Logger.LogException<DynamicPixelsException>(new DynamicPixelsException("connection not ready"), DebugLocation.Connection, "Send");
+                Logger.Logger.LogException<DynamicPixelsException>(
+     new DynamicPixelsException(ErrorCode.ConnectionNotReady, "connection not ready"),
+     DebugLocation.Connection,
+     "Send");
             try
             {
                 ws.SendAsync(request.ToString(), null);

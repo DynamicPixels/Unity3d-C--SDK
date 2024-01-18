@@ -4,7 +4,8 @@ using models.outputs;
 using adapters.repositories.storage;
 using ports;
 using ports.utils;
-
+using System;
+using UnityEngine;
 namespace adapters.services.storage
 {
     public class StorageService: IStorage
@@ -13,6 +14,7 @@ namespace adapters.services.storage
 
         public StorageService()
         {
+            _repository = new StorageRepository();
         }
 
 
@@ -21,10 +23,15 @@ namespace adapters.services.storage
             throw new System.NotImplementedException();
         }
 
-        public void Upload()
+        public async Task<FileMetaForUpload> UploadAsync<TInput>(TInput param) where TInput : FileMetaForUpload
         {
-            throw new System.NotImplementedException();
+            Debug.Log("input: "+param);
+            var result = await this._repository.UploadFile(param);
+
+            return result;
         }
+
+
 
         public Task<FileMetadata> GetFileInfo()
         {
