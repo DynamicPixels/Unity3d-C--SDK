@@ -12,6 +12,7 @@ namespace adapters.utils.httpClient
 {
      internal static class WebRequest
     {
+        
         private static string baseUrl = 
             !DynamicPixels.DevelopmentMode
             ?
