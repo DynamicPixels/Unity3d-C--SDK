@@ -43,7 +43,6 @@ namespace adapters.repositories.table
         {
             
             var response = await WebRequest.Put( UrlMap.FindUrl(Params.tableId, Params.options.Skip, Params.options.Limit), Params.options.ToString());
-            Debug.Log(Params.options.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             Debug.Log(body);

@@ -26,15 +26,18 @@ namespace models.outputs
     }
     public class FileMetaForUpload
     {
-        [JsonProperty("name")]
+        [JsonProperty("file_name")]
         public string Name = "";
         [JsonProperty("content_type")]
         public string ContentType = "";
+        
         public string row { get; set; }
-        public string FileContent { get; set; }
+        
+        public byte[] FileContent { get; set; }
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
         }
     }
+    
 }
