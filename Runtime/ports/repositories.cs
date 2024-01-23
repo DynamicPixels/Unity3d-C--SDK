@@ -62,7 +62,7 @@ namespace ports
     }
     public interface IAchievementRepository
     {
-        Task<RowListResponse<Achievement>> GetAchievements<T>(T Params) where T: GetAchievementParams;
+        Task<RowListResponse<RichAchievement>> GetAchievements<T>(T Params) where T: GetAchievementParams;
         Task<RowResponse<Unlock>> UnlockAchievement<T>(T Params) where T: UnlockAchievementParams;
     }
     

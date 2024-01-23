@@ -7,20 +7,22 @@ using models.inputs;
 using models.outputs;
 using Newtonsoft.Json;
 using ports;
-
+using UnityEngine;
 namespace adapters.repositories.table.services.achievement
 {
     public class AchievementRepository: IAchievementRepository
     {
 
-        public async Task<RowListResponse<Achievement>> GetAchievements<T>(T input) where T : GetAchievementParams
+        public async Task<RowListResponse<RichAchievement>> GetAchievements<T>(T input) where T : GetAchievementParams
         {
+            Debug.Log(input);
             var response = await WebRequest.Get(UrlMap.GetAchievementsUrl);
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
+            Debug.Log(body);
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<RowListResponse<Achievement>>(body);
+                return JsonConvert.DeserializeObject<RowListResponse<RichAchievement>>(body);
             }
             else
             {
