@@ -5,7 +5,10 @@ namespace models.inputs
 {
     public class GetLeaderboardsParams
     {
-        
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string? label;
+        public int skip = 0;
+        public int limit = 25;
     }
 
     public class GetScoresParams
@@ -15,13 +18,14 @@ namespace models.inputs
         public int skip;
         public int limit;
         [JsonProperty("return_me")]
-        public bool return_me;
+        public bool returnUserScore;
         [JsonProperty("conditions", NullValueHandling = NullValueHandling.Ignore)]
         public QueryParam? Conditions { get; set; }
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
         }
+
     }
 
     public class GetCurrentUserScoreParams
@@ -51,10 +55,11 @@ namespace models.inputs
         public int Score { get; set; }
         [JsonProperty("other_data", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public Dictionary<string, dynamic>? OtherData { get; set; }
-        [JsonProperty("party_Id",DefaultValueHandling =DefaultValueHandling.Ignore)]
+        [JsonProperty("party_Id", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int PartyId { get; set; }
 
-
+        [JsonProperty("unique_by", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string? UniqueBy { get; set; }
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);

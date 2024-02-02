@@ -19,9 +19,11 @@ namespace adapters.repositories.table.services.leaderboard
 
         public async Task<RowListResponse<Leaderboard>> GetLeaderBoards<T>(T input) where T : GetLeaderboardsParams
         {
-            var response = await WebRequest.Get(UrlMap.GetLeaderboardsUrl);
+            
+            var response = await WebRequest.Get(UrlMap.GetLeaderboardsUrl(input.skip,input.limit,input.label));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
+            Debug.Log(body);
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<RowListResponse<Leaderboard>>(body);
@@ -98,6 +100,7 @@ namespace adapters.repositories.table.services.leaderboard
             var response = await WebRequest.Post(UrlMap.GetCurrentUserScoreUrl(input.LeaderboardId), input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
+            Debug.Log(body);
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<RowResponse<TOutput>>(body);

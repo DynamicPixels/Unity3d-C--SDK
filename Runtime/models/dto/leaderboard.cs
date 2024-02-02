@@ -6,27 +6,33 @@ namespace models.dto
 {
     public class Leaderboard
     {
-        [JsonProperty("id")]
-        public int Id { get; set; }
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [JsonProperty("desc")]
-        public string Desc { get; set; }
-        [JsonProperty("order")]
-        public int Order { get; set; }
+        public string? Desc { get; set; }
+        [JsonProperty("label")]
+        public string? Lable { get; set; }
+        [JsonProperty("unique_by")]
+        public string? UniqueBy { get; set; }
+
+        [JsonProperty("actions")]
+        public string? Actions { get; set; } = "[]";
+        [JsonProperty("extend_table")]
+        public string? ExtendTable { get; set; }
+
         [JsonProperty("course")]
         public int Course { get; set; }
         [JsonProperty("timeframe")]
         public int TimeFrame { get; set; }
-        [JsonProperty("participants")]
-        public int Participants { get; set; }
+        [JsonProperty("ttl")]
+        public int Ttl { get; set; }
         [JsonProperty("round")]
         public int Round { get; set; }
         [JsonProperty("winners_count")]
         public int WinnersCount { get; set; }
         [JsonProperty("last_wipe")]
         public DateTime LastWipe { get; set; }
-        
+
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
