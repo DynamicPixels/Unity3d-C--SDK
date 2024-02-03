@@ -2,7 +2,7 @@ namespace adapters.repositories.table.services.leaderboard
 {
     public class UrlMap
     {
-        public const string GetLeaderboardsUrl = "/api/table/services/leaderboard";
+        public static string GetLeaderboardsUrl(int skip, int limit, string? label) => $"/api/table/services/leaderboard/?skip={skip}&limit={limit}&label={label}";
         public static string GetUsersScoresUrl(int leaderboardId, int skip, int limit) => $"/api/table/services/leaderboard/user/{leaderboardId}?skip={skip}&limit={limit}";
         
         public static string GetPartiesScoresUrl(int leaderboardId, int skip, int limit) => $"/api/table/services/leaderboard/party/{leaderboardId}?skip={skip}&limit={limit}";
