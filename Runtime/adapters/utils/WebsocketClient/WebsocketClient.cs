@@ -1,12 +1,9 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using models;
 using models.dto;
 using Newtonsoft.Json;
 using ports.utils;
-using UnityEngine;
 using WebSocketSharp;
+using ErrorEventArgs = WebSocketSharp.ErrorEventArgs;
 
 namespace adapters.utils.WebsocketClient
 {

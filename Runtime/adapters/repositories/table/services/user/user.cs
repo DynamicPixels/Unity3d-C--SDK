@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
 using adapters.utils.httpClient;
 using models;
 using models.dto;
@@ -8,8 +5,6 @@ using models.inputs;
 using models.outputs;
 using Newtonsoft.Json;
 using ports;
-using ports.utils;
-using UnityEngine;
 
 namespace adapters.repositories.table.services.user
 {
@@ -62,7 +57,7 @@ namespace adapters.repositories.table.services.user
         public async Task<RowResponse<User>> EditCurrentUser<T>(T input) where T : EditCurrentUserParams
         {
             var response = await WebRequest.Put(UrlMap.EditCurrentUserUrl, input.ToString());
-            Debug.Log(input.ToString());
+
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)

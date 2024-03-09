@@ -6,7 +6,6 @@ using ports;
 using models;
 using models.inputs;
 using Newtonsoft.Json;
-using UnityEngine;
 
 namespace adapters.repositories.table
 {
@@ -45,7 +44,7 @@ namespace adapters.repositories.table
             var response = await WebRequest.Put( UrlMap.FindUrl(Params.tableId, Params.options.Skip, Params.options.Limit), Params.options.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
-            Debug.Log(body);
+
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<RowListResponse<TY>>(body);
@@ -175,7 +174,6 @@ namespace adapters.repositories.table
 
         public async Task<ActionResponse> UpdateMany<T>(T Params) where T : UpdateManyParams
         {
-            Debug.Log(JsonConvert.SerializeObject(Params));
             var response = await WebRequest.Put(UrlMap.UpdateManyUrl(Params.TableId), Params.Options.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();

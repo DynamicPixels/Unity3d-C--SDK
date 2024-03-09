@@ -1,20 +1,10 @@
-using System;
-using System.IO;
-using System.Net.Http;
-using System.Threading.Tasks;
-using adapters.repositories.authentication;
 using models.outputs;
 using adapters.utils.httpClient;
 using models;
-using models.inputs;
 using Newtonsoft.Json;
 using ports;
-using UnityEngine;
 using System.Net.Http.Headers;
-using System.Text;
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
+
 namespace adapters.repositories.storage
 {
     public class StorageRepository : IStorageRepositories
@@ -38,17 +28,14 @@ namespace adapters.repositories.storage
 
             // Convert the object to JSON
             string json = JsonConvert.SerializeObject(fileInfo, Formatting.Indented);
-            Debug.Log(json);
-            Debug.Log(input.ToString());
+            
             var response = await WebRequest.Post(urlMap.GetUploadFileUrl, json);
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
-            Debug.Log(response);
-            Debug.Log(body);
+            
             if (response.IsSuccessStatusCode)
             {
                 var row = JsonConvert.DeserializeObject<FileMetaForUpload>(body);
-                Debug.Log(row.row);
                 await PutFile(row.row, input.FileContent, input.Name, input.ContentType);
 
                 return JsonConvert.DeserializeObject<FileMetaForUpload>(body);

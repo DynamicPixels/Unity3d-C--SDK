@@ -1,0 +1,5 @@
+/Users/parya/Development/dotnet_proj/Unity3d-C--SDK/obj/Debug/net6.0/DynamicPixels.csproj.AssemblyReference.cache
+/Users/parya/Development/dotnet_proj/Unity3d-C--SDK/obj/Debug/net6.0/DynamicPixels.GeneratedMSBuildEditorConfig.editorconfig
+/Users/parya/Development/dotnet_proj/Unity3d-C--SDK/obj/Debug/net6.0/DynamicPixels.AssemblyInfoInputs.cache
+/Users/parya/Development/dotnet_proj/Unity3d-C--SDK/obj/Debug/net6.0/DynamicPixels.AssemblyInfo.cs
+/Users/parya/Development/dotnet_proj/Unity3d-C--SDK/obj/Debug/net6.0/DynamicPixels.csproj.CoreCompileInputs.cache

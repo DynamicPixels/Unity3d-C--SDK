@@ -9,7 +9,6 @@ using models.inputs;
 using models.outputs;
 using Newtonsoft.Json;
 using ports;
-using UnityEngine;
 
 namespace adapters.repositories.table.services.party
 {

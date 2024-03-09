@@ -1,4 +1,3 @@
-using System;
 using models.dto;
 using adapters.services.authentication;
 using adapters.services.storage;
@@ -8,7 +7,7 @@ using adapters.services.synchronise;
 using ports;
 using models;
 using ports.utils;
-using UnityEngine;
+
 using Logger = adapters.utils.Logger.Logger;
 using LogType = models.dto.LogType;
 using SystemInfo = models.dto.SystemInfo;

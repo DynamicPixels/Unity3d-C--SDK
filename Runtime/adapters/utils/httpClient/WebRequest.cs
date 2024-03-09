@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 using models;
 using models.dto;
-using UnityEngine;
 
 namespace adapters.utils.httpClient
 {

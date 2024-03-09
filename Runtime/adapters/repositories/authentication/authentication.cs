@@ -9,7 +9,6 @@ using models;
 using models.inputs;
 using Newtonsoft.Json;
 using ports;
-using UnityEngine;
 
 namespace adapters.repositories.authentication
 {
@@ -33,8 +32,7 @@ namespace adapters.repositories.authentication
             {
                 // Deserialize the error response
                 var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-                Debug.Log(errorResponse.ToString());
-                Debug.Log(body);
+               
                 // Get the corresponding ErrorCode from the error message
                 var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
 
@@ -115,7 +113,7 @@ namespace adapters.repositories.authentication
             var response = await WebRequest.Post(urlMap.GuestAuthUrl, input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
-            Debug.Log("Response body: " + body);
+
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<LoginResponse>(body);

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Mg\\Piranest-UI-Test\\Library\\PackageCache\\com.dynamicpixels.sdk@b682c4a370\\DynamicPixels.csproj": {}
+    "/Users/parya/Development/dotnet_proj/Unity3d-C--SDK/DynamicPixels.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Mg\\Piranest-UI-Test\\Library\\PackageCache\\com.dynamicpixels.sdk@b682c4a370\\DynamicPixels.csproj": {
+    "/Users/parya/Development/dotnet_proj/Unity3d-C--SDK/DynamicPixels.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mg\\Piranest-UI-Test\\Library\\PackageCache\\com.dynamicpixels.sdk@b682c4a370\\DynamicPixels.csproj",
+        "projectUniqueName": "/Users/parya/Development/dotnet_proj/Unity3d-C--SDK/DynamicPixels.csproj",
         "projectName": "DynamicPixels",
-        "projectPath": "C:\\Users\\Mg\\Piranest-UI-Test\\Library\\PackageCache\\com.dynamicpixels.sdk@b682c4a370\\DynamicPixels.csproj",
-        "packagesPath": "C:\\Users\\Mg\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mg\\Piranest-UI-Test\\Library\\PackageCache\\com.dynamicpixels.sdk@b682c4a370\\obj\\",
+        "projectPath": "/Users/parya/Development/dotnet_proj/Unity3d-C--SDK/DynamicPixels.csproj",
+        "packagesPath": "/Users/parya/.nuget/packages/",
+        "outputPath": "/Users/parya/Development/dotnet_proj/Unity3d-C--SDK/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Mg\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/parya/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -54,26 +54,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.20, 6.0.20]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.20, 6.0.20]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.20, 6.0.20]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\Mg\\.dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.411/RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -8,8 +8,6 @@ using models.inputs;
 using models.outputs;
 using Newtonsoft.Json;
 using ports;
-using ports.utils;
-using UnityEngine;
 
 namespace adapters.repositories.table.services.friendship
 {

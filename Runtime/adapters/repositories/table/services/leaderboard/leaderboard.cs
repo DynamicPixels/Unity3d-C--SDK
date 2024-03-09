@@ -9,8 +9,7 @@ using models.inputs;
 using models.outputs;
 using Newtonsoft.Json;
 using ports;
-using ports.utils;
-using UnityEngine;
+
 
 namespace adapters.repositories.table.services.leaderboard
 {
@@ -23,7 +22,7 @@ namespace adapters.repositories.table.services.leaderboard
             var response = await WebRequest.Get(UrlMap.GetLeaderboardsUrl(input.skip,input.limit,input.label));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
-            Debug.Log(body);
+
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<RowListResponse<Leaderboard>>(body);
@@ -70,9 +69,8 @@ namespace adapters.repositories.table.services.leaderboard
             where TInput : GetScoresParams
             where TOutput : UserScore
         {
-            Debug.Log(input.ToString());
             var response = await WebRequest.Post(UrlMap.GetUsersScoresUrl(input.Leaderboardid, input.skip, input.limit), input.ToString());
-            Debug.Log("reponse: " + UrlMap.GetUsersScoresUrl(input.Leaderboardid, input.skip, input.limit).ToString());
+
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
@@ -100,7 +98,7 @@ namespace adapters.repositories.table.services.leaderboard
             var response = await WebRequest.Post(UrlMap.GetCurrentUserScoreUrl(input.LeaderboardId), input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
-            Debug.Log(body);
+
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<RowResponse<TOutput>>(body);
@@ -144,7 +142,7 @@ namespace adapters.repositories.table.services.leaderboard
            where TInput : SubmitScoreParams
            where TOutput : UserScore
         {
-            Debug.Log(input.ToString());
+
             var response = await WebRequest.Post(UrlMap.SubmitScoreUrl(input.LeaderboardId), input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();

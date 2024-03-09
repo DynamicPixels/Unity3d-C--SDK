@@ -1,5 +1,3 @@
-using System.IO;
-using System.Threading.Tasks;
 using adapters.utils.httpClient;
 using models;
 using models.dto;
@@ -7,7 +5,7 @@ using models.inputs;
 using models.outputs;
 using Newtonsoft.Json;
 using ports;
-using UnityEngine;
+
 namespace adapters.repositories.table.services.achievement
 {
     public class AchievementRepository: IAchievementRepository
@@ -15,11 +13,9 @@ namespace adapters.repositories.table.services.achievement
 
         public async Task<RowListResponse<RichAchievement>> GetAchievements<T>(T input) where T : GetAchievementParams
         {
-            Debug.Log(input);
             var response = await WebRequest.Get(UrlMap.GetAchievementsUrl);
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
-            Debug.Log(body);
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<RowListResponse<RichAchievement>>(body);

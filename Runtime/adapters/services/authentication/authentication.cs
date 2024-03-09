@@ -1,13 +1,8 @@
-using System;
-using System.Threading.Tasks;
 using adapters.repositories.authentication;
-using adapters.utils.Logger;
-using adapters.utils.WebsocketClient;
 using models.dto;
 using models.outputs;
 using models.inputs;
 using ports;
-using UnityEngine;
 
 namespace adapters.services.authentication
 {
