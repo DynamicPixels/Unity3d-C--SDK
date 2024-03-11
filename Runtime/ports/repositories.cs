@@ -50,7 +50,7 @@ namespace ports
             where TOutput : UserScore;
         Task<RowListResponse<TOutput>> GetPartiesScores<TInput, TOutput>(TInput input)
             where TInput : GetScoresParams
-            where TOutput : UserScore;
+            where TOutput : PartyScore;
         Task<RowResponse<TOutput>> GetCurrentUserScore<TInput, TOutput>(TInput input)
            where TInput : GetCurrentUserScoreParams
            where TOutput : UserScore;

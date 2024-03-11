@@ -24,7 +24,7 @@ namespace adapters.services.table.services
             return result.List;
         }
 
-        public async Task<List<TOutput>> GetPartiesScores<TInput, TOutput>(TInput param) where TInput : GetScoresParams where TOutput : UserScore
+        public async Task<List<TOutput>> GetPartiesScores<TInput, TOutput>(TInput param) where TInput : GetScoresParams where TOutput : PartyScore
         {
             var result = await this._repository.GetPartiesScores<TInput, TOutput>(param);
             return result.List;
