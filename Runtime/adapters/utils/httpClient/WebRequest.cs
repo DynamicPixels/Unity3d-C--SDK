@@ -6,14 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using models;
 using models.dto;
-using UnityEngine;
 
 namespace adapters.utils.httpClient
 {
      internal static class WebRequest
     {
         
-        private static string baseUrl = 
+        private static string _baseUrl = 
             !DynamicPixels.DevelopmentMode
             ?
                 $"https://link.dynamicpixels.dev/game/{DynamicPixels.ClientId}" 
@@ -112,7 +111,7 @@ namespace adapters.utils.httpClient
             var httpClient = Init(headers);
             StringContent content = null;
             if (body != null) content = new StringContent(body, Encoding.UTF8, "application/json");
-            url = baseUrl + url;
+            url = _baseUrl + url;
             
 
             Logger.Logger.LogNormal<string>(DebugLocation.Http, "DoRequest", url);

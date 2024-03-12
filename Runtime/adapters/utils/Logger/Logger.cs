@@ -2,20 +2,19 @@ using System;
 using System.Diagnostics;
 using System.Reflection;
 using models.dto;
-using ports.utils;
 
 namespace adapters.utils.Logger
 {
     public static class Logger
     {
-        public static event EventHandler<DebugArgs> onDebugReceived;
+        public static event EventHandler<DebugArgs> OnDebugReceived;
         
         public static void LogNormal(Type type,DebugLocation where,string callingMethod,string data)
         {
             if(!CanDebug(LogType.Normal,where)) return;
             
             var callingClass = type.Name;
-            onDebugReceived?.Invoke(null, new DebugArgs()
+            OnDebugReceived?.Invoke(null, new DebugArgs()
             {
                 LogTypeType = LogType.Normal,
                 Where = where,
@@ -31,7 +30,7 @@ namespace adapters.utils.Logger
             if(!CanDebug(LogType.Normal,where)) return;
 
             var callingClass = typeof(TClass).Name;
-            onDebugReceived?.Invoke(null, new DebugArgs()
+            OnDebugReceived?.Invoke(null, new DebugArgs()
             {
                 LogTypeType = LogType.Normal,
                 Where = where,
@@ -46,7 +45,7 @@ namespace adapters.utils.Logger
             if(!CanDebug(LogType.Error,where)) return;
 
             var callingClass = typeof(TClass).Name;
-            onDebugReceived?.Invoke(null, new DebugArgs()
+            OnDebugReceived?.Invoke(null, new DebugArgs()
             {
                 LogTypeType = LogType.Error, 
                 Where = where,
@@ -59,7 +58,7 @@ namespace adapters.utils.Logger
             if(!CanDebug(LogType.Error,where)) return;
 
             var callingClass = type.Name;
-            onDebugReceived?.Invoke(null, new DebugArgs()
+            OnDebugReceived?.Invoke(null, new DebugArgs()
             {
                 LogTypeType = LogType.Error, 
                 Where = where,
@@ -73,7 +72,7 @@ namespace adapters.utils.Logger
             if(!CanDebug(LogType.Exception,where)) return exception;
             
             var callingClass = typeof(TClass).Name;
-            onDebugReceived?.Invoke(null, new DebugArgs()
+            OnDebugReceived?.Invoke(null, new DebugArgs()
             {
                 LogTypeType = LogType.Exception, 
                 Exception = exception,
@@ -90,7 +89,7 @@ namespace adapters.utils.Logger
             if(!CanDebug(LogType.Exception,where)) return exception;
 
             var callingClass = type.Name;
-            onDebugReceived?.Invoke(null, new DebugArgs()
+            OnDebugReceived?.Invoke(null, new DebugArgs()
             {
                 LogTypeType = LogType.Exception, 
                 Exception = exception,
@@ -145,7 +144,7 @@ namespace adapters.utils.Logger
             for (var i = 0; i < stackTrace.GetFrames()?.Length; i++)
             {
                 var methodBase = stackTrace.GetFrame(i).GetMethod();
-                var name = MethodBase.GetCurrentMethod().Name;
+                var name = MethodBase.GetCurrentMethod()?.Name;
                 
                 if (!methodBase.Name.Equals(methodName) && !methodBase.Name.Equals(name))
                     return new StackFrame(i, true);

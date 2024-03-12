@@ -1,8 +1,6 @@
 using System;
 using models.dto;
 using Newtonsoft.Json;
-using UnityEngine;
-using SystemInfo = models.dto.SystemInfo;
 
 namespace models.inputs
 {
