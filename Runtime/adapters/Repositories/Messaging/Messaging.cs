@@ -1,6 +1,6 @@
 namespace adapters.repositories.messaging
 {
-    public class messaging
+    public class Messaging
     {
         
     }

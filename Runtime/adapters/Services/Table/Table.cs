@@ -10,39 +10,10 @@ namespace adapters.services.table
     public class TableService: ITable
     {
         private TableRepository _repository;
-        private DynamicPixelsServices _services; 
-            
-        public static IAchievement Achievement;
-        public static ILeaderboard Leaderboard;
-        public static IChat Chat;
-        public static IDevice Device;
-        public static IUser User;
-        public static IFriendship Friendship;
-        public static IParty Party;
 
         public TableService(ISocketAgent agent)
         {
             _repository = new TableRepository();
-            _services = new DynamicPixelsServices(agent);
-            
-            Achievement = new AchievementService();
-            Leaderboard = new LeaderboardService();
-            Device = new DeviceService();
-            User = new UserService();
-            Friendship = new FriendshipService();
-            Party = new PartyService();
-            Chat = new ChatService();
-        }
-
-        public DynamicPixelsServices GetServices()
-        {
-            return _services;
-        }
-
-        public async Task<RowListResponse<TY>> Aggregation<TY, T>(T param) where T : AggregationParams
-        {
-            var result = await this._repository.Aggregation<TY, T>(param);
-            return result;
         }
 
         public async Task<RowListResponse<TY>> Find<TY, T>(T param) where T : FindParams

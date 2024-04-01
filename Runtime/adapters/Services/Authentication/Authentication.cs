@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using adapters.repositories.authentication;
-using models.dto;
+using adapters.repositories.table.services.user;
 using models.outputs;
 using models.inputs;
 
@@ -27,7 +27,7 @@ namespace adapters.services.authentication
             {
                 case "wss":
                     // connInfo.Endpoint
-                    DynamicPixels.Agent.Connect("wss://ws-europe.dynamicpixels.dev/ws", token);
+                    // DynamicPixels.Agent.Connect("wss://ws-europe.dynamicpixels.dev/ws", token);
                 break;       
             }
             

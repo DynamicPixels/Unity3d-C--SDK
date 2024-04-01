@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Net.Mime;
 using models.dto;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using LogType = models.dto.LogType;
-using SystemInfo = models.dto.SystemInfo;
 using Logger = adapters.utils.Logger.Logger;
+using SystemInfo = models.dto.SystemInfo;
 
 namespace DynamicPixelsInitializer
 {

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using adapters.repositories.table.services.party;
-using models.dto;
 using models.inputs;
 
 namespace adapters.services.table.services

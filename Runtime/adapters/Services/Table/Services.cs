@@ -3,9 +3,9 @@ using adapters.utils.WebsocketClient;
 
 namespace adapters.services.table
 {
-    public class DynamicPixelsServices
+    public class Services
     {
-        public DynamicPixelsServices(ISocketAgent agent)
+        public Services()
         {
             Leaderboard = new LeaderboardService();
             Achievement = new AchievementService();

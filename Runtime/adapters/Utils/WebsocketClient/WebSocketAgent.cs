@@ -16,6 +16,8 @@ namespace adapters.utils.WebsocketClient
         private string _endpoint;
         private string _token;
         private System.Timers.Timer _pingInterval;
+        private long _lastPingSentTime;
+        private long _ping;
         public event EventHandler<Request> OnMessageReceived;
 
         public bool IsConnected()
@@ -45,7 +47,12 @@ namespace adapters.utils.WebsocketClient
         {
             _ws.Close();    
         }
-        
+
+        public long GetPing()
+        {
+            return _ping;
+        }
+
         public Task Send(Request request)
         {
             if (!_isAvailable)
@@ -53,6 +60,7 @@ namespace adapters.utils.WebsocketClient
             try
             {
                 _ws.SendAsync(request.ToString(), null);
+                _lastPingSentTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             }
             catch (Exception e)
             {
@@ -83,9 +91,11 @@ namespace adapters.utils.WebsocketClient
             var response = JsonConvert.DeserializeObject<Request>(message.Data);
             if (response.Method == "ping")
             {
+                _ping = _lastPingSentTime - DateTimeOffset.Now.ToUnixTimeMilliseconds();
                 Debug.Log("pong!");
                 return;
             }
+            
             if (OnMessageReceived != null) 
                 OnMessageReceived(this, response);
         }

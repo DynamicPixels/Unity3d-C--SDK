@@ -2,9 +2,9 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using adapters.services.table.services;
 using adapters.utils.httpClient;
 using models;
-using models.dto;
 using models.inputs;
 using models.outputs;
 using Newtonsoft.Json;

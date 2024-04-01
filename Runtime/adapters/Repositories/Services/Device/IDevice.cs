@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using models.dto;
+using adapters.repositories.table.services.user;
 using models.inputs;
 using models.outputs;
 

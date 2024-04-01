@@ -15,28 +15,6 @@ namespace adapters.repositories.table
         {
         }
 
-        public async Task<RowListResponse<TY>> Aggregation<TY, T>(T Params) where T : AggregationParams
-        {
-            var response = await WebRequest.Post(UrlMap.AggregationUrl(Params.TableId), Params.ToString());
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-            if (response.IsSuccessStatusCode)
-            {
-                return JsonConvert.DeserializeObject<RowListResponse<TY>>(body);
-            }
-            else
-            {
-                // Deserialize the error response
-                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-                // Get the corresponding ErrorCode from the error message
-                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-                // Throw the DynamicPixelsException with the ErrorCode
-                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
-            }
-        }
-
         public async Task<RowListResponse<TY>> Find<TY, T>(T Params) where T : FindParams
         {
             

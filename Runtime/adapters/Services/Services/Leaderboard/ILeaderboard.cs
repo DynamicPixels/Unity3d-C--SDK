@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using adapters.repositories.table.services.leaderboard;
 using models.dto;
 using models.inputs;
 using models.outputs;

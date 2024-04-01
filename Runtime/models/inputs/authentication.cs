@@ -1,5 +1,5 @@
 using System;
-using models.dto;
+using adapters.repositories.table.services.user;
 using Newtonsoft.Json;
 
 namespace models.inputs
