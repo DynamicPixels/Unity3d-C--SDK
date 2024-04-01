@@ -7,7 +7,7 @@ namespace adapters.repositories.table.services.achievement
 {
     public interface IAchievementRepository
     {
-        Task<RowListResponse<Model>> GetAchievements<T>(T param) where T: GetAchievementParams;
+        Task<RowListResponse<Achievement>> GetAchievements<T>(T param) where T: GetAchievementParams;
         Task<RowResponse<Unlock>> UnlockAchievement<T>(T param) where T: UnlockAchievementParams;
     }
 }

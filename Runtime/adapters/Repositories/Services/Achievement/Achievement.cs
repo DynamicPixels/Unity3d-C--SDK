@@ -12,7 +12,7 @@ namespace adapters.repositories.table.services.achievement
     public class AchievementRepository: IAchievementRepository
     {
 
-        public async Task<RowListResponse<Model>> GetAchievements<T>(T input) where T : GetAchievementParams
+        public async Task<RowListResponse<Achievement>> GetAchievements<T>(T input) where T : GetAchievementParams
         {
             var response = await WebRequest.Get(UrlMap.GetAchievementsUrl);
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
@@ -20,7 +20,7 @@ namespace adapters.repositories.table.services.achievement
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<RowListResponse<Model>>(body);
+                return JsonConvert.DeserializeObject<RowListResponse<Achievement>>(body);
             }
             else
             {

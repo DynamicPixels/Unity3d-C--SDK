@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 namespace models.dto
 {
-    public class Model : Row
+    public class Achievement : Row
     {
         [JsonProperty("name")] public string Name { get; set; } = null!;
         [JsonProperty("desc")] public string Desc { get; set; } = null!;
