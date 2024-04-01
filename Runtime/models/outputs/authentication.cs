@@ -1,4 +1,5 @@
 using System;
+using adapters.repositories.table.services.user;
 using models.dto;
 using Newtonsoft.Json;
 

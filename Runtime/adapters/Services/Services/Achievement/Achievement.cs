@@ -16,7 +16,7 @@ namespace adapters.services.table.services
             this._repository = new AchievementRepository();
         }
 
-        public async Task<List<RichAchievement>> GetAchievements<T>(T param) where T : GetAchievementParams
+        public async Task<List<Achievement>> GetAchievements<T>(T param) where T : GetAchievementParams
         {
             var result = await this._repository.GetAchievements(param);
             return result.List;

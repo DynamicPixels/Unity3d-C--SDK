@@ -1,4 +1,5 @@
 using System;
+using adapters.repositories.table.services.user;
 using models.dto;
 using adapters.services.authentication;
 using adapters.services.storage;
@@ -6,7 +7,6 @@ using adapters.services.table;
 using adapters.utils.WebsocketClient;
 using adapters.services.synchronise;
 using models;
-using SystemInfo = models.dto.SystemInfo;
 using Logger = adapters.utils.Logger.Logger;
 
 public static class DynamicPixels
@@ -22,6 +22,7 @@ public static class DynamicPixels
     public static bool VerboseMode = false;
     public static SystemInfo SystemInfo;
    
+
     // transports
     internal static ISocketAgent Agent = new WebSocketAgent();
 
@@ -30,6 +31,7 @@ public static class DynamicPixels
     public static IAuthentication Authentication;
     public static IStorage Storage;
     public static ITable Table;
+    public static Services Services;
 
     public static void Configure(string clientId, string clientSecret, SystemInfo systemInfo, bool debugMode, bool developmentMode, bool verboseMode)
     {
@@ -51,7 +53,7 @@ public static class DynamicPixels
         Table = new TableService(Agent);
         Storage = new StorageService();
         Synchronise = new SynchroniseService();
-        
+        Services = new Services();
     }
 
     public static bool IsAuthenticated()

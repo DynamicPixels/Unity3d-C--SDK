@@ -8,6 +8,7 @@ namespace adapters.utils.WebsocketClient
     {
         Task Connect(string endpoint, string token);
         void Disconnect();
+        long GetPing();
         public Task Send(Request packet);
         public event EventHandler<Request> OnMessageReceived;
     }

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using adapters.repositories.table.services.user;
+using models.dto;
 using Newtonsoft.Json;
 
-namespace models.dto
+namespace adapters.services.table.services
 {
 
     public enum PartyMemberStatus
