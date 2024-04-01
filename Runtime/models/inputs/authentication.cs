@@ -1,8 +1,6 @@
 using System;
-using models.dto;
+using adapters.repositories.table.services.user;
 using Newtonsoft.Json;
-using UnityEngine;
-using SystemInfo = models.dto.SystemInfo;
 
 namespace models.inputs
 {

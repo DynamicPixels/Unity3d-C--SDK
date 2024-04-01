@@ -1,0 +1,138 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using models;
+using models.dto;
+using Newtonsoft.Json;
+using UnityEngine;
+using WebSocketSharp;
+
+namespace adapters.utils.WebsocketClient
+{
+    public class WebSocketAgent: ISocketAgent
+    {
+        private static WebSocket _ws;
+        private bool _isAvailable;
+        private string _endpoint;
+        private string _token;
+        private System.Timers.Timer _pingInterval;
+        private long _lastPingSentTime;
+        private long _ping;
+        public event EventHandler<Request> OnMessageReceived;
+
+        public bool IsConnected()
+        {
+            return _ws != null && _isAvailable;
+        }
+
+        public Task Connect(string endpoint, string token)
+        {
+            Logger.Logger.LogNormal<string>(DebugLocation.Connection, "Connect", "Connecting to " + endpoint);
+
+            _endpoint = endpoint;
+            _token = token;
+            
+            _ws = new WebSocket(endpoint + $"?token={token}");
+            _ws.OnOpen += OnOpen;
+            _ws.OnClose += OnClose;
+            _ws.OnError += OnError;
+            _ws.OnMessage += OnMessage;
+            
+            _ws.ConnectAsync();
+            
+            return Task.CompletedTask;
+        }
+
+        public void Disconnect()
+        {
+            _ws.Close();    
+        }
+
+        public long GetPing()
+        {
+            return _ping;
+        }
+
+        public Task Send(Request request)
+        {
+            if (!_isAvailable)
+                Logger.Logger.LogException<DynamicPixelsException>(new DynamicPixelsException(ErrorCode.ConnectionNotReady, "connection not ready"), DebugLocation.Connection, "Send");
+            try
+            {
+                _ws.SendAsync(request.ToString(), null);
+                _lastPingSentTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            }
+            catch (Exception e)
+            {
+                if (
+                    e is OperationCanceledException || 
+                    e is ObjectDisposedException || 
+                    e is ArgumentOutOfRangeException
+                ) return Task.CompletedTask;
+                
+                _isAvailable = false;
+            }
+
+            return Task.CompletedTask;
+        }
+
+        private async void OnSendPing(object sender, System.Timers.ElapsedEventArgs args)
+        {
+            await Send(new Request
+            {
+                Method = "ping",
+            });
+        }
+        
+        private void OnMessage(object sender, MessageEventArgs message)
+        {
+            if (!message.IsText) return;
+            
+            var response = JsonConvert.DeserializeObject<Request>(message.Data);
+            if (response.Method == "ping")
+            {
+                _ping = _lastPingSentTime - DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                Debug.Log("pong!");
+                return;
+            }
+            
+            if (OnMessageReceived != null) 
+                OnMessageReceived(this, response);
+        }
+
+        private void OnError(object sender, ErrorEventArgs error)
+        {
+            if (error.Exception != null)
+            {
+                Logger.Logger.LogException<Exception>(error.Exception, DebugLocation.Connection, "onError");
+            }
+            else
+            {
+                // Use a generic error code for errors without a specific exception
+                var exception = new DynamicPixelsException(ErrorCode.UnknownError, error.Message);
+                Logger.Logger.LogException<DynamicPixelsException>(exception, DebugLocation.Connection, "onError");
+            }
+        }
+      
+        private void OnClose(object sender, CloseEventArgs close)
+        {
+            Logger.Logger.LogNormal<string>(DebugLocation.Connection, "Connect", "Disconnected from " + close.Reason);
+            _pingInterval.Dispose();
+            if (!_isAvailable || close.WasClean) return;
+            _isAvailable = false;
+        }
+        
+        private void OnOpen(object sender, EventArgs e)
+        {
+            Logger.Logger.LogNormal<string>(DebugLocation.Connection, "Connect", "Connected to " + _endpoint);
+            _isAvailable = true;
+            
+            _pingInterval = new System.Timers.Timer();
+            _pingInterval.Interval = 10*1000;
+            _pingInterval.AutoReset = true;        
+            _pingInterval.Elapsed += OnSendPing;
+            _pingInterval.Start();
+        }
+
+    }
+}

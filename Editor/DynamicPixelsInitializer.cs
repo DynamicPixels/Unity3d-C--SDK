@@ -1,7 +1,9 @@
-﻿using System.Diagnostics;
-using System.Net.Mime;
+﻿using System;
+using models.dto;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
+using LogType = models.dto.LogType;
+using Logger = adapters.utils.Logger.Logger;
 using SystemInfo = models.dto.SystemInfo;
 
 namespace DynamicPixelsInitializer
@@ -19,6 +21,12 @@ namespace DynamicPixelsInitializer
         public void OnDisable()
         {
             Debug.Log("DynamicPixels was disabled");
+            DynamicPixelsDispose();
+        }
+        
+        private void Awake()
+        {
+            DontDestroyOnLoad(this);
         }
 
         public void OnEnable()
@@ -47,8 +55,54 @@ namespace DynamicPixelsInitializer
             // configure Sdk instance
             DynamicPixels.Configure(clientId, clientSecret, systemInfo, debugMode, developmentMode, verboseMode);
 
+            Logger.OnDebugReceived += LoggerOnDebugReceived;
+
+            _isInit = true;
             Debug.Log("DynamicPixels Initialized");
         }
 
+        private void OnDestroy()
+        {
+            DynamicPixelsDispose();
+        }
+
+        private void OnApplicationQuit()
+        {
+            DynamicPixelsDispose();
+        }
+
+        private void DynamicPixelsDispose()
+        {
+            if(!_isInit) return;
+            
+            _isInit = false;
+
+            Debug.Log("DynamicPixels Disposed");
+ 
+            DynamicPixels.Dispose();
+        }
+
+        private static void LoggerOnDebugReceived(object sender, DebugArgs debug)
+        {
+            switch (debug.LogTypeType)
+            {
+                case LogType.Normal:
+                    Debug.Log(debug.Data);
+                    break;
+                case LogType.Error:
+                    Debug.LogError(debug.Data);
+                    break;
+                case LogType.Exception:
+                    Debug.LogException(debug.Exception);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            // if (!EnableSaveDebugLogs) return;
+
+            // if (Directory.Exists(_appPath + DebugPath))
+            //     File.AppendAllText(_appPath + DebugPath + _logFile,debug.Data + "\r\n");
+        }
     }
 }
