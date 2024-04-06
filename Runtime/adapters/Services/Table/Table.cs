@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using adapters.repositories.table;
 using models.outputs;
-using adapters.services.table.services;
 using adapters.utils.WebsocketClient;
 using models.inputs;
 
