@@ -14,7 +14,7 @@ namespace adapters.repositories.table.services.achievement
 
         public async Task<RowListResponse<Achievement>> GetAchievements<T>(T input) where T : GetAchievementParams
         {
-            var response = await WebRequest.Get(UrlMap.GetAchievementsUrl);
+            var response = await WebRequest.Get(UrlMap.GetAchievementsUrl(input.JustUnlocked, input.Skip, input.Limit));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
 
