@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace adapters.repositories.table.services.leaderboard
+namespace GameService.Client.Sdk.Adapters.Services.Services.Leaderboard
 {
     public class Leaderboard
     {

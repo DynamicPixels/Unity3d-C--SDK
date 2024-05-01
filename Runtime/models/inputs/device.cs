@@ -1,4 +1,4 @@
-namespace models.inputs
+namespace GameService.Client.Sdk.Models.inputs
 {
     public class FindMyDeviceParams
     {

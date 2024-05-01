@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using models.dto;
-using models.inputs;
+using GameService.Client.Sdk.Adapters.Repositories.Services.Chat;
+using GameService.Client.Sdk.Models.inputs;
 
-namespace adapters.services.table.services
+namespace GameService.Client.Sdk.Adapters.Services.Services.Chat
 {
     public interface IChat
     {

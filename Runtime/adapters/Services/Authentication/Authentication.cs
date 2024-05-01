@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using adapters.repositories.authentication;
-using adapters.repositories.table.services.user;
-using models.outputs;
-using models.inputs;
+using GameService.Client.Sdk.Adapters.Repositories.Authentication;
+using GameService.Client.Sdk.Adapters.Services.Services.User;
+using GameService.Client.Sdk.Models.inputs;
+using GameService.Client.Sdk.Models.outputs;
 
-namespace adapters.services.authentication
+namespace GameService.Client.Sdk.Adapters.Services.Authentication
 {
     public class AuthenticationService: IAuthentication
     {
@@ -104,7 +104,8 @@ namespace adapters.services.authentication
             DynamicPixels.User = null;
             
             // dispose connections
-            DynamicPixels.Agent.Disconnect();
+            // TODO: Realtime
+            //DynamicPixels.Agent.Disconnect();
         }
     }
 }

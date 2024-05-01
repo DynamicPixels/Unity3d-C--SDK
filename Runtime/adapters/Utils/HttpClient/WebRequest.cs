@@ -4,10 +4,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using models;
-using models.dto;
+using GameService.Client.Sdk.Models;
 
-namespace adapters.utils.httpClient
+namespace GameService.Client.Sdk.Adapters.Utils.HttpClient
 {
      internal static class WebRequest
     {
@@ -19,14 +18,14 @@ namespace adapters.utils.httpClient
             :
                 $"http://localhost:5286/game/{DynamicPixels.ClientId}";
 
-        private static HttpClient _client;
+        private static System.Net.Http.HttpClient _client;
         private static readonly string UserAgent = "UnitySDK-" + DynamicPixels.Version();
 
         private static void InitWebRequest()
         {
             if (_client != null) return;
 
-            _client = new HttpClient {Timeout = TimeSpan.FromSeconds(15)};
+            _client = new System.Net.Http.HttpClient {Timeout = TimeSpan.FromSeconds(15)};
         }
 
         internal static async Task<HttpResponseMessage> Get(string url, Dictionary<string, string> headers = null)
@@ -68,7 +67,7 @@ namespace adapters.utils.httpClient
             return await httpClient.PostAsync(url, dataContent);
         }
 
-        private static HttpClient Init(Dictionary<string, string> headers = null)
+        private static System.Net.Http.HttpClient Init(Dictionary<string, string> headers = null)
         {
             _client.DefaultRequestHeaders.Clear();
 

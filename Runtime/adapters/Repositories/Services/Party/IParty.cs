@@ -1,19 +1,18 @@
 using System.Threading.Tasks;
-using adapters.services.table.services;
-using models.dto;
-using models.inputs;
-using models.outputs;
+using GameService.Client.Sdk.Adapters.Services.Services.Party;
+using GameService.Client.Sdk.Models.inputs;
+using GameService.Client.Sdk.Models.outputs;
 
-namespace adapters.repositories.table.services.party
+namespace GameService.Client.Sdk.Adapters.Repositories.Services.Party
 {
     public interface IPartyRepository
     {
-        Task<RowListResponse<Party>> GetParties<T>(T param) where T: GetPartiesParams;
-        Task<RowResponse<Party>> CreateParty<T>(T param) where T: CreatePartyParams;
-        Task<RowListResponse<Party>> GetSubscribedParties<T>(T param) where T: GetSubscribedPartiesParams;
-        Task<RowResponse<Party>> GetPartyById<T>(T param) where T: GetPartyByIdParams;
+        Task<RowListResponse<Adapters.Services.Services.Party.Party>> GetParties<T>(T param) where T: GetPartiesParams;
+        Task<RowResponse<Adapters.Services.Services.Party.Party>> CreateParty<T>(T param) where T: CreatePartyParams;
+        Task<RowListResponse<Adapters.Services.Services.Party.Party>> GetSubscribedParties<T>(T param) where T: GetSubscribedPartiesParams;
+        Task<RowResponse<Adapters.Services.Services.Party.Party>> GetPartyById<T>(T param) where T: GetPartyByIdParams;
         Task<RowResponse<PartyMember>> JoinToParty<T>(T param) where T: JoinToPartyParams;
-        Task<RowResponse<Party>> EditParty<T>(T param) where T: EditPartyParams;
+        Task<RowResponse<Adapters.Services.Services.Party.Party>> EditParty<T>(T param) where T: EditPartyParams;
         Task<ActionResponse> LeaveParty<T>(T param) where T: LeavePartyParams;
         Task<RowListResponse<RichPartyMember>> GetPartyMembers<T>(T param) where T: GetPartyMembersParams;
         Task<RowListResponse<PartyMember>> GetPartyWaitingMembers<T>(T param) where T: GetPartyWaitingMembersParams;

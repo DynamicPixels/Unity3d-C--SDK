@@ -1,4 +1,4 @@
-namespace adapters.repositories.authentication
+namespace GameService.Client.Sdk.Adapters.Repositories.Authentication
 {
     public class UrlMap
     {

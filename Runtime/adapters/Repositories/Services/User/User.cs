@@ -1,25 +1,23 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
-using adapters.utils.httpClient;
-using models;
-using models.dto;
-using models.inputs;
-using models.outputs;
+using GameService.Client.Sdk.Adapters.Utils.HttpClient;
+using GameService.Client.Sdk.Models;
+using GameService.Client.Sdk.Models.inputs;
+using GameService.Client.Sdk.Models.outputs;
 using Newtonsoft.Json;
 
-namespace adapters.repositories.table.services.user
+namespace GameService.Client.Sdk.Adapters.Repositories.Services.User
 {
     public class UserRepository : IUserRepository
     {
-        public async Task<RowListResponse<User>> Find<T>(T input) where T : FindUserParams
+        public async Task<RowListResponse<Adapters.Services.Services.User.User>> Find<T>(T input) where T : FindUserParams
         {
             var response = await WebRequest.Post(UrlMap.FindUsersUrl, input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<RowListResponse<User>>(body);
+                return JsonConvert.DeserializeObject<RowListResponse<Adapters.Services.Services.User.User>>(body);
             }
             else
             {
@@ -34,14 +32,14 @@ namespace adapters.repositories.table.services.user
             }
         }
 
-        public async Task<RowResponse<User>> FindUserById<T>(T input) where T : FindUserByIdParams
+        public async Task<RowResponse<Adapters.Services.Services.User.User>> FindUserById<T>(T input) where T : FindUserByIdParams
         {
             var response = await WebRequest.Get(UrlMap.FindUserByIdUrl(input.UserId));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<RowResponse<User>>(body);
+                return JsonConvert.DeserializeObject<RowResponse<Adapters.Services.Services.User.User>>(body);
             }
             else
             {
@@ -56,7 +54,7 @@ namespace adapters.repositories.table.services.user
             }
         }
 
-        public async Task<RowResponse<User>> EditCurrentUser<T>(T input) where T : EditCurrentUserParams
+        public async Task<RowResponse<Adapters.Services.Services.User.User>> EditCurrentUser<T>(T input) where T : EditCurrentUserParams
         {
             var response = await WebRequest.Put(UrlMap.EditCurrentUserUrl, input.ToString());
 
@@ -64,7 +62,7 @@ namespace adapters.repositories.table.services.user
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<RowResponse<User>>(body);
+                return JsonConvert.DeserializeObject<RowResponse<Adapters.Services.Services.User.User>>(body);
             }
             else
             {

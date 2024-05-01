@@ -1,4 +1,4 @@
-namespace adapters.repositories.messaging
+namespace GameService.Client.Sdk.Adapters.Repositories.Messaging
 {
     public class Messaging
     {

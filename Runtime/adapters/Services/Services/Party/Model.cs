@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using adapters.repositories.table.services.user;
-using models.dto;
+using GameService.Client.Sdk.Adapters.Services.Table;
 using Newtonsoft.Json;
 
-namespace adapters.services.table.services
+namespace GameService.Client.Sdk.Adapters.Services.Services.Party
 {
 
     public enum PartyMemberStatus
@@ -75,7 +74,7 @@ namespace adapters.services.table.services
         }
     }
 
-    public class RichPartyMember : User
+    public class RichPartyMember : User.User
     {
         [JsonProperty("role")]
         public PartyMemberRoles Role { get; set; }

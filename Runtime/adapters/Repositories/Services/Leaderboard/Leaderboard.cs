@@ -1,20 +1,18 @@
-
-using System;
 using System.IO;
 using System.Threading.Tasks;
-using adapters.utils.httpClient;
-using models;
-using models.dto;
-using models.inputs;
-using models.outputs;
+using GameService.Client.Sdk.Adapters.Services.Services.Leaderboard;
+using GameService.Client.Sdk.Adapters.Utils.HttpClient;
+using GameService.Client.Sdk.Models;
+using GameService.Client.Sdk.Models.inputs;
+using GameService.Client.Sdk.Models.outputs;
 using Newtonsoft.Json;
 
-namespace adapters.repositories.table.services.leaderboard
+namespace GameService.Client.Sdk.Adapters.Repositories.Services.Leaderboard
 {
     public class LeaderboardRepository : ILeaderboardRepository
     {
 
-        public async Task<RowListResponse<Leaderboard>> GetLeaderBoards<T>(T input) where T : GetLeaderboardsParams
+        public async Task<RowListResponse<Adapters.Services.Services.Leaderboard.Leaderboard>> GetLeaderBoards<T>(T input) where T : GetLeaderboardsParams
         {
             
             var response = await WebRequest.Get(UrlMap.GetLeaderboardsUrl(input.skip,input.limit,input.label));
@@ -23,7 +21,7 @@ namespace adapters.repositories.table.services.leaderboard
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<RowListResponse<Leaderboard>>(body);
+                return JsonConvert.DeserializeObject<RowListResponse<Adapters.Services.Services.Leaderboard.Leaderboard>>(body);
             }
             else
             {

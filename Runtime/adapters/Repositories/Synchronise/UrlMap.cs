@@ -1,4 +1,4 @@
-namespace adapters.repositories.synchronise
+namespace GameService.Client.Sdk.Adapters.Repositories.Synchronise
 {
     public class UrlMap
     {

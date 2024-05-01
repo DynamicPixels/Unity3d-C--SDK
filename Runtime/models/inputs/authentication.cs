@@ -1,8 +1,8 @@
 using System;
-using adapters.repositories.table.services.user;
+using GameService.Client.Sdk.Adapters.Services.Services.User;
 using Newtonsoft.Json;
 
-namespace models.inputs
+namespace GameService.Client.Sdk.Models.inputs
 {
     [Serializable]
     public class RegisterWithEmailParams

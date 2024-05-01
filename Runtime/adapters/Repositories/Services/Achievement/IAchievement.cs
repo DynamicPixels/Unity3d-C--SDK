@@ -1,13 +1,13 @@
 using System.Threading.Tasks;
-using models.dto;
-using models.inputs;
-using models.outputs;
+using GameService.Client.Sdk.Adapters.Services.Services.Achievement;
+using GameService.Client.Sdk.Models.inputs;
+using GameService.Client.Sdk.Models.outputs;
 
-namespace adapters.repositories.table.services.achievement
+namespace GameService.Client.Sdk.Adapters.Repositories.Services.Achievement
 {
     public interface IAchievementRepository
     {
-        Task<RowListResponse<Achievement>> GetAchievements<T>(T param) where T: GetAchievementParams;
+        Task<RowListResponse<Adapters.Services.Services.Achievement.Achievement>> GetAchievements<T>(T param) where T: GetAchievementParams;
         Task<RowResponse<Unlock>> UnlockAchievement<T>(T param) where T: UnlockAchievementParams;
     }
 }

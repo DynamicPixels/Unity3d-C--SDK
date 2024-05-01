@@ -1,4 +1,4 @@
-namespace adapters.repositories.table.services.friendship
+namespace GameService.Client.Sdk.Adapters.Repositories.Services.Friendship
 {
     public class UrlMap
     {

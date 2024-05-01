@@ -1,13 +1,13 @@
 using System.Threading.Tasks;
-using models.dto;
-using models.inputs;
-using models.outputs;
+using GameService.Client.Sdk.Adapters.Services.Services.Leaderboard;
+using GameService.Client.Sdk.Models.inputs;
+using GameService.Client.Sdk.Models.outputs;
 
-namespace adapters.repositories.table.services.leaderboard
+namespace GameService.Client.Sdk.Adapters.Repositories.Services.Leaderboard
 {
     public interface ILeaderboardRepository
     {
-        Task<RowListResponse<Leaderboard>> GetLeaderBoards<T>(T param) where T : GetLeaderboardsParams;
+        Task<RowListResponse<Adapters.Services.Services.Leaderboard.Leaderboard>> GetLeaderBoards<T>(T param) where T : GetLeaderboardsParams;
         Task<RowListResponse<TOutput>> GetUsersScores<TInput, TOutput>(TInput param)
             where TInput : GetScoresParams
             where TOutput : UserScore;

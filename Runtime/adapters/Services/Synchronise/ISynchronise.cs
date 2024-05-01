@@ -1,8 +1,7 @@
-using System.Threading.Tasks;
-using models.inputs;
 using System;
+using System.Threading.Tasks;
 
-namespace adapters.services.synchronise
+namespace GameService.Client.Sdk.Adapters.Services.Synchronise
 {
     public interface ISynchronise
     {

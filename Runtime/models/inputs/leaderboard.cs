@@ -1,7 +1,8 @@
-using Newtonsoft.Json;
-using models.inputs.QueryHelper;
 using System.Collections.Generic;
-namespace models.inputs
+using GameService.Client.Sdk.Models.inputs.QueryHelper;
+using Newtonsoft.Json;
+
+namespace GameService.Client.Sdk.Models.inputs
 {
     public class GetLeaderboardsParams
     {

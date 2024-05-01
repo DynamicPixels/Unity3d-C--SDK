@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using models.inputs.QueryHelper;
+using GameService.Client.Sdk.Models.inputs.QueryHelper;
 using Newtonsoft.Json;
 
-namespace models.dto
+namespace GameService.Client.Sdk.Adapters.Services.Table
 {
    
     public class FindOptions

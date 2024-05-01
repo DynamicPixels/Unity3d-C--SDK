@@ -1,4 +1,4 @@
-namespace adapters.utils.httpClient
+namespace GameService.Client.Sdk.Adapters.Utils.HttpClient
 {
     internal enum WebRequestMethod
     {

@@ -1,8 +1,8 @@
-using System.Threading.Tasks;
-using adapters.repositories.synchronise;
 using System;
+using System.Threading.Tasks;
+using GameService.Client.Sdk.Adapters.Repositories.Synchronise;
 
-namespace adapters.services.synchronise
+namespace GameService.Client.Sdk.Adapters.Services.Synchronise
 {
     public class SynchroniseService : ISynchronise
     {

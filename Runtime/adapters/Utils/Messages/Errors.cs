@@ -1,4 +1,4 @@
-namespace adapters.utils.messages
+namespace GameService.Client.Sdk.Adapters.Utils.Messages
 {
     public class Errors
     {

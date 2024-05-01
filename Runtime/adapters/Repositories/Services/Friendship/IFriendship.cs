@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
-using models.dto;
-using models.inputs;
-using models.outputs;
+using GameService.Client.Sdk.Models.inputs;
+using GameService.Client.Sdk.Models.outputs;
 
-namespace adapters.repositories.table.services.friendship
+namespace GameService.Client.Sdk.Adapters.Repositories.Services.Friendship
 {
     public interface IFriendshipRepository
     {

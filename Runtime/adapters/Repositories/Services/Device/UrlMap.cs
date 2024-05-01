@@ -1,4 +1,4 @@
-namespace adapters.repositories.table.services.device
+namespace GameService.Client.Sdk.Adapters.Repositories.Services.Device
 {
     public class UrlMap
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace adapters.repositories.synchronise
+namespace GameService.Client.Sdk.Adapters.Repositories.Synchronise
 {
     public interface ISynchroniseRepositories
     {

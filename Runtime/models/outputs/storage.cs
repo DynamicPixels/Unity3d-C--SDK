@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace models.outputs
+namespace GameService.Client.Sdk.Models.outputs
 {
     public class FileMetadata
     {

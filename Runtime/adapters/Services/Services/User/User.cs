@@ -1,13 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using adapters.repositories.table.services.user;
-using models.dto;
-using models.inputs;
-using models.outputs;
-using Newtonsoft.Json;
+using GameService.Client.Sdk.Adapters.Repositories.Services.User;
+using GameService.Client.Sdk.Models.inputs;
 
-namespace adapters.services.table.services
+namespace GameService.Client.Sdk.Adapters.Services.Services.User
 {
     public class UserService: IUser
     {

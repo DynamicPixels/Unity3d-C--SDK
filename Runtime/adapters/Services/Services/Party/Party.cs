@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using adapters.repositories.table.services.party;
-using models.inputs;
+using GameService.Client.Sdk.Adapters.Repositories.Services.Party;
+using GameService.Client.Sdk.Models.inputs;
 
-namespace adapters.services.table.services
+namespace GameService.Client.Sdk.Adapters.Services.Services.Party
 {
     public class PartyService: IParty
     {

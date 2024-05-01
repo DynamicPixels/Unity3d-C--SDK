@@ -1,15 +1,13 @@
-
-using System;
 using System.IO;
 using System.Threading.Tasks;
-using adapters.services.table.services;
-using adapters.utils.httpClient;
-using models;
-using models.inputs;
-using models.outputs;
+using GameService.Client.Sdk.Adapters.Services.Services.Party;
+using GameService.Client.Sdk.Adapters.Utils.HttpClient;
+using GameService.Client.Sdk.Models;
+using GameService.Client.Sdk.Models.inputs;
+using GameService.Client.Sdk.Models.outputs;
 using Newtonsoft.Json;
 
-namespace adapters.repositories.table.services.party
+namespace GameService.Client.Sdk.Adapters.Repositories.Services.Party
 {
     public class PartyRepository:IPartyRepository
     {
@@ -18,14 +16,14 @@ namespace adapters.repositories.table.services.party
         {
         }
 
-        public async Task<RowListResponse<Party>> GetParties<T>(T input) where T : GetPartiesParams
+        public async Task<RowListResponse<Adapters.Services.Services.Party.Party>> GetParties<T>(T input) where T : GetPartiesParams
         {
             var response = await WebRequest.Get(UrlMap.GetPartiesUrl);
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<RowListResponse<Party>>(body);
+                return JsonConvert.DeserializeObject<RowListResponse<Adapters.Services.Services.Party.Party>>(body);
             }
             else
             {
@@ -41,14 +39,14 @@ namespace adapters.repositories.table.services.party
 
         }
 
-        public async Task<RowResponse<Party>> CreateParty<T>(T input) where T : CreatePartyParams
+        public async Task<RowResponse<Adapters.Services.Services.Party.Party>> CreateParty<T>(T input) where T : CreatePartyParams
         {
             var response = await WebRequest.Post(UrlMap.CreatePartyUrl, input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<RowResponse<Party>>(body);
+                return JsonConvert.DeserializeObject<RowResponse<Adapters.Services.Services.Party.Party>>(body);
             }
             else
             {
@@ -63,14 +61,14 @@ namespace adapters.repositories.table.services.party
             }
         }
 
-        public async Task<RowListResponse<Party>> GetSubscribedParties<T>(T input) where T : GetSubscribedPartiesParams
+        public async Task<RowListResponse<Adapters.Services.Services.Party.Party>> GetSubscribedParties<T>(T input) where T : GetSubscribedPartiesParams
         {
             var response = await WebRequest.Get(UrlMap.GetSubscribedPartiesUrl);
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<RowListResponse<Party>>(body);
+                return JsonConvert.DeserializeObject<RowListResponse<Adapters.Services.Services.Party.Party>>(body);
             }
             else
             {
@@ -85,14 +83,14 @@ namespace adapters.repositories.table.services.party
             }
         }
 
-        public async Task<RowResponse<Party>> GetPartyById<T>(T input) where T : GetPartyByIdParams
+        public async Task<RowResponse<Adapters.Services.Services.Party.Party>> GetPartyById<T>(T input) where T : GetPartyByIdParams
         {
             var response = await WebRequest.Get(UrlMap.GetPartyByIdUrl(input.PartyId));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<RowResponse<Party>>(body);
+                return JsonConvert.DeserializeObject<RowResponse<Adapters.Services.Services.Party.Party>>(body);
             }
             else
             {
@@ -129,14 +127,14 @@ namespace adapters.repositories.table.services.party
             }
         }
 
-        public async Task<RowResponse<Party>> EditParty<T>(T input) where T : EditPartyParams
+        public async Task<RowResponse<Adapters.Services.Services.Party.Party>> EditParty<T>(T input) where T : EditPartyParams
         {
             var response = await WebRequest.Put(UrlMap.EditPartyUrl(input.PartyId), input.ToString());
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<RowResponse<Party>>(body);
+                return JsonConvert.DeserializeObject<RowResponse<Adapters.Services.Services.Party.Party>>(body);
             }
             else
             {

@@ -1,17 +1,12 @@
-using System.IO;
-using System.Threading.Tasks;
-using adapters.utils.httpClient;
-using models;
-using System.IO;
-using System.Threading.Tasks;
-using models.outputs;
-using adapters.utils.httpClient;
-using models;
-using models.inputs;
-using Newtonsoft.Json;
 using System;
+using System.IO;
+using System.Threading.Tasks;
+using GameService.Client.Sdk.Adapters.Utils.HttpClient;
+using GameService.Client.Sdk.Models;
+using GameService.Client.Sdk.Models.outputs;
+using Newtonsoft.Json;
 
-namespace adapters.repositories.synchronise
+namespace GameService.Client.Sdk.Adapters.Repositories.Synchronise
 {
     public class SynchroniseRepository: ISynchroniseRepositories
     {

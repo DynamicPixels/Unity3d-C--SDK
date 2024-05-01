@@ -1,11 +1,10 @@
 using System.Threading.Tasks;
-using adapters.repositories.table;
-using models.outputs;
-using adapters.services.table.services;
-using adapters.utils.WebsocketClient;
-using models.inputs;
+using GameService.Client.Sdk.Adapters.Repositories.Table;
+using GameService.Client.Sdk.Adapters.Utils.WebsocketClient;
+using GameService.Client.Sdk.Models.inputs;
+using GameService.Client.Sdk.Models.outputs;
 
-namespace adapters.services.table
+namespace GameService.Client.Sdk.Adapters.Services.Table
 {
     public class TableService: ITable
     {

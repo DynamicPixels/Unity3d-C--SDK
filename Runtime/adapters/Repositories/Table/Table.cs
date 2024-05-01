@@ -1,12 +1,12 @@
 using System.IO;
 using System.Threading.Tasks;
-using models.outputs;
-using adapters.utils.httpClient;
-using models;
-using models.inputs;
+using GameService.Client.Sdk.Adapters.Utils.HttpClient;
+using GameService.Client.Sdk.Models;
+using GameService.Client.Sdk.Models.inputs;
+using GameService.Client.Sdk.Models.outputs;
 using Newtonsoft.Json;
 
-namespace adapters.repositories.table
+namespace GameService.Client.Sdk.Adapters.Repositories.Table
 {
     public class TableRepository :ITableRepositories
     {

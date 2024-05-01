@@ -1,9 +1,10 @@
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-namespace models.dto
+using GameService.Client.Sdk.Adapters.Services.Table;
+using Newtonsoft.Json;
+
+namespace GameService.Client.Sdk.Adapters.Services.Services.Achievement
 {
     public class Achievement : Row
     {

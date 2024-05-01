@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using models.outputs;
+using GameService.Client.Sdk.Models.outputs;
 
-namespace adapters.repositories.storage
+namespace GameService.Client.Sdk.Adapters.Repositories.Storage
 {
     public interface IStorageRepositories
     {

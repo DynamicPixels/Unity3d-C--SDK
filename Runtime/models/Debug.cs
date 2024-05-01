@@ -1,6 +1,6 @@
 using System;
 
-namespace models.dto
+namespace GameService.Client.Sdk.Models
 {
     
     /// <summary>

@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using models.dto;
 using Newtonsoft.Json;
 
-namespace models.inputs
+namespace GameService.Client.Sdk.Models.inputs
 {
     public class PartyInput
     {

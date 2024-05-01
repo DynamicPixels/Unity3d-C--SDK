@@ -1,11 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using adapters.repositories.table.services.user;
-using models.dto;
-using models.inputs;
-using models.outputs;
+using GameService.Client.Sdk.Models.inputs;
 
-namespace adapters.services.table.services
+namespace GameService.Client.Sdk.Adapters.Services.Services.User
 {
     public interface IUser
     {

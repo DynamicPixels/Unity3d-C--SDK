@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-namespace models.inputs.QueryHelper
+namespace GameService.Client.Sdk.Models.inputs.QueryHelper
 {
     public interface Query
     {
@@ -16,9 +14,9 @@ namespace models.inputs.QueryHelper
         public string Op { get; set; }
         [JsonProperty("field")]
         public string? Field { get; set; }
-        [JsonProperty("value")] [CanBeNull] public dynamic? Value { get; set; }
-        [JsonProperty("values")] [CanBeNull] public dynamic[]? Values { get; set; }
-        [JsonProperty("list")] [CanBeNull] public QueryParam[]? list { get; set; }
+        [JsonProperty("value", NullValueHandling = NullValueHandling.Ignore)] public dynamic? Value { get; set; }
+        [JsonProperty("values", NullValueHandling = NullValueHandling.Ignore)] public dynamic[]? Values { get; set; }
+        [JsonProperty("list", NullValueHandling = NullValueHandling.Ignore)] public QueryParam[]? list { get; set; }
     }
 
     public class JoinParams

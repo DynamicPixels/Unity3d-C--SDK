@@ -1,4 +1,4 @@
-namespace adapters.repositories.storage
+namespace GameService.Client.Sdk.Adapters.Repositories.Storage
 {
     public class UrlMap
     {

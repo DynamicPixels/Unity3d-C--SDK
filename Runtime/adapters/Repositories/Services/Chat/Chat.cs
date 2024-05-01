@@ -1,14 +1,12 @@
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using adapters.utils.httpClient;
-using models;
-using models.dto;
-using models.inputs;
-using models.outputs;
+using GameService.Client.Sdk.Adapters.Utils.HttpClient;
+using GameService.Client.Sdk.Models;
+using GameService.Client.Sdk.Models.inputs;
+using GameService.Client.Sdk.Models.outputs;
 using Newtonsoft.Json;
 
-namespace adapters.repositories.table.services
+namespace GameService.Client.Sdk.Adapters.Repositories.Services.Chat
 {
     public class ChatRepository : IChatRepository
     {

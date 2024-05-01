@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Numerics;
-using models.dto;
+using GameService.Client.Sdk.Adapters.Services.Table;
 using Newtonsoft.Json;
 
-namespace models.outputs
+namespace GameService.Client.Sdk.Models.outputs
 {
     public class RowListResponse
     {

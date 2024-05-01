@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using models.dto;
+using GameService.Client.Sdk.Adapters.Repositories.Messaging;
 
-namespace adapters.utils.WebsocketClient
+namespace GameService.Client.Sdk.Adapters.Utils.WebsocketClient
 {
     public interface ISocketAgent
     {

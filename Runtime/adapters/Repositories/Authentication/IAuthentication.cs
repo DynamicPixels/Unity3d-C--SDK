@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using models.inputs;
-using models.outputs;
+using GameService.Client.Sdk.Models.inputs;
+using GameService.Client.Sdk.Models.outputs;
 
-namespace adapters.repositories.authentication
+namespace GameService.Client.Sdk.Adapters.Repositories.Authentication
 {
     public interface IAuthenticationRepositories
     {

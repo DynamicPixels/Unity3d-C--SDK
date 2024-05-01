@@ -1,6 +1,6 @@
-using models.dto;
+using GameService.Client.Sdk.Adapters.Repositories.Services.Chat;
 
-namespace models.inputs
+namespace GameService.Client.Sdk.Models.inputs
 {
     public enum ConversationType 
     {

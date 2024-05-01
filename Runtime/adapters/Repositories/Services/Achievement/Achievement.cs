@@ -1,26 +1,26 @@
 using System.IO;
 using System.Threading.Tasks;
-using adapters.utils.httpClient;
-using models;
-using models.dto;
-using models.inputs;
-using models.outputs;
+using GameService.Client.Sdk.Adapters.Services.Services.Achievement;
+using GameService.Client.Sdk.Adapters.Utils.HttpClient;
+using GameService.Client.Sdk.Models;
+using GameService.Client.Sdk.Models.inputs;
+using GameService.Client.Sdk.Models.outputs;
 using Newtonsoft.Json;
 
-namespace adapters.repositories.table.services.achievement
+namespace GameService.Client.Sdk.Adapters.Repositories.Services.Achievement
 {
     public class AchievementRepository: IAchievementRepository
     {
 
-        public async Task<RowListResponse<Achievement>> GetAchievements<T>(T input) where T : GetAchievementParams
+        public async Task<RowListResponse<Adapters.Services.Services.Achievement.Achievement>> GetAchievements<T>(T input) where T : GetAchievementParams
         {
-            var response = await WebRequest.Get(UrlMap.GetAchievementsUrl);
+            var response = await WebRequest.Get(UrlMap.GetAchievementsUrl(input.JustUnlocked, input.Skip, input.Limit));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<RowListResponse<Achievement>>(body);
+                return JsonConvert.DeserializeObject<RowListResponse<Adapters.Services.Services.Achievement.Achievement>>(body);
             }
             else
             {

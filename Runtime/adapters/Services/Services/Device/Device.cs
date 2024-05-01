@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using adapters.repositories.table.services.device;
-using adapters.repositories.table.services.user;
-using models.inputs;
+using GameService.Client.Sdk.Adapters.Repositories.Services.Device;
+using GameService.Client.Sdk.Models.inputs;
 
-namespace adapters.services.table.services
+namespace GameService.Client.Sdk.Adapters.Services.Services.Device
 {
     public class DeviceService: IDevice
     {
@@ -14,7 +13,7 @@ namespace adapters.services.table.services
             this._repository = new DeviceRepository();
         }
 
-        public async Task<List<Device>> FindMyDevices<T>(T input) where T : FindMyDeviceParams
+        public async Task<List<User.Device>> FindMyDevices<T>(T input) where T : FindMyDeviceParams
         {
             var result = await this._repository.FindMyDevices(input);
             return result.List;

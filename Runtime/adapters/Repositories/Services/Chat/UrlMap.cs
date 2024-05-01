@@ -1,4 +1,4 @@
-namespace adapters.repositories.table.services
+namespace GameService.Client.Sdk.Adapters.Repositories.Services.Chat
 {
     public class UrlMap
     {

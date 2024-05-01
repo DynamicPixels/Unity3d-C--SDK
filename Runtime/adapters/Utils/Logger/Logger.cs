@@ -1,9 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
-using models.dto;
+using GameService.Client.Sdk.Models;
 
-namespace adapters.utils.Logger
+namespace GameService.Client.Sdk.Adapters.Utils.Logger
 {
     public static class Logger
     {

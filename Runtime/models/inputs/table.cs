@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using models.dto;
+using GameService.Client.Sdk.Adapters.Services.Table;
 using Newtonsoft.Json;
 
-namespace models.inputs
+namespace GameService.Client.Sdk.Models.inputs
 {
     public class AggregationParams
     {

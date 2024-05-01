@@ -1,9 +1,8 @@
 using System;
-using adapters.repositories.table.services.user;
-using models.dto;
+using GameService.Client.Sdk.Adapters.Services.Services.User;
 using Newtonsoft.Json;
 
-namespace models.outputs
+namespace GameService.Client.Sdk.Models.outputs
 {
     [Serializable]
     public class LoginResponse

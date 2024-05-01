@@ -1,7 +1,8 @@
 using System;
+using GameService.Client.Sdk.Adapters.Services.Table;
 using Newtonsoft.Json;
 
-namespace models.dto
+namespace GameService.Client.Sdk.Adapters.Repositories.Services.Friendship
 {
     public class Friendship: SlimUser
     {

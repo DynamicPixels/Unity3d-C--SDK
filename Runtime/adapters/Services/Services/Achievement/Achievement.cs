@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using adapters.repositories.table.services.achievement;
-using models.inputs;
-using models.dto;
+using GameService.Client.Sdk.Adapters.Repositories.Services.Achievement;
+using GameService.Client.Sdk.Models.inputs;
 
-namespace adapters.services.table.services
+namespace GameService.Client.Sdk.Adapters.Services.Services.Achievement
 {
     public class AchievementService: IAchievement
     {

@@ -1,10 +1,8 @@
 using System.Threading.Tasks;
-using adapters.repositories;
-using models.outputs;
-using adapters.repositories.storage;
-using System;
+using GameService.Client.Sdk.Adapters.Repositories.Storage;
+using GameService.Client.Sdk.Models.outputs;
 
-namespace adapters.services.storage
+namespace GameService.Client.Sdk.Adapters.Services.Storage
 {
     public class StorageService: IStorage
     {

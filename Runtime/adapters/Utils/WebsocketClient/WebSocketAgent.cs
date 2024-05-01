@@ -1,15 +1,14 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
-using models;
-using models.dto;
+using GameService.Client.Sdk.Adapters.Repositories.Messaging;
+using GameService.Client.Sdk.Models;
 using Newtonsoft.Json;
 using UnityEngine;
 using WebSocketSharp;
 
-namespace adapters.utils.WebsocketClient
+namespace GameService.Client.Sdk.Adapters.Utils.WebsocketClient
 {
-    public class WebSocketAgent: ISocketAgent
+    public class WebSocketAgent : ISocketAgent
     {
         private static WebSocket _ws;
         private bool _isAvailable;
@@ -31,21 +30,21 @@ namespace adapters.utils.WebsocketClient
 
             _endpoint = endpoint;
             _token = token;
-            
+
             _ws = new WebSocket(endpoint + $"?token={token}");
             _ws.OnOpen += OnOpen;
             _ws.OnClose += OnClose;
             _ws.OnError += OnError;
             _ws.OnMessage += OnMessage;
-            
+
             _ws.ConnectAsync();
-            
+
             return Task.CompletedTask;
         }
 
         public void Disconnect()
         {
-            _ws.Close();    
+            _ws.Close();
         }
 
         public long GetPing()
@@ -65,11 +64,11 @@ namespace adapters.utils.WebsocketClient
             catch (Exception e)
             {
                 if (
-                    e is OperationCanceledException || 
-                    e is ObjectDisposedException || 
+                    e is OperationCanceledException ||
+                    e is ObjectDisposedException ||
                     e is ArgumentOutOfRangeException
                 ) return Task.CompletedTask;
-                
+
                 _isAvailable = false;
             }
 
@@ -83,11 +82,11 @@ namespace adapters.utils.WebsocketClient
                 Method = "ping",
             });
         }
-        
+
         private void OnMessage(object sender, MessageEventArgs message)
         {
             if (!message.IsText) return;
-            
+
             var response = JsonConvert.DeserializeObject<Request>(message.Data);
             if (response.Method == "ping")
             {
@@ -95,8 +94,8 @@ namespace adapters.utils.WebsocketClient
                 Debug.Log("pong!");
                 return;
             }
-            
-            if (OnMessageReceived != null) 
+
+            if (OnMessageReceived != null)
                 OnMessageReceived(this, response);
         }
 
@@ -113,7 +112,7 @@ namespace adapters.utils.WebsocketClient
                 Logger.Logger.LogException<DynamicPixelsException>(exception, DebugLocation.Connection, "onError");
             }
         }
-      
+
         private void OnClose(object sender, CloseEventArgs close)
         {
             Logger.Logger.LogNormal<string>(DebugLocation.Connection, "Connect", "Disconnected from " + close.Reason);
@@ -121,15 +120,15 @@ namespace adapters.utils.WebsocketClient
             if (!_isAvailable || close.WasClean) return;
             _isAvailable = false;
         }
-        
+
         private void OnOpen(object sender, EventArgs e)
         {
             Logger.Logger.LogNormal<string>(DebugLocation.Connection, "Connect", "Connected to " + _endpoint);
             _isAvailable = true;
-            
+
             _pingInterval = new System.Timers.Timer();
-            _pingInterval.Interval = 10*1000;
-            _pingInterval.AutoReset = true;        
+            _pingInterval.Interval = 10 * 1000;
+            _pingInterval.AutoReset = true;
             _pingInterval.Elapsed += OnSendPing;
             _pingInterval.Start();
         }

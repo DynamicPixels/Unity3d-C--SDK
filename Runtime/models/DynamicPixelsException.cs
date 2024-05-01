@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace models
+namespace GameService.Client.Sdk.Models
 {
     // Enum for Error Codes
     public enum ErrorCode

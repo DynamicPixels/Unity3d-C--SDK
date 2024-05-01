@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using adapters.repositories.table.services.user;
-using models.inputs;
+using GameService.Client.Sdk.Models.inputs;
 
-namespace adapters.services.table.services
+namespace GameService.Client.Sdk.Adapters.Services.Services.Device
 {
     public interface IDevice
     {
-        Task<List<Device>> FindMyDevices<T>(T param) where T: FindMyDeviceParams;
+        Task<List<User.Device>> FindMyDevices<T>(T param) where T: FindMyDeviceParams;
         Task<bool> RevokeDevice<T>(T param) where T: RevokeDeviceParams;
     }
 }

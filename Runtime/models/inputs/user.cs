@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
-namespace models.inputs
+
+namespace GameService.Client.Sdk.Models.inputs
 {
     public class FindUserParams
     {

@@ -1,14 +1,7 @@
-
 using System.Threading.Tasks;
-using models.outputs;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using adapters.repositories.table.services.leaderboard;
-using models.dto;
-using models.inputs;
-using models.outputs;
+using GameService.Client.Sdk.Models.outputs;
 
-namespace adapters.services.storage
+namespace GameService.Client.Sdk.Adapters.Services.Storage
 {
     public interface IStorage
     {

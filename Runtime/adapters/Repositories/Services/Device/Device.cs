@@ -1,24 +1,23 @@
 using System.IO;
 using System.Threading.Tasks;
-using adapters.repositories.table.services.user;
-using adapters.utils.httpClient;
-using models;
-using models.inputs;
-using models.outputs;
+using GameService.Client.Sdk.Adapters.Utils.HttpClient;
+using GameService.Client.Sdk.Models;
+using GameService.Client.Sdk.Models.inputs;
+using GameService.Client.Sdk.Models.outputs;
 using Newtonsoft.Json;
 
-namespace adapters.repositories.table.services.device
+namespace GameService.Client.Sdk.Adapters.Repositories.Services.Device
 {
     public class DeviceRepository:IDeviceRepository
     {
-        public async Task<RowListResponse<Device>> FindMyDevices<T>(T input) where T : FindMyDeviceParams
+        public async Task<RowListResponse<Adapters.Services.Services.User.Device>> FindMyDevices<T>(T input) where T : FindMyDeviceParams
         {
             var response = await WebRequest.Get(UrlMap.FindMyDevicesUrl);
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<RowListResponse<Device>>(body);
+                return JsonConvert.DeserializeObject<RowListResponse<Adapters.Services.Services.User.Device>>(body);
             }
             else
             {
