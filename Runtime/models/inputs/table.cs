@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using GameService.Client.Sdk.Adapters.Services.Table;
+using GameService.Client.Sdk.Services.Table;
 using Newtonsoft.Json;
 
 namespace GameService.Client.Sdk.Models.inputs

@@ -1,5 +1,5 @@
 using System;
-using GameService.Client.Sdk.Adapters.Services.Services.User;
+using GameService.Client.Sdk.Services.Services.User;
 using Newtonsoft.Json;
 
 namespace GameService.Client.Sdk.Models.outputs

@@ -1,12 +1,13 @@
 using System;
-using GameService.Client.Sdk.Adapters.Services.Authentication;
-using GameService.Client.Sdk.Adapters.Services.Services.User;
-using GameService.Client.Sdk.Adapters.Services.Storage;
-using GameService.Client.Sdk.Adapters.Services.Synchronise;
-using GameService.Client.Sdk.Adapters.Services.Table;
 using GameService.Client.Sdk.Adapters.Utils.WebsocketClient;
 using GameService.Client.Sdk.Models;
-using Logger = GameService.Client.Sdk.Adapters.Utils.Logger.Logger;
+using GameService.Client.Sdk.Services.Authentication;
+using GameService.Client.Sdk.Services.Services.User;
+using GameService.Client.Sdk.Services.Storage;
+using GameService.Client.Sdk.Services.Synchronise;
+using GameService.Client.Sdk.Services.Table;
+using GameService.Client.Sdk.Utils.Logger;
+using GameService.Client.Sdk.Utils.WebsocketClient;
 
 namespace GameService.Client.Sdk
 {
@@ -34,13 +35,13 @@ namespace GameService.Client.Sdk
         public static IAuthentication Authentication;
         public static IStorage Storage;
         public static ITable Table;
-        public static Services Services;
+        public static Services.Table.Services Services;
 
         public static void Configure(string clientId, string clientSecret, SystemInfo systemInfo, bool debugMode,
             bool developmentMode, bool verboseMode)
         {
             if (IsAvailable)
-                Logger.LogException<DynamicPixelsException>(
+                LogHelper.LogException<DynamicPixelsException>(
                     new DynamicPixelsException(ErrorCode.SdkAlreadyInitialized,
                         "Sdk is already initialized, logout first"),
                     DebugLocation.All,
@@ -56,10 +57,10 @@ namespace GameService.Client.Sdk
 
             Authentication = new AuthenticationService();
             // TODO: RealTime
-            Table = new TableService(Agent);
+            //Table = new TableService(Agent);
             Storage = new StorageService();
             Synchronise = new SynchroniseService();
-            Services = new Services(Agent);
+            //Services = new Services(Agent);
         }
 
         public static bool IsAuthenticated()

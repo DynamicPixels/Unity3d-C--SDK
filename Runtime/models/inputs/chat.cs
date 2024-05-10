@@ -1,4 +1,4 @@
-using GameService.Client.Sdk.Adapters.Repositories.Services.Chat;
+using GameService.Client.Sdk.Repositories.Services.Chat;
 
 namespace GameService.Client.Sdk.Models.inputs
 {

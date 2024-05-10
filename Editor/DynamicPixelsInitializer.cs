@@ -4,7 +4,7 @@ using GameService.Client.Sdk.Models;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using LogType = GameService.Client.Sdk.Models.LogType;
-using Logger = GameService.Client.Sdk.Adapters.Utils.Logger.Logger;
+using GameService.Client.Sdk.Utils.Logger;
 using SystemInfo = GameService.Client.Sdk.Models.SystemInfo;
 
 namespace DynamicPixelsInitializer
@@ -56,7 +56,7 @@ namespace DynamicPixelsInitializer
             // configure Sdk instance
             DynamicPixels.Configure(clientId, clientSecret, systemInfo, debugMode, developmentMode, verboseMode);
 
-            Logger.OnDebugReceived += LoggerOnDebugReceived;
+            LogHelper.OnDebugReceived += LoggerOnDebugReceived;
 
             _isInit = true;
             Debug.Log("DynamicPixels Initialized");
