@@ -1,8 +1,7 @@
 using System.Threading.Tasks;
-using GameService.Client.Sdk.Models.inputs;
-using GameService.Client.Sdk.Models.outputs;
+using DynamicPixels.GameService.Services.Authentication.Models;
 
-namespace GameService.Client.Sdk.Services.Authentication
+namespace DynamicPixels.GameService.Services.Authentication
 {
     public interface IAuthentication
     {

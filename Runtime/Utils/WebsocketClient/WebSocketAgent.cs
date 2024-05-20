@@ -1,14 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using GameService.Client.Sdk.Models;
-using GameService.Client.Sdk.Repositories.Messaging;
-using GameService.Client.Sdk.Utils.Logger;
-using GameService.Client.Sdk.Utils.WebsocketClient;
+using DynamicPixels.GameService.Models;
+using DynamicPixels.GameService.Utils.Logger;
 using Newtonsoft.Json;
 using UnityEngine;
 using WebSocketSharp;
 
-namespace GameService.Client.Sdk.Adapters.Utils.WebsocketClient
+namespace DynamicPixels.GameService.Utils.WebsocketClient
 {
     public class WebSocketAgent : ISocketAgent
     {

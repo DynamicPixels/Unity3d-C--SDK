@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using GameService.Client.Sdk.Repositories.Messaging;
+using DynamicPixels.GameService.Models;
 
-namespace GameService.Client.Sdk.Utils.WebsocketClient
+namespace DynamicPixels.GameService.Utils.WebsocketClient
 {
     public interface ISocketAgent
     {

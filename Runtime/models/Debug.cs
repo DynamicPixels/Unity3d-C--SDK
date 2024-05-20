@@ -1,6 +1,6 @@
 using System;
 
-namespace GameService.Client.Sdk.Models
+namespace DynamicPixels.GameService.Models
 {
     
     /// <summary>

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace GameService.Client.Sdk.Models
+namespace DynamicPixels.GameService.Models
 {
     // Enum for Error Codes
     public enum ErrorCode

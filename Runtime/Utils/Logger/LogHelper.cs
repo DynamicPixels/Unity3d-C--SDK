@@ -1,9 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
-using GameService.Client.Sdk.Models;
+using DynamicPixels.GameService.Models;
 
-namespace GameService.Client.Sdk.Utils.Logger
+namespace DynamicPixels.GameService.Utils.Logger
 {
     public static class LogHelper
     {
@@ -112,13 +112,13 @@ namespace GameService.Client.Sdk.Utils.Logger
             switch (type)
             {
                 case LogType.Normal:
-                    if (DynamicPixels.VerboseMode) can = true;
+                    if (ServiceHub.VerboseMode) can = true;
                     break;
                 case LogType.Error:
-                    if (DynamicPixels.DebugMode || DynamicPixels.VerboseMode) can = true;
+                    if (ServiceHub.DebugMode || ServiceHub.VerboseMode) can = true;
                     break;
                 case LogType.Exception:
-                    if (DynamicPixels.DebugMode || DynamicPixels.VerboseMode) can = true;
+                    if (ServiceHub.DebugMode || ServiceHub.VerboseMode) can = true;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

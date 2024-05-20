@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using GameService.Client.Sdk.Services.Table;
+using DynamicPixels.GameService.Services.Table;
 using Newtonsoft.Json;
 
-namespace GameService.Client.Sdk.Models.outputs
+namespace DynamicPixels.GameService.Models.outputs
 {
     public class RowListResponse
     {

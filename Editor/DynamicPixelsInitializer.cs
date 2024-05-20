@@ -1,11 +1,11 @@
 ﻿using System;
 using GameService.Client.Sdk;
-using GameService.Client.Sdk.Models;
+using DynamicPixels.GameService.Models;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
-using LogType = GameService.Client.Sdk.Models.LogType;
-using GameService.Client.Sdk.Utils.Logger;
-using SystemInfo = GameService.Client.Sdk.Models.SystemInfo;
+using LogType = DynamicPixels.GameService.Models.LogType;
+using DynamicPixels.GameService.Utils.Logger;
+using SystemInfo = DynamicPixels.GameService.Models.SystemInfo;
 
 namespace DynamicPixelsInitializer
 {

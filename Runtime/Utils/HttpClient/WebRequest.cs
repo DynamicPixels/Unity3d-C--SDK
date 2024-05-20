@@ -4,22 +4,22 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using GameService.Client.Sdk.Models;
+using DynamicPixels.GameService.Models;
 
-namespace GameService.Client.Sdk.Utils.HttpClient
+namespace DynamicPixels.GameService.Utils.HttpClient
 {
     internal static class WebRequest
     {
 
         private static string _baseUrl =
-            !DynamicPixels.DevelopmentMode
+            !ServiceHub.DevelopmentMode
             ?
-                $"https://link.dynamicpixels.dev/game/{DynamicPixels.ClientId}"
+                $"https://link.dynamicpixels.dev/game/{ServiceHub.ClientId}"
             :
-                $"http://localhost:5286/game/{DynamicPixels.ClientId}";
+                $"http://localhost:5286/game/{ServiceHub.ClientId}";
 
         private static System.Net.Http.HttpClient _client;
-        private static readonly string UserAgent = "UnitySDK-" + DynamicPixels.Version();
+        private static readonly string UserAgent = "UnitySDK-" + ServiceHub.Version();
 
         private static void InitWebRequest()
         {
@@ -71,9 +71,9 @@ namespace GameService.Client.Sdk.Utils.HttpClient
         {
             _client.DefaultRequestHeaders.Clear();
 
-            if (DynamicPixels.Token != string.Empty)
+            if (ServiceHub.Token != string.Empty)
             {
-                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", DynamicPixels.Token);
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ServiceHub.Token);
             }
 
             _client.DefaultRequestHeaders.Add("User-Agent", UserAgent);

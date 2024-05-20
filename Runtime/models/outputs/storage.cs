@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace GameService.Client.Sdk.Models.outputs
+namespace DynamicPixels.GameService.Models.outputs
 {
     public class FileMetadata
     {

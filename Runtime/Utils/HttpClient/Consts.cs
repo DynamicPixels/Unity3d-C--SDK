@@ -1,4 +1,4 @@
-namespace GameService.Client.Sdk.Utils.HttpClient
+namespace DynamicPixels.GameService.Utils.HttpClient
 {
     internal enum WebRequestMethod
     {

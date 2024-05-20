@@ -1,4 +1,4 @@
-namespace GameService.Client.Sdk.Models
+namespace DynamicPixels.GameService.Models
 {
     public abstract class BaseGetAllParams
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace GameService.Client.Sdk.Services.Synchronise
+namespace DynamicPixels.GameService.Services.Synchronise
 {
     public interface ISynchronise
     {

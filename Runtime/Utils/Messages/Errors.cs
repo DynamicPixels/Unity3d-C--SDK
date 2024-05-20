@@ -1,4 +1,4 @@
-namespace GameService.Client.Sdk.Utils.Messages
+namespace DynamicPixels.GameService.Utils.Messages
 {
     public class Errors
     {

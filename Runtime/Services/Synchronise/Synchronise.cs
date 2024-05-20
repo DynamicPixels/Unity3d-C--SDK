@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using GameService.Client.Sdk.Repositories.Synchronise;
+using DynamicPixels.GameService.Services.Synchronise.Repositories;
 
-namespace GameService.Client.Sdk.Services.Synchronise
+namespace DynamicPixels.GameService.Services.Synchronise
 {
     public class SynchroniseService : ISynchronise
     {

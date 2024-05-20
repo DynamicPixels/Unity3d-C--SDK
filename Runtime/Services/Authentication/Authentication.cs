@@ -1,10 +1,8 @@
 using System.Threading.Tasks;
-using GameService.Client.Sdk.Models.inputs;
-using GameService.Client.Sdk.Models.outputs;
-using GameService.Client.Sdk.Repositories.Authentication;
-using GameService.Client.Sdk.Services.Services.User;
+using DynamicPixels.GameService.Services.Authentication.Models;
+using DynamicPixels.GameService.Services.Authentication.Repositories;
 
-namespace GameService.Client.Sdk.Services.Authentication
+namespace DynamicPixels.GameService.Services.Authentication
 {
     public class AuthenticationService : IAuthentication
     {
@@ -15,11 +13,11 @@ namespace GameService.Client.Sdk.Services.Authentication
             _repository = new AuthenticationRepository();
         }
 
-        private Task SetupSdk(string token, User user, ConnectionInfo connInfo)
+        private Task SetupSdk(string token, User.Models.User user, ConnectionInfo connInfo)
         {
-            DynamicPixels.IsAvailable = true;
-            DynamicPixels.Token = token;
-            DynamicPixels.User = user;
+            ServiceHub.IsAvailable = true;
+            ServiceHub.Token = token;
+            ServiceHub.User = user;
 
             // setup connection
             switch (connInfo?.Protocol)
@@ -64,7 +62,7 @@ namespace GameService.Client.Sdk.Services.Authentication
         public async Task<LoginResponse> LoginWithToken<T>(T input) where T : LoginWithTokenParams
         {
             var result = await _repository.LoginWithToken(input);
-            await SetupSdk(input.Token, new User(), new ConnectionInfo());
+            await SetupSdk(input.Token, new User.Models.User(), new ConnectionInfo());
             return result;
         }
 
@@ -93,14 +91,14 @@ namespace GameService.Client.Sdk.Services.Authentication
 
         public bool IsLoggedIn()
         {
-            return DynamicPixels.Token != string.Empty;
+            return ServiceHub.Token != string.Empty;
         }
 
         public void Logout()
         {
-            DynamicPixels.IsAvailable = false;
-            DynamicPixels.Token = string.Empty;
-            DynamicPixels.User = null;
+            ServiceHub.IsAvailable = false;
+            ServiceHub.Token = string.Empty;
+            ServiceHub.User = null;
 
             // dispose connections
             // TODO: Realtime

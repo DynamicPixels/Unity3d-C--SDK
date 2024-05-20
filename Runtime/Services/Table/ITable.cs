@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using GameService.Client.Sdk.Models.inputs;
-using GameService.Client.Sdk.Models.outputs;
+using DynamicPixels.GameService.Models.outputs;
+using DynamicPixels.GameService.Services.Table.Models;
 
-namespace GameService.Client.Sdk.Services.Table
+namespace DynamicPixels.GameService.Services.Table
 {
     public interface ITable
     {

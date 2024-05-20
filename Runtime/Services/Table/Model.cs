@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using GameService.Client.Sdk.Models.inputs.QueryHelper;
+using DynamicPixels.GameService.Models.inputs;
 using Newtonsoft.Json;
 
-namespace GameService.Client.Sdk.Services.Table
+namespace DynamicPixels.GameService.Services.Table
 {
 
     public class FindOptions

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using GameService.Client.Sdk.Models.outputs;
+using DynamicPixels.GameService.Models.outputs;
 
-namespace GameService.Client.Sdk.Services.Storage
+namespace DynamicPixels.GameService.Services.Storage
 {
     public interface IStorage
     {

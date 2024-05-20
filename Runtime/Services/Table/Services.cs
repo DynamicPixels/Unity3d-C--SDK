@@ -1,17 +1,16 @@
-using GameService.Client.Sdk.Services.Services.Achievement;
-using GameService.Client.Sdk.Services.Services.Chat;
-using GameService.Client.Sdk.Services.Services.Device;
-using GameService.Client.Sdk.Services.Services.Friendship;
-using GameService.Client.Sdk.Services.Services.Leaderboard;
-using GameService.Client.Sdk.Services.Services.MultiPlayer;
-using GameService.Client.Sdk.Services.Services.MultiPlayer.Match;
-using GameService.Client.Sdk.Services.Services.MultiPlayer.Realtime;
-using GameService.Client.Sdk.Services.Services.MultiPlayer.Room;
-using GameService.Client.Sdk.Services.Services.Party;
-using GameService.Client.Sdk.Services.Services.User;
-using GameService.Client.Sdk.Utils.WebsocketClient;
+using DynamicPixels.GameService.Services.Achievement;
+using DynamicPixels.GameService.Services.Chat;
+using DynamicPixels.GameService.Services.Device;
+using DynamicPixels.GameService.Services.Friendship;
+using DynamicPixels.GameService.Services.Leaderboard;
+using DynamicPixels.GameService.Services.MultiPlayer.Match;
+using DynamicPixels.GameService.Services.MultiPlayer.Realtime;
+using DynamicPixels.GameService.Services.MultiPlayer.Room;
+using DynamicPixels.GameService.Services.Party;
+using DynamicPixels.GameService.Services.User;
+using DynamicPixels.GameService.Utils.WebsocketClient;
 
-namespace GameService.Client.Sdk.Services.Table
+namespace DynamicPixels.GameService.Services.Table
 {
 
     public class Services
@@ -25,7 +24,7 @@ namespace GameService.Client.Sdk.Services.Table
             Party = new PartyService();
             Users = new UserService();
             Devices = new DeviceService();
-            MultiPlayer = new MultiPlayer(
+            MultiPlayer = new MultiPlayer.MultiPlayer(
                 new RoomService(agent),
                 new MatchService(),
                 new RealtimeService(agent));
@@ -38,6 +37,6 @@ namespace GameService.Client.Sdk.Services.Table
         public IParty Party { get; private set; }
         public IUser Users { get; private set; }
         public IDevice Devices { get; private set; }
-        public MultiPlayer MultiPlayer { get; }
+        public MultiPlayer.MultiPlayer MultiPlayer { get; }
     }
 }

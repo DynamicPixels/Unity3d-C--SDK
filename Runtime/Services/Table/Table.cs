@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
-using GameService.Client.Sdk.Models.inputs;
-using GameService.Client.Sdk.Models.outputs;
-using GameService.Client.Sdk.Repositories.Table;
-using GameService.Client.Sdk.Utils.WebsocketClient;
+using DynamicPixels.GameService.Models.outputs;
+using DynamicPixels.GameService.Services.Table.Models;
+using DynamicPixels.GameService.Services.Table.Repositories;
+using DynamicPixels.GameService.Utils.WebsocketClient;
 
-namespace GameService.Client.Sdk.Services.Table
+namespace DynamicPixels.GameService.Services.Table
 {
     public class TableService : ITable
     {
