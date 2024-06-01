@@ -10,7 +10,6 @@ using Newtonsoft.Json;
 
 namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 {
-
     public class RoomService : IRoomService
     {
         private readonly ISocketAgent _socketAgent;
@@ -28,7 +27,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 
             if (response.IsSuccessStatusCode)
             {
-                var room = JsonConvert.DeserializeObject<RowResponse<Room>>(body)!.Row;
+                var room = JsonConvert.DeserializeObject<Room>(body);
                 room.Config(_socketAgent);
                 return room;
             }

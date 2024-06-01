@@ -92,7 +92,7 @@ namespace DynamicPixels.GameService.Utils.WebsocketClient
             if (response.Method == "ping")
             {
                 _ping = _lastPingSentTime - DateTimeOffset.Now.ToUnixTimeMilliseconds();
-                Debug.Log("pong!");
+                //Debug.Log("pong!");
                 return;
             }
 

@@ -53,9 +53,7 @@ namespace DynamicPixels.GameService
             DevelopmentMode = developmentMode;
             SystemInfo = systemInfo;
 
-
             Authentication = new AuthenticationService();
-            // TODO: RealTime
             Table = new TableService(Agent);
             Storage = new StorageService();
             Synchronise = new SynchroniseService();

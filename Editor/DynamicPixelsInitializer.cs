@@ -1,11 +1,11 @@
 ﻿using System;
-using GameService.Client.Sdk;
 using DynamicPixels.GameService.Models;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using LogType = DynamicPixels.GameService.Models.LogType;
 using DynamicPixels.GameService.Utils.Logger;
 using SystemInfo = DynamicPixels.GameService.Models.SystemInfo;
+using DynamicPixels.GameService;
 
 namespace DynamicPixelsInitializer
 {
@@ -33,7 +33,7 @@ namespace DynamicPixelsInitializer
         public void OnEnable()
         {
             // dont initialize SDK multiple time 
-            if (_isInit || DynamicPixels.IsAuthenticated()) return;
+            if (_isInit || ServiceHub.IsAuthenticated()) return;
             Debug.Log("DynamicPixels Initializing");
 
             // getting system info
@@ -54,7 +54,7 @@ namespace DynamicPixelsInitializer
             };
 
             // configure Sdk instance
-            DynamicPixels.Configure(clientId, clientSecret, systemInfo, debugMode, developmentMode, verboseMode);
+            ServiceHub.Configure(clientId, clientSecret, systemInfo, debugMode, developmentMode, verboseMode);
 
             LogHelper.OnDebugReceived += LoggerOnDebugReceived;
 
@@ -79,8 +79,8 @@ namespace DynamicPixelsInitializer
             _isInit = false;
 
             Debug.Log("DynamicPixels Disposed");
- 
-            DynamicPixels.Dispose();
+
+            ServiceHub.Dispose();
         }
 
         private static void LoggerOnDebugReceived(object sender, DebugArgs debug)

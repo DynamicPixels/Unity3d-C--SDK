@@ -24,7 +24,7 @@ namespace DynamicPixels.GameService.Services.Authentication
             {
                 case "wss":
                     // connInfo.Endpoint
-                    // DynamicPixels.Agent.Connect("wss://ws-europe.dynamicpixels.dev/ws", token);
+                    ServiceHub.Agent.Connect("wss://ws-europe.dynamicpixels.dev/ws", token);
                     break;
             }
 

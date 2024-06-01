@@ -102,7 +102,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
             var packet = new Request
             {
                 Method = "room:send-to-user",
-                UserId = receiverId,
+                ReceiverId = receiverId,
                 Payload = JsonConvert.SerializeObject(payload)
             };
 

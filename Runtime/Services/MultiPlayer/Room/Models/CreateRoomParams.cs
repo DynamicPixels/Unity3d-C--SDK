@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace DynamicPixels.GameService.Services.MultiPlayer.Room.Models
 {
@@ -6,6 +7,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room.Models
     {
         public string Name { get; set; }
         public bool IsPrivate { get; set; }
+        public bool IsPermanent { get; set; }
         public int MinPlayer { get; set; }
         public int MaxPlayer { get; set; }
         public int? MinXp { get; set; }
@@ -15,5 +17,10 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room.Models
         public GameOrderType? GameOrderType { get; set; }
         public string Metadata { get; set; }
         public List<int> Players { get; set; }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }

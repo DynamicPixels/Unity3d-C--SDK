@@ -41,11 +41,19 @@ namespace DynamicPixels.GameService.Utils.HttpClient
             return await DoRequest(url, WebRequestMethod.Put, body, headers);
         }
 
-        internal static async Task<HttpResponseMessage> Post(string url, string body = null,
+        internal static Task<HttpResponseMessage> Post(string url, string body = null,
             Dictionary<string, string> headers = null)
         {
-            InitWebRequest();
-            return await DoRequest(url, WebRequestMethod.Post, body, headers);
+            //try
+            //{
+                InitWebRequest();
+                return DoRequest(url, WebRequestMethod.Post, body, headers);
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //    throw;
+            //}
         }
 
         internal static async Task<HttpResponseMessage> Delete(string url, Dictionary<string, string> headers = null)
@@ -100,7 +108,7 @@ namespace DynamicPixels.GameService.Utils.HttpClient
         }
 
 
-        private static async Task<HttpResponseMessage> DoRequest(
+        private static Task<HttpResponseMessage> DoRequest(
             string url,
             WebRequestMethod method = WebRequestMethod.Get,
             string body = null,
@@ -115,30 +123,30 @@ namespace DynamicPixels.GameService.Utils.HttpClient
 
             Logger.LogHelper.LogNormal<string>(DebugLocation.Http, "DoRequest", url);
 
-            try
-            {
+            //try
+            //{
                 switch (method)
                 {
                     case WebRequestMethod.Get:
-                        return await httpClient.GetAsync(url);
+                        return httpClient.GetAsync(url);
                     case WebRequestMethod.Post:
-                        return await httpClient.PostAsync(url, content);
+                        return httpClient.PostAsync(url, content);
                     case WebRequestMethod.Put:
-                        return await httpClient.PutAsync(url, content);
+                        return httpClient.PutAsync(url, content);
                     case WebRequestMethod.Delete:
-                        return await httpClient.DeleteAsync(url);
+                        return httpClient.DeleteAsync(url);
                     default:
                         throw new DynamicPixelsException(ErrorCode.UnknownError, "Invalid request method");
                 }
-            }
-            catch (Exception e)
-            {
-                if (e is OperationCanceledException)
-                    throw new DynamicPixelsException(ErrorCode.UnknownError, "Request failed: " + e.Message);
+            //}
+            //catch (Exception e)
+            //{
+            //    if (e is OperationCanceledException)
+            //        throw new DynamicPixelsException(ErrorCode.UnknownError, "Request failed: " + e.Message);
 
-                // You might want to provide more information or a different error code here
-                throw new DynamicPixelsException(ErrorCode.UnknownError, "Request failed: " + e.Message);
-            }
+            //    // You might want to provide more information or a different error code here
+            //    throw new DynamicPixelsException(ErrorCode.UnknownError, "Request failed: " + e.Message);
+            //}
         }
     }
 }
