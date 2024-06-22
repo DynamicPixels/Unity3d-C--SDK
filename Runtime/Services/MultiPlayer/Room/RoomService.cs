@@ -94,7 +94,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 
             if (response.IsSuccessStatusCode)
             {
-                var room = JsonConvert.DeserializeObject<RowResponse<Room>>(body)!.Row;
+                var room = JsonConvert.DeserializeObject<Room>(body);
                 room.Config(_socketAgent);
                 return room;
             }
@@ -117,7 +117,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 
             if (response.IsSuccessStatusCode)
             {
-                var room = JsonConvert.DeserializeObject<RowResponse<Room>>(body)!.Row;
+                var room = JsonConvert.DeserializeObject<Room>(body);
                 room.Config(_socketAgent);
                 return room;
             }
@@ -140,7 +140,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 
             if (response.IsSuccessStatusCode)
             {
-                var room = JsonConvert.DeserializeObject<RowResponse<Room>>(body)!.Row;
+                var room = JsonConvert.DeserializeObject<Room>(body);
                 room.Config(_socketAgent);
                 return room;
             }
@@ -163,7 +163,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 
             if (response.IsSuccessStatusCode)
             {
-                var room = JsonConvert.DeserializeObject<RowResponse<Room>>(body)!.Row;
+                var room = JsonConvert.DeserializeObject<Room>(body);
                 room.Config(_socketAgent);
                 return room;
             }
@@ -186,7 +186,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 
             if (response.IsSuccessStatusCode)
             {
-                var room = JsonConvert.DeserializeObject<RowResponse<Room>>(body)!.Row;
+                var room = JsonConvert.DeserializeObject<Room>(body);
                 room.Config(_socketAgent);
                 return room;
             }
