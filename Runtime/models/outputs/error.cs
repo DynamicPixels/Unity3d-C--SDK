@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace models.outputs
+namespace DynamicPixels.GameService.Models.outputs
 {
     [Serializable]
     public class ErrorResponse
