@@ -9,6 +9,7 @@ namespace DynamicPixels.GameService.Models.outputs
     {
         [JsonProperty("list")]
         public List<Row> List { get; set; } = new List<Row>();
+
         [JsonProperty("totalCount")]
         public Int64 TotalCount { get; set; }
     }
@@ -17,6 +18,7 @@ namespace DynamicPixels.GameService.Models.outputs
     {
         [JsonProperty("list")]
         public List<T> List { get; set; } = new List<T>();
+
         [JsonProperty("totalCount")]
         public Int64 TotalCount { get; set; }
     }

@@ -9,11 +9,14 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
         public static string MakeAndStartMatchUrl = $"{_baseUrl}/makeAndStart";
 
         // get
-        public static string GetMatchByIdUrl(int matchId) => $"{_baseUrl}/{matchId}";
+        public static string GetMyMatchesUrl = $"{_baseUrl}";
+        public static string LoadMatch(int matchId) => $"{_baseUrl}/{matchId}";
+        public static string LoadState(int matchId, string levelKey) => $"{_baseUrl}/{matchId}/levels/{levelKey}";
 
         //put
         public static string SaveUrl(int matchId) => $"{_baseUrl}/{matchId}";
-        public static string SavePlayerMetaDataUrl(int matchId) => $"{_baseUrl}/{matchId}/players";
+        public static string SaveState(int matchId, string levelKey) => $"{_baseUrl}/{matchId}/levels/{levelKey}";
+        public static string SavePlayerMetaDataUrl(int matchId, int playerId) => $"{_baseUrl}/{matchId}/players/{playerId}";
         public static string FinishMatchUrl(int matchId) => $"{_baseUrl}/{matchId}/finish";
 
         // patch

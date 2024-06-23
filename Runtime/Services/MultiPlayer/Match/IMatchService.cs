@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using DynamicPixels.GameService.Services.MultiPlayer.Match.Models;
 
 namespace DynamicPixels.GameService.Services.MultiPlayer.Match
 {
@@ -6,6 +8,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
     {
         Task<Match> MakeMatch(int roomId, bool lockRoom = true);
         Task<Match> MakeAndStartMatch(int roomId, bool lockRoom = true);
-        Task<Match> GetMatchById(int matchId);
+        Task<Match> LoadMatch(int matchId);
+        Task<IEnumerable<MatchSummary>> GetMyMatches();
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using DynamicPixels.GameService.Models;
@@ -22,7 +23,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
             var body = await reader.ReadToEndAsync();
 
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowResponse<Match>>(body)!.Row;
+                return JsonConvert.DeserializeObject<Match>(body);
 
             // Deserialize the error response
             var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
@@ -46,7 +47,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
             var body = await reader.ReadToEndAsync();
 
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowResponse<Match>>(body)!.Row;
+                return JsonConvert.DeserializeObject<Match>(body);
 
             // Deserialize the error response
             var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
@@ -58,14 +59,33 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
             throw new DynamicPixelsException(errorCode, errorResponse?.Message);
         }
 
-        public async Task<Match> GetMatchById(int matchId)
+        public async Task<Match> LoadMatch(int matchId)
         {
-            var response = await WebRequest.Get(UrlMap.GetMatchByIdUrl(matchId));
+            var response = await WebRequest.Get(UrlMap.LoadMatch(matchId));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
 
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowResponse<Match>>(body)!.Row;
+                return JsonConvert.DeserializeObject<Match>(body);
+
+            // Deserialize the error response
+            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
+
+            // Get the corresponding ErrorCode from the error message
+            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+
+            // Throw the DynamicPixelsException with the ErrorCode
+            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+        }
+
+        public async Task<IEnumerable<MatchSummary>> GetMyMatches()
+        {
+            var response = await WebRequest.Get(UrlMap.GetMyMatchesUrl);
+            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var body = await reader.ReadToEndAsync();
+
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<IEnumerable<MatchSummary>>(body);
 
             // Deserialize the error response
             var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
