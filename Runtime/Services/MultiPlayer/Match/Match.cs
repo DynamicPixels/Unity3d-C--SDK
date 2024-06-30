@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using DynamicPixels.GameService.Models;
 using DynamicPixels.GameService.Models.outputs;
+using DynamicPixels.GameService.Services.MultiPlayer.Match.Models;
 using DynamicPixels.GameService.Utils.HttpClient;
 using Newtonsoft.Json;
 
@@ -62,7 +63,10 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
             var body = await reader.ReadToEndAsync();
 
             if (response.IsSuccessStatusCode)
-                return body;
+            {
+                var result = JsonConvert.DeserializeObject<MatchState>(body);
+                return result.StateData;
+            }
 
             // Deserialize the error response
             var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
