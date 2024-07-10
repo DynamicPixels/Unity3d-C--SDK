@@ -78,14 +78,14 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
             throw new DynamicPixelsException(errorCode, errorResponse?.Message);
         }
 
-        public async Task<Match> SavePlayerData(int playerId, string metadata)
+        public async Task<MatchPlayer> SavePlayerData(string metadata)
         {
-            var response = await WebRequest.Put(UrlMap.SavePlayerMetaDataUrl(Id, playerId), $"{{ metadata: {metadata} }}");
+            var response = await WebRequest.Put(UrlMap.SavePlayerMetaDataUrl(Id), $"{{ metadata: {metadata} }}");
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
 
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<Match>(body);
+                return JsonConvert.DeserializeObject<MatchPlayer>(body);
 
             // Deserialize the error response
             var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
@@ -112,14 +112,14 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
             return UpdateStatus(MatchStatus.Resumed);
         }
 
-        public async Task<Match> Finish(string metadata)
+        public async Task Finish(string metadata)
         {
             var response = await WebRequest.Put(UrlMap.FinishMatchUrl(Id), $"{{ metadata: {metadata} }}");
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
 
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<Match>(body);
+                return;
 
             // Deserialize the error response
             var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);

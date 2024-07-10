@@ -16,7 +16,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
         //put
         public static string SaveUrl(int matchId) => $"{_baseUrl}/{matchId}";
         public static string SaveState(int matchId, string stateKey) => $"{_baseUrl}/{matchId}/states/{stateKey}";
-        public static string SavePlayerMetaDataUrl(int matchId, int playerId) => $"{_baseUrl}/{matchId}/players/{playerId}";
+        public static string SavePlayerMetaDataUrl(int matchId) => $"{_baseUrl}/{matchId}/players";
         public static string FinishMatchUrl(int matchId) => $"{_baseUrl}/{matchId}/finish";
 
         // patch
