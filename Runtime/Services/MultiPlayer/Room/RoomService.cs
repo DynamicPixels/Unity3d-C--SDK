@@ -44,7 +44,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 
         public Task<Room> CreateAndOpenRoom(CreateRoomParams input)
         {
-            input.State = RoomState.Open;
+            input.State = RoomStatus.Open;
             return CreateRoom(input);
         }
 

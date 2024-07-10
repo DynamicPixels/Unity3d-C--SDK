@@ -22,8 +22,9 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         public int? MinXp { get; set; }
         public int? MaxXp { get; set; }
         public bool IsPermanent { get; set; }
-        public RoomState State { get; set; }
+        public RoomStatus Status { get; set; }
         public bool IsTurnBasedGame { get; set; }
+        public bool IsLocked { get; set; }
         public GameOrderType? GameOrderType { get; set; }
         public string Metadata { get; set; }
         public int CreatorId { get; set; }
@@ -47,14 +48,14 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 
         public async Task Open()
         {
-            var sendingBody = new { State = nameof(RoomState.Open) };
+            var sendingBody = new { State = nameof(RoomStatus.Open) };
             var response = await WebRequest.Put(UrlMap.UpdateStatusUrl(Id), JsonConvert.SerializeObject(sendingBody));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                State = RoomState.Open;
+                Status = RoomStatus.Open;
                 return;
             }
 
@@ -70,14 +71,14 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 
         public async Task Lock()
         {
-            var sendingBody = new { State = nameof(RoomState.Lock) };
+            var sendingBody = new { State = nameof(RoomStatus.Lock) };
             var response = await WebRequest.Put(UrlMap.UpdateStatusUrl(Id), JsonConvert.SerializeObject(sendingBody));
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
             var body = await reader.ReadToEndAsync();
 
             if (response.IsSuccessStatusCode)
             {
-                State = RoomState.Lock;
+                Status = RoomStatus.Lock;
                 return;
             }
 
@@ -194,7 +195,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         public List<string> Tags { get; set; }
     }
 
-    public enum RoomState
+    public enum RoomStatus
     {
         Initial = 0,
         Open = 1,
