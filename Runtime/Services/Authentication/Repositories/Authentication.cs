@@ -1,10 +1,7 @@
-using System.IO;
 using System.Threading.Tasks;
-using DynamicPixels.GameService.Models;
 using DynamicPixels.GameService.Models.outputs;
 using DynamicPixels.GameService.Services.Authentication.Models;
 using DynamicPixels.GameService.Utils.HttpClient;
-using Newtonsoft.Json;
 
 namespace DynamicPixels.GameService.Services.Authentication.Repositories
 {
@@ -15,183 +12,44 @@ namespace DynamicPixels.GameService.Services.Authentication.Repositories
         {
         }
 
-        public async Task<LoginResponse> RegisterWithEmail<T>(T input) where T : RegisterWithEmailParams
+        public Task<LoginResponse> RegisterWithEmail<T>(T input) where T : RegisterWithEmailParams
         {
-            var response = await WebRequest.Post(UrlMap.SignupUrl, input.ToString());
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-            if (response.IsSuccessStatusCode)
-            {
-                return JsonConvert.DeserializeObject<LoginResponse>(body);
-            }
-            else
-            {
-                // Deserialize the error response
-                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-                // Get the corresponding ErrorCode from the error message
-                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-                // Throw the DynamicPixelsException with the ErrorCode
-                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
-            }
+            return WebRequest.Post< LoginResponse>(UrlMap.SignupUrl, input.ToString());
         }
 
-        public async Task<LoginResponse> LoginWithEmail<T>(T input) where T : LoginWithEmailParams
+        public Task<LoginResponse> LoginWithEmail<T>(T input) where T : LoginWithEmailParams
         {
-            var response = await WebRequest.Post(UrlMap.SigninUrl, input.ToString());
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-            if (response.IsSuccessStatusCode)
-            {
-                return JsonConvert.DeserializeObject<LoginResponse>(body);
-            }
-            else
-            {
-                // Deserialize the error response
-                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-                // Get the corresponding ErrorCode from the error message
-                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-                // Throw the DynamicPixelsException with the ErrorCode
-                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
-            }
+            return WebRequest.Post< LoginResponse>(UrlMap.SigninUrl, input.ToString());
         }
 
-        public async Task<LoginResponse> LoginWithToken<T>(T input) where T : LoginWithTokenParams
+        public Task<LoginResponse> LoginWithToken<T>(T input) where T : LoginWithTokenParams
         {
-            var response = await WebRequest.Post(UrlMap.LoginWithToken, input.ToString());
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-            if (response.IsSuccessStatusCode)
-            {
-                return JsonConvert.DeserializeObject<LoginResponse>(body);
-            }
-            else
-            {
-                // Deserialize the error response
-                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-                // Get the corresponding ErrorCode from the error message
-                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-                // Throw the DynamicPixelsException with the ErrorCode
-                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
-            }
+            return WebRequest.Post<LoginResponse>(UrlMap.LoginWithToken, input.ToString());
         }
 
-        public async Task<LoginResponse> LoginWithGoogle<T>(T input) where T : LoginWithGoogleParams
+        public Task<LoginResponse> LoginWithGoogle<T>(T input) where T : LoginWithGoogleParams
         {
-            var response = await WebRequest.Post(UrlMap.GoogleAuthUrl, input.ToString());
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-            if (response.IsSuccessStatusCode)
-            {
-                return JsonConvert.DeserializeObject<LoginResponse>(body);
-            }
-            else
-            {
-                // Deserialize the error response
-                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-                // Get the corresponding ErrorCode from the error message
-                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-                // Throw the DynamicPixelsException with the ErrorCode
-                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
-            }
-
+            return WebRequest.Post<LoginResponse>(UrlMap.GoogleAuthUrl, input.ToString());
         }
 
-        public async Task<LoginResponse> LoginAsGuest<T>(T input) where T : LoginAsGuestParams
+        public Task<LoginResponse> LoginAsGuest<T>(T input) where T : LoginAsGuestParams
         {
-            var response = await WebRequest.Post(UrlMap.GuestAuthUrl, input.ToString());
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-            if (response.IsSuccessStatusCode)
-            {
-                return JsonConvert.DeserializeObject<LoginResponse>(body);
-            }
-            else
-            {
-                // Deserialize the error response
-                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-                // Get the corresponding ErrorCode from the error message
-                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-                // Throw the DynamicPixelsException with the ErrorCode
-                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
-            }
+            return WebRequest.Post<LoginResponse>(UrlMap.GuestAuthUrl, input.ToString());
         }
 
-        public async Task<bool> IsOtaReady<T>(T input) where T : IsOtaReadyParams
+        public Task<bool> IsOtaReady<T>(T input) where T : IsOtaReadyParams
         {
-            var response = await WebRequest.Post(UrlMap.IsOtaReadyUrl, input.ToString());
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-            if (response.IsSuccessStatusCode)
-            {
-                return JsonConvert.DeserializeObject<bool>(body);
-            }
-            else
-            {
-                // Deserialize the error response
-                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-                // Get the corresponding ErrorCode from the error message
-                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-                // Throw the DynamicPixelsException with the ErrorCode
-                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
-            }
-
+            return WebRequest.Post<bool>(UrlMap.IsOtaReadyUrl, input.ToString());
         }
 
-        public async Task<ActionResponse> SendOtaToken<T>(T input) where T : SendOtaTokenParams
+        public Task<ActionResponse> SendOtaToken<T>(T input) where T : SendOtaTokenParams
         {
-            var response = await WebRequest.Post(UrlMap.SendOtaUrl, input.ToString());
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-            if (response.IsSuccessStatusCode)
-            {
-                return JsonConvert.DeserializeObject<ActionResponse>(body);
-            }
-            else
-            {
-                // Deserialize the error response
-                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-                // Get the corresponding ErrorCode from the error message
-                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-                // Throw the DynamicPixelsException with the ErrorCode
-                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
-            }
-
+            return WebRequest.Post<ActionResponse>(UrlMap.SendOtaUrl, input.ToString());
         }
 
-        public async Task<LoginResponse> VerifyOtaToken<T>(T input) where T : VerifyOtaTokenParams
+        public Task<LoginResponse> VerifyOtaToken<T>(T input) where T : VerifyOtaTokenParams
         {
-            var response = await WebRequest.Post(UrlMap.VerifyOtaUrl, input.ToString());
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-            if (response.IsSuccessStatusCode)
-            {
-                return JsonConvert.DeserializeObject<LoginResponse>(body);
-            }
-            else
-            {
-                // Deserialize the error response
-                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-                // Get the corresponding ErrorCode from the error message
-                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-                // Throw the DynamicPixelsException with the ErrorCode
-                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
-            }
+            return WebRequest.Post<LoginResponse>(UrlMap.VerifyOtaUrl, input.ToString());
         }
     }
 }

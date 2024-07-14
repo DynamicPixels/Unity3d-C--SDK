@@ -1,11 +1,7 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using DynamicPixels.GameService.Models;
-using DynamicPixels.GameService.Models.outputs;
 using DynamicPixels.GameService.Services.MultiPlayer.Match.Models;
 using DynamicPixels.GameService.Utils.HttpClient;
-using Newtonsoft.Json;
 
 namespace DynamicPixels.GameService.Services.MultiPlayer.Match
 {
@@ -18,83 +14,26 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
         public IEnumerable<MatchPlayer> Players { get; set; }
         public Room.Room Room { get; set; }
 
-        public async Task<Match> Save(string matchMetadata)
+        public Task<Match> Save(string matchMetadata)
         {
-            var response = await WebRequest.Put(UrlMap.SaveUrl(Id), $"{{ metadata: {matchMetadata} }}");
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<Match>(body);
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            return WebRequest.Put<Match>(UrlMap.SaveUrl(Id), $"{{ metadata: {matchMetadata} }}");
         }
 
-        public async Task SaveState(string key, string value)
+        public  Task SaveState(string key, string value)
         {
-            var response = await WebRequest.Put(UrlMap.SaveState(Id, key), $"{{ value: {value} }}");
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-                return;
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            return WebRequest.Put(UrlMap.SaveState(Id, key), $"{{ value: {value} }}");
         }
 
         public async Task<string> LoadState(string key)
         {
-            var response = await WebRequest.Get(UrlMap.LoadState(Id, key));
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                var result = JsonConvert.DeserializeObject<MatchState>(body);
-                return result.StateData;
-            }
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            var result = await WebRequest.Get<MatchState>(UrlMap.LoadState(Id, key));
+            return result.StateData;
         }
 
-        public async Task<MatchPlayer> SavePlayerData(string metadata)
+        public Task<MatchPlayer> SavePlayerData(string metadata)
         {
-            var response = await WebRequest.Put(UrlMap.SavePlayerMetaDataUrl(Id), $"{{ metadata: {metadata} }}");
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
+            return WebRequest.Put<MatchPlayer>(UrlMap.SavePlayerMetaDataUrl(Id), $"{{ metadata: {metadata} }}");
 
-            if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<MatchPlayer>(body);
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
         }
 
         public Task<Match> Start()
@@ -112,61 +51,19 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
             return UpdateStatus(MatchStatus.Resumed);
         }
 
-        public async Task Finish(string metadata)
+        public Task Finish(string metadata)
         {
-            var response = await WebRequest.Put(UrlMap.FinishMatchUrl(Id), $"{{ metadata: {metadata} }}");
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-                return;
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            return WebRequest.Put(UrlMap.FinishMatchUrl(Id), $"{{ metadata: {metadata} }}");
         }
 
-        public async Task LeaveAndAbort()
+        public Task LeaveAndAbort()
         {
-            var response = await WebRequest.Delete(UrlMap.LeaveAndAbortUrl(Id));
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-                return;
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            return WebRequest.Delete(UrlMap.LeaveAndAbortUrl(Id));
         }
 
-        private async Task<Match> UpdateStatus(MatchStatus status)
+        private Task<Match> UpdateStatus(MatchStatus status)
         {
-            var response = await WebRequest.Put(UrlMap.UpdateMatchStatusUrl(Id), $"{{ status: {status} }}");
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<Match>(body);
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            return WebRequest.Put<Match>(UrlMap.UpdateMatchStatusUrl(Id), $"{{ status: {status} }}");
         }
     }
 

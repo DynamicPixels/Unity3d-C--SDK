@@ -49,47 +49,15 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         public async Task Open()
         {
             var sendingBody = new { State = nameof(RoomStatus.Open) };
-            var response = await WebRequest.Put(UrlMap.UpdateStatusUrl(Id), JsonConvert.SerializeObject(sendingBody));
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                Status = RoomStatus.Open;
-                return;
-            }
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            await WebRequest.Put(UrlMap.UpdateStatusUrl(Id), JsonConvert.SerializeObject(sendingBody));
+            Status = RoomStatus.Open;
         }
 
         public async Task Lock()
         {
             var sendingBody = new { State = nameof(RoomStatus.Lock) };
-            var response = await WebRequest.Put(UrlMap.UpdateStatusUrl(Id), JsonConvert.SerializeObject(sendingBody));
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                Status = RoomStatus.Lock;
-                return;
-            }
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            await WebRequest.Put(UrlMap.UpdateStatusUrl(Id), JsonConvert.SerializeObject(sendingBody));
+            Status = RoomStatus.Lock;
         }
 
         public Task SendToUser(int receiverId, string message)
@@ -127,23 +95,9 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
             return _socketAgent.Send(packet);
         }
 
-        public async Task Leave()
+        public Task Leave()
         {
-            var response = await WebRequest.Delete(UrlMap.LeaveRoomUrl(Id));
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (!response.IsSuccessStatusCode)
-            {
-                // Deserialize the error response
-                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-                // Get the corresponding ErrorCode from the error message
-                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-                // Throw the DynamicPixelsException with the ErrorCode
-                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
-            }
+            return WebRequest.Delete(UrlMap.LeaveRoomUrl(Id));
         }
 
         private void UserJoinedListenerAction(string message)

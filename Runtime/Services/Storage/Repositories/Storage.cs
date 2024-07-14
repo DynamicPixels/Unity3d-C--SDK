@@ -1,4 +1,3 @@
-using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -31,30 +30,10 @@ namespace DynamicPixels.GameService.Services.Storage.Repositories
             // Convert the object to JSON
             string json = JsonConvert.SerializeObject(fileInfo, Formatting.Indented);
 
-            var response = await WebRequest.Post(UrlMap.GetUploadFileUrl, json);
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
+            var response = await WebRequest.Post<FileMetaForUpload>(UrlMap.GetUploadFileUrl, json);
+            await PutFile(response.row, input.FileContent, input.Name, input.ContentType);
 
-            if (response.IsSuccessStatusCode)
-            {
-                var row = JsonConvert.DeserializeObject<FileMetaForUpload>(body);
-
-                await PutFile(row.row, input.FileContent, input.Name, input.ContentType);
-
-                return JsonConvert.DeserializeObject<FileMetaForUpload>(body);
-
-            }
-            else
-            {
-                // Deserialize the error response
-                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-                // Get the corresponding ErrorCode from the error message
-                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-                // Throw the DynamicPixelsException with the ErrorCode
-                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
-            }
+            return response;
         }
 
         public async Task<FileMetaForUpload> PutFile(string url, byte[] fileContent, string Name, string contenttype)
