@@ -41,6 +41,19 @@ namespace DynamicPixels.GameService.Utils.HttpClient
             await DoRequest(url, HttpMethod.Put, body, headers);
         }
 
+        internal static async Task<T> Patch<T>(string url, string body = null,
+            Dictionary<string, string> headers = null)
+        {
+            var result = await DoRequest(url, HttpMethod.Patch, body, headers);
+            return JsonConvert.DeserializeObject<T>(result);
+        }
+
+        internal static async Task Patch(string url, string body = null,
+            Dictionary<string, string> headers = null)
+        {
+            await DoRequest(url, HttpMethod.Patch, body, headers);
+        }
+
         internal static async Task<T> Post<T>(string url, string body = null,
             Dictionary<string, string> headers = null)
         {
