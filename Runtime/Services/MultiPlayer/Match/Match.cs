@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DynamicPixels.GameService.Services.MultiPlayer.Match.Models;
 using DynamicPixels.GameService.Utils.HttpClient;
+using Newtonsoft.Json;
 
 namespace DynamicPixels.GameService.Services.MultiPlayer.Match
 {
@@ -16,12 +17,14 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
 
         public Task<Match> Save(string matchMetadata)
         {
-            return WebRequest.Put<Match>(UrlMap.SaveUrl(Id), $"{{ metadata: {matchMetadata} }}");
+            var data = new { Metadata = matchMetadata };
+            return WebRequest.Put<Match>(UrlMap.SaveUrl(Id), JsonConvert.SerializeObject(data));
         }
 
-        public  Task SaveState(string key, string value)
+        public Task SaveState(string key, string value)
         {
-            return WebRequest.Put(UrlMap.SaveState(Id, key), $"{{ value: {value} }}");
+            var data = new { StateData = value };
+            return WebRequest.Put(UrlMap.SaveState(Id, key), JsonConvert.SerializeObject(data));
         }
 
         public async Task<string> LoadState(string key)
@@ -32,7 +35,8 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
 
         public Task<MatchPlayer> SavePlayerData(string metadata)
         {
-            return WebRequest.Put<MatchPlayer>(UrlMap.SavePlayerMetaDataUrl(Id), $"{{ metadata: {metadata} }}");
+            var data = new { Metadata = metadata };
+            return WebRequest.Put<MatchPlayer>(UrlMap.SavePlayerMetaDataUrl(Id), JsonConvert.SerializeObject(data));
 
         }
 
@@ -51,9 +55,9 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
             return UpdateStatus(MatchStatus.Resumed);
         }
 
-        public Task Finish(string metadata)
+        public Task Finish()
         {
-            return WebRequest.Put(UrlMap.FinishMatchUrl(Id), $"{{ metadata: {metadata} }}");
+            return WebRequest.Patch(UrlMap.FinishMatchUrl(Id));
         }
 
         public Task LeaveAndAbort()
@@ -63,7 +67,8 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
 
         private Task<Match> UpdateStatus(MatchStatus status)
         {
-            return WebRequest.Put<Match>(UrlMap.UpdateMatchStatusUrl(Id), $"{{ status: {status} }}");
+            var data = new { Status = status };
+            return WebRequest.Put<Match>(UrlMap.UpdateMatchStatusUrl(Id), JsonConvert.SerializeObject(data));
         }
     }
 
