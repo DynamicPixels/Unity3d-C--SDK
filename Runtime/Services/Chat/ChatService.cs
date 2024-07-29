@@ -9,9 +9,8 @@ using DynamicPixels.GameService.Models;
 using DynamicPixels.GameService.Services.Chat;
 using DynamicPixels.GameService.Services.Chat.Models;
 using DynamicPixels.GameService.Services.Chat.Repositories;
-using DynamicPixels.GameService.Services.MultiPlayer.Room;
 using DynamicPixels.GameService.Utils.WebsocketClient;
-using Unity.Plastic.Newtonsoft.Json;
+using Newtonsoft.Json;
 using MessageType = DynamicPixels.Services.Chat.MessageType;
 
 namespace DynamicPixels.GameService.Services.services
@@ -22,12 +21,12 @@ namespace DynamicPixels.GameService.Services.services
         private readonly ISocketAgent _socketAgent;
         private readonly IChatRepository _repository;
 
-        public event EventHandler OnPrivateMessage;
-        public event EventHandler OnPublicMessage;
-        public event EventHandler OnSubscribe;
-        public event EventHandler OnUnsubscribe;
-        public event EventHandler OnEditMessage;
-        public event EventHandler OnDeleteMessage;
+        public event EventHandler<Message> OnPrivateMessage;
+        public event EventHandler<Message> OnPublicMessage;
+        public event EventHandler<Conversation> OnSubscribe;
+        public event EventHandler<int> OnUnsubscribe;
+        public event EventHandler<Message> OnEditMessage;
+        public event EventHandler<Message> OnDeleteMessage;
         public event EventHandler OnDeleteAllMessage;
 
         public ChatService(ISocketAgent socketAgent)
@@ -42,22 +41,27 @@ namespace DynamicPixels.GameService.Services.services
             switch (packet.Method)
             {
                 case MessageType.ChatSendPrivate:
-                    OnPrivateMessage?.Invoke(this, packet);
+                    var privateMsg = JsonConvert.DeserializeObject<Message>(packet.Payload);
+                    OnPrivateMessage?.Invoke(this, privateMsg);
                     break;
                 case MessageType.ChatSendGroup:
-                    OnPublicMessage?.Invoke(this, packet);
+                    var groupMsg = JsonConvert.DeserializeObject<Message>(packet.Payload);
+                    OnPublicMessage?.Invoke(this, groupMsg);
                     break;
                 case MessageType.ChatSubscribe:
-                    OnSubscribe?.Invoke(this, packet);
+                    var conversation = JsonConvert.DeserializeObject<Conversation>(packet.Payload);
+                    OnSubscribe?.Invoke(this, conversation);
                     break;
                 case MessageType.ChatUnsubscribe:
-                    OnUnsubscribe?.Invoke(this, packet);
+                    OnUnsubscribe?.Invoke(this, Int32.Parse(packet.Payload));
                     break;
                 case MessageType.ChatMessageEdit:
-                    OnEditMessage?.Invoke(this, packet);
+                    var editedMsg = JsonConvert.DeserializeObject<Message>(packet.Payload);
+                    OnEditMessage?.Invoke(this, editedMsg);
                     break;
                 case MessageType.ChatMessageDelete:
-                    OnDeleteMessage?.Invoke(this, packet);
+                    var deletedMsg = JsonConvert.DeserializeObject<Message>(packet.Payload);
+                    OnDeleteMessage?.Invoke(this, deletedMsg);
                     break;
                 case MessageType.ChatMessageDeleteAll:
                     OnDeleteAllMessage?.Invoke(this, packet);
