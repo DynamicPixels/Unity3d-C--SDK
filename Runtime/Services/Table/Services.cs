@@ -4,7 +4,6 @@ using DynamicPixels.GameService.Services.Device;
 using DynamicPixels.GameService.Services.Friendship;
 using DynamicPixels.GameService.Services.Leaderboard;
 using DynamicPixels.GameService.Services.MultiPlayer.Match;
-using DynamicPixels.GameService.Services.MultiPlayer.Realtime;
 using DynamicPixels.GameService.Services.MultiPlayer.Room;
 using DynamicPixels.GameService.Services.Party;
 using DynamicPixels.GameService.Services.services;
@@ -27,8 +26,7 @@ namespace DynamicPixels.GameService.Services.Table
             Devices = new DeviceService();
             MultiPlayer = new MultiPlayer.MultiPlayer(
                 new RoomService(agent),
-                new MatchService(),
-                new RealtimeService(agent));
+                new MatchService());
         }
 
         public ILeaderboard Leaderboard { get; private set; }

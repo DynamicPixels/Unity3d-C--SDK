@@ -1,98 +1,175 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using DynamicPixels.GameService.Models;
+using DynamicPixels.GameService.Models.outputs;
+using DynamicPixels.GameService.Utils.Logger;
+using Newtonsoft.Json;
+using UnityEngine;
 
 namespace DynamicPixels.GameService.Utils.HttpClient
 {
     internal static class WebRequest
     {
+        private static readonly string _baseUrl = ServiceHub.DevelopmentMode
+            ? $"http://localhost:5286/game/{ServiceHub.ClientId}"
+            : $"https://link.dynamicpixels.dev/game/{ServiceHub.ClientId}";
 
-        private static string _baseUrl =
-            !ServiceHub.DevelopmentMode
-            ?
-                $"https://link.dynamicpixels.dev/game/{ServiceHub.ClientId}"
-            :
-                $"http://localhost:5286/game/{ServiceHub.ClientId}";
+        private static System.Net.Http.HttpClient _client = new() { Timeout = TimeSpan.FromSeconds(15) };
+        private static readonly string _userAgent = "UnitySDK-" + ServiceHub.Version();
 
-        private static System.Net.Http.HttpClient _client;
-        private static readonly string UserAgent = "UnitySDK-" + ServiceHub.Version();
-
-        private static void InitWebRequest()
+        internal static async Task<T> Get<T>(string url, Dictionary<string, string> headers = null)
         {
-            if (_client != null) return;
-
-            _client = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(15) };
+            var result = await DoRequest(url, HttpMethod.Get, null, headers);
+            return JsonConvert.DeserializeObject<T>(result);
         }
 
-        internal static async Task<HttpResponseMessage> Get(string url, Dictionary<string, string> headers = null)
-        {
-            InitWebRequest();
-            return await DoRequest(url, WebRequestMethod.Get, null, headers);
-        }
-
-        internal static async Task<HttpResponseMessage> Put(string url, string body = null,
+        internal static async Task<T> Put<T>(string url, string body = null,
             Dictionary<string, string> headers = null)
         {
-            InitWebRequest();
-            return await DoRequest(url, WebRequestMethod.Put, body, headers);
+            var result = await DoRequest(url, HttpMethod.Put, body, headers);
+            return JsonConvert.DeserializeObject<T>(result);
         }
 
-        internal static Task<HttpResponseMessage> Post(string url, string body = null,
+        internal static async Task Put(string url, string body = null,
             Dictionary<string, string> headers = null)
         {
-            //try
-            //{
-                InitWebRequest();
-                return DoRequest(url, WebRequestMethod.Post, body, headers);
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e);
-            //    throw;
-            //}
+            await DoRequest(url, HttpMethod.Put, body, headers);
         }
 
-        internal static async Task<HttpResponseMessage> Delete(string url, Dictionary<string, string> headers = null)
-        {
-            InitWebRequest();
-            return await DoRequest(url, WebRequestMethod.Delete, null, headers);
-        }
-
-        internal static async Task<HttpResponseMessage> DoMultiPartPost(string url, byte[] data,
+        internal static async Task<T> Patch<T>(string url, string body = null,
             Dictionary<string, string> headers = null)
         {
-            InitWebRequest();
-
-            var httpClient = Init(headers);
-            var dataContent = new MultipartFormDataContent
-            {
-                {new ByteArrayContent(data), "file", "file"}
-            };
-            return await httpClient.PostAsync(url, dataContent);
+            var result = await DoRequest(url, HttpMethod.Patch, body, headers);
+            return JsonConvert.DeserializeObject<T>(result);
         }
 
-        private static System.Net.Http.HttpClient Init(Dictionary<string, string> headers = null)
+        internal static async Task Patch(string url, string body = null,
+            Dictionary<string, string> headers = null)
         {
-            _client.DefaultRequestHeaders.Clear();
+            await DoRequest(url, HttpMethod.Patch, body, headers);
+        }
 
+        internal static async Task<T> Post<T>(string url, string body = null,
+            Dictionary<string, string> headers = null)
+        {
+            var result = await DoRequest(url, HttpMethod.Post, body, headers);
+            return JsonConvert.DeserializeObject<T>(result);
+
+        }
+
+        internal static async Task Post(string url, string body = null,
+            Dictionary<string, string> headers = null)
+        {
+            await DoRequest(url, HttpMethod.Post, body, headers);
+        }
+
+        internal static async Task<T> Delete<T>(string url, Dictionary<string, string> headers = null)
+        {
+            var result = await DoRequest(url, HttpMethod.Delete, null, headers);
+            return JsonConvert.DeserializeObject<T>(result);
+
+        }
+
+        internal static async Task Delete(string url, Dictionary<string, string> headers = null)
+        {
+            await DoRequest(url, HttpMethod.Delete, null, headers);
+        }
+
+        private static async Task<string> DoRequest(
+            string url,
+            HttpMethod method,
+            string body = null,
+            Dictionary<string, string> headers = null,
+            CancellationToken cancellationToken = default
+        )
+        {
+            url = _baseUrl + url;
+
+            var request = new HttpRequestMessage(method, url);
+            var response = await request
+                .SetHeaders(headers)
+                .AddJsonBody(body)
+                .Send(cancellationToken);
+
+            LogHelper.LogNormal<string>(DebugLocation.Http, "DoRequest", url);
+
+
+            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
+            var result = await reader.ReadToEndAsync();
+
+            if (response.IsSuccessStatusCode)
+                return result;
+
+            Debug.LogError($"Server Error: {result}");
+
+            // Deserialize the error response
+            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(result);
+
+            // Get the corresponding ErrorCode from the error message
+            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
+            
+            if (errorCode == ErrorCode.UnknownError)
+                throw new DynamicPixelsException(errorCode, response.ToString());
+
+            // Throw the DynamicPixelsException with the ErrorCode
+            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+
+            //var content = await responseMessage.Content.ReadAsStringAsync();
+            //var problemDetails = string.IsNullOrWhiteSpace(content)
+            //    ? new() { Title = responseMessage.ReasonPhrase }
+            //    : JsonSerializer.Deserialize<ProblemDetails>(content);
+
+            //throw new RestApiClientException(problemDetails);
+        }
+        
+        //internal static async Task<HttpResponseMessage> DoMultiPartPost(string url, byte[] data,
+        //    Dictionary<string, string> headers = null)
+        //{
+        //    var httpClient = SetHeaders(headers);
+        //    var dataContent = new MultipartFormDataContent
+        //    {
+        //        { new ByteArrayContent(data), "file", "file" }
+        //    };
+        //    return await httpClient.PostAsync(url, dataContent);
+        //}
+
+        private static HttpRequestMessage SetHeaders(this HttpRequestMessage request,
+            Dictionary<string, string> headers = null)
+        {
             if (ServiceHub.Token != string.Empty)
-            {
-                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ServiceHub.Token);
-            }
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", ServiceHub.Token);
 
-            _client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
+            request.Headers.Add("User-Agent", _userAgent);
 
-            if (headers == null) return _client;
+            if (headers == null) return request;
+
             foreach (var header in headers)
-                _client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                request.Headers.Add(header.Key, header.Value);
 
-            return _client;
+            return request;
+        }
+        private static HttpRequestMessage AddJsonBody(this HttpRequestMessage request, string body)
+        {
+            if (body is null)
+                return request;
+
+            request.Content =
+                new StringContent(body, Encoding.UTF8, "application/json");
+
+            return request;
         }
 
+        private static Task<HttpResponseMessage> Send(this HttpRequestMessage request,
+            CancellationToken cancellationToken = default)
+        {
+            return _client.SendAsync(request, cancellationToken);
+        }
 
         internal static void Dispose()
         {
@@ -105,48 +182,6 @@ namespace DynamicPixels.GameService.Utils.HttpClient
             {
                 // ignored
             }
-        }
-
-
-        private static Task<HttpResponseMessage> DoRequest(
-            string url,
-            WebRequestMethod method = WebRequestMethod.Get,
-            string body = null,
-            Dictionary<string, string> headers = null
-        )
-        {
-            var httpClient = Init(headers);
-            StringContent content = null;
-            if (body != null) content = new StringContent(body, Encoding.UTF8, "application/json");
-            url = _baseUrl + url;
-
-
-            Logger.LogHelper.LogNormal<string>(DebugLocation.Http, "DoRequest", url);
-
-            //try
-            //{
-                switch (method)
-                {
-                    case WebRequestMethod.Get:
-                        return httpClient.GetAsync(url);
-                    case WebRequestMethod.Post:
-                        return httpClient.PostAsync(url, content);
-                    case WebRequestMethod.Put:
-                        return httpClient.PutAsync(url, content);
-                    case WebRequestMethod.Delete:
-                        return httpClient.DeleteAsync(url);
-                    default:
-                        throw new DynamicPixelsException(ErrorCode.UnknownError, "Invalid request method");
-                }
-            //}
-            //catch (Exception e)
-            //{
-            //    if (e is OperationCanceledException)
-            //        throw new DynamicPixelsException(ErrorCode.UnknownError, "Request failed: " + e.Message);
-
-            //    // You might want to provide more information or a different error code here
-            //    throw new DynamicPixelsException(ErrorCode.UnknownError, "Request failed: " + e.Message);
-            //}
         }
     }
 }

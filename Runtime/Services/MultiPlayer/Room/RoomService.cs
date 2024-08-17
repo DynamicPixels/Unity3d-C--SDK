@@ -21,222 +21,72 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 
         public async Task<Room> CreateRoom(CreateRoomParams input)
         {
-            var response = await WebRequest.Post(UrlMap.CreateRoomUrl, input.ToString());
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                var room = JsonConvert.DeserializeObject<Room>(body);
-                room.Config(_socketAgent);
-                return room;
-            }
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            var room = await WebRequest.Post<Room>(UrlMap.CreateRoomUrl, input.ToString());
+            room.Config(_socketAgent);
+            return room;
         }
 
         public Task<Room> CreateAndOpenRoom(CreateRoomParams input)
         {
-            input.State = RoomState.Open;
+            input.State = RoomStatus.Open;
             return CreateRoom(input);
         }
 
         public async Task<IEnumerable<Room>> GetAllRooms(GetAllRoomsParams inputParams)
         {
-            var response = await WebRequest.Get(UrlMap.GetAllRoomsUrl);
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<Room>>(body)!.List;
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            var response = await WebRequest.Get<RowListResponse<Room>>(UrlMap.GetAllRoomsUrl);
+            return response!.List;
         }
 
         public async Task<IEnumerable<Room>> GetAllMatchedRooms(GetAllRoomsParams inputParams)
         {
-            var response = await WebRequest.Get(UrlMap.GetAllMatchedRoomsUrl);
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<RowListResponse<Room>>(body)!.List;
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            var response = await WebRequest.Get<RowListResponse<Room>>(UrlMap.GetAllMatchedRoomsUrl);
+            return response!.List;
         }
 
         public async Task<Room> GetRoomById(int roomId)
         {
-            var response = await WebRequest.Get(UrlMap.GetRoomByIdUrl(roomId));
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                var room = JsonConvert.DeserializeObject<Room>(body);
-                room.Config(_socketAgent);
-                return room;
-            }
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            var room = await WebRequest.Get<Room>(UrlMap.GetRoomByIdUrl(roomId));
+            room.Config(_socketAgent);
+            return room;
         }
 
         public async Task<Room> GetRoomByName(string name)
         {
-            var response = await WebRequest.Get(UrlMap.GetRoomByNameUrl(name));
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                var room = JsonConvert.DeserializeObject<Room>(body);
-                room.Config(_socketAgent);
-                return room;
-            }
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            var room = await WebRequest.Get<Room>(UrlMap.GetRoomByNameUrl(name));
+            room.Config(_socketAgent);
+            return room;
         }
 
         public async Task<Room> Join(int roomId)
         {
-            var response = await WebRequest.Post(UrlMap.JoinToRoomByIdUrl(roomId));
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                var room = JsonConvert.DeserializeObject<Room>(body);
-                room.Config(_socketAgent);
-                return room;
-            }
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            var room = await WebRequest.Post<Room>(UrlMap.JoinToRoomByIdUrl(roomId));
+            room.Config(_socketAgent);
+            return room;
         }
 
         public async Task<Room> Join(string roomName)
         {
-            var response = await WebRequest.Post(UrlMap.JoinToRoomByNameUrl(roomName));
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                var room = JsonConvert.DeserializeObject<Room>(body);
-                room.Config(_socketAgent);
-                return room;
-            }
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            var room = await WebRequest.Post<Room>(UrlMap.JoinToRoomByNameUrl(roomName));
+            room.Config(_socketAgent);
+            return room;
         }
 
         public async Task<Room> AutoMatch()
         {
-            var response = await WebRequest.Post(UrlMap.AutoMatchUrl);
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (response.IsSuccessStatusCode)
-            {
-                var room = JsonConvert.DeserializeObject<Room>(body);
-                room.Config(_socketAgent);
-                return room;
-            }
-
-            // Deserialize the error response
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-            // Get the corresponding ErrorCode from the error message
-            var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-            // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            var room = await WebRequest.Post<Room>(UrlMap.AutoMatchUrl);
+            room.Config(_socketAgent);
+            return room;
         }
 
-        public async Task Leave(int roomId)
+        public Task Leave(int roomId)
         {
-            var response = await WebRequest.Delete(UrlMap.LeaveRoomUrl(roomId));
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (!response.IsSuccessStatusCode)
-            {
-                // Deserialize the error response
-                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-                // Get the corresponding ErrorCode from the error message
-                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-                // Throw the DynamicPixelsException with the ErrorCode
-                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
-            }
+            return WebRequest.Delete(UrlMap.LeaveRoomUrl(roomId));
         }
 
-        public async Task DeleteRoom(int roomId)
+        public Task DeleteRoom(int roomId)
         {
-            var response = await WebRequest.Delete(UrlMap.DeleteRoomUrl(roomId));
-            using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
-            var body = await reader.ReadToEndAsync();
-
-            if (!response.IsSuccessStatusCode)
-            {
-                // Deserialize the error response
-                var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(body);
-
-                // Get the corresponding ErrorCode from the error message
-                var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-
-                // Throw the DynamicPixelsException with the ErrorCode
-                throw new DynamicPixelsException(errorCode, errorResponse?.Message);
-            }
+            return WebRequest.Delete(UrlMap.DeleteRoomUrl(roomId));
         }
     }
 }
