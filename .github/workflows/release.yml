@@ -26,13 +26,13 @@ jobs:
       - name: create unitypackage from glob pattern
         uses: natsuneko-laboratory/create-unitypackage@v3
         with:
+          root: ./
           files-glob: |
-            *
-          dest: dynamicpixels.unitypackage
+            ./**/*
+          respect-gitignore: false
+          dest: dist/dynamicpixels.unitypackage
 
-      # Upload
-      - name: Upload .unitypackage
-        uses: actions/upload-artifact@v2
+      - name: upload artifacts
+        uses: actions/upload-artifact@v3
         with:
-          name: Unity Package
-          path: dynamicpixels.unitypackage
+          path: ./dist/*.unitypackage
