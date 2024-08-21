@@ -27,7 +27,7 @@ jobs:
         uses: natsuneko-laboratory/create-unitypackage@v3
         with:
           files-glob: |
-            ./**/*.cs
+            ./**/*
           dest: dynamicpixels.unitypackage
 
       # Upload
