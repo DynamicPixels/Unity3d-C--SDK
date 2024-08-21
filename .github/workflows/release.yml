@@ -23,16 +23,20 @@ jobs:
           key: Library
           restore-keys: Library-
       
-      - name: create unitypackage from glob pattern
-        uses: natsuneko-laboratory/create-unitypackage@v3
+      # - name: create unitypackage from glob pattern
+      #   uses: natsuneko-laboratory/create-unitypackage@v3
+      #   with:
+      #     root: ./
+      #     files-glob: |
+      #       ./**/*
+      #     respect-gitignore: false
+      #     dest: dist/dynamicpixels.unitypackage
+
+      - uses: montudor/action-zip@v1
         with:
-          root: ./
-          files-glob: |
-            ./**/*
-          respect-gitignore: false
-          dest: dist/dynamicpixels.unitypackage
+          args: zip -qq -r ./dist/dynamicpixels-unity.zip .
 
       - name: upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          path: ./dist/*.unitypackage
+          path: ./dist/dynamicpixels-unity.zip
