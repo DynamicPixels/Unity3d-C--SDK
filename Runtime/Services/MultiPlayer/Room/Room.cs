@@ -31,14 +31,42 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         public List<RoomPlayer> Players { get; set; }
 
 
+        /// <summary>
+        /// Event triggered after a user has joined the room.
+        /// </summary>
         public event EventHandler<RoomPlayer> OnAfterUserJoinedToRoom;
+
+        /// <summary>
+        /// Event triggered when the room is created.
+        /// </summary>
         public event EventHandler<Room> OnCreateRoom;
+
+        /// <summary>
+        /// Event triggered when the user leaves the room.
+        /// </summary>
         public event EventHandler<int> OnLeaveRoom;
+
+        /// <summary>
+        /// Event triggered when the room is disposed.
+        /// </summary>
         public event EventHandler<int> OnDisposeRoom;
+
+        /// <summary>
+        /// Event triggered when the disconnected from the room.
+        /// </summary>
         public event EventHandler OnDisconnect;
+
+        /// <summary>
+        /// Event triggered when a message is received from the server.
+        /// </summary>
         public event EventHandler<Request> OnMessageReceived;
 
 
+        /// <summary>
+        /// Configures the room with the specified socket agent.
+        /// Initializes event handlers for message reception and disconnection.
+        /// </summary>
+        /// <param name="socketAgent">Socket agent used for communication.</param>
         public void Config(ISocketAgent socketAgent)
         {
             _socketAgent = socketAgent;
@@ -46,6 +74,11 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
             _socketAgent.OnDisconnect += Disconnect;
         }
 
+        /// <summary>
+        /// Opens the room by setting its status to "Open".
+        /// Sends a PUT request to update the room's status on the server.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task Open()
         {
             var sendingBody = new { State = nameof(RoomStatus.Open) };
@@ -53,13 +86,24 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
             Status = RoomStatus.Open;
         }
 
+        /// <summary>
+        /// Locks the room by setting its status to "Lock".
+        /// Sends a PUT request to update the room's status on the server.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task Lock()
         {
             var sendingBody = new { State = nameof(RoomStatus.Lock) };
             await WebRequest.Put(UrlMap.UpdateStatusUrl(Id), JsonConvert.SerializeObject(sendingBody));
             Status = RoomStatus.Lock;
         }
-
+        
+        /// <summary>
+        /// Sends a message to a specific user in the room.
+        /// </summary>
+        /// <param name="receiverId">The ID of the receiving user.</param>
+        /// <param name="message">The message to send.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public Task SendToUser(int receiverId, string message)
         {
             var payload = new SendToRoomInputDto
@@ -78,6 +122,11 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
             return _socketAgent.Send(packet);
         }
 
+        /// <summary>
+        /// Broadcasts a message to all users in the room.
+        /// </summary>
+        /// <param name="message">The message to broadcast.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public Task Broadcast(string message)
         {
             var payload = new SendToRoomInputDto
@@ -95,11 +144,15 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
             return _socketAgent.Send(packet);
         }
 
+        /// <summary>
+        /// Leaves the room.
+        /// Sends a DELETE request to remove the user from the room on the server.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public Task Leave()
         {
             return WebRequest.Delete(UrlMap.LeaveRoomUrl(Id));
         }
-
         private void UserJoinedListenerAction(string message)
         {
             var user = JsonConvert.DeserializeObject<RoomPlayer>(message);
@@ -108,7 +161,6 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 
             OnAfterUserJoinedToRoom?.Invoke(this, user);
         }
-
         private void UserLeftListenerAction(string message)
         {
             var userId = Convert.ToInt32(message);
@@ -117,7 +169,6 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 
             OnLeaveRoom?.Invoke(this, userId);
         }
-
         private void OnMessage(object source, Request packet)
         {
             switch (packet.Method)
@@ -134,7 +185,6 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
                     break;
             }
         }
-
         private void Disconnect(object sender, EventArgs e)
         {
             if (OnDisconnect != null)
