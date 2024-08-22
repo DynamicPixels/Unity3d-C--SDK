@@ -23,15 +23,16 @@ jobs:
           key: Library
           restore-keys: Library-
       
-      # - name: create unitypackage from glob pattern
-      #   uses: natsuneko-laboratory/create-unitypackage@v3
-      #   with:
-      #     root: ./
-      #     files-glob: |
-      #       ./**/*
-      #     respect-gitignore: false
-      #     dest: dist/dynamicpixels.unitypackage
-
+      - name: Set up Unity
+        uses: game-ci/unity-setup@v2
+        with:
+          unityVersion: 2021.3.5f1 # Set your Unity version
+    
+      - name: Test and Build
+        run: |
+          unity-editor -quit -batchmode -projectPath ./ -runTests -logFile /dev/stdout
+          unity-editor -quit -batchmode -projectPath ./ -executeMethod BuildScript.Build # Replace with your build method
+  
       - uses: montudor/action-zip@v1
         with:
           args: zip -qq -r dynamicpixels-unity.zip .
