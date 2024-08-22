@@ -39,6 +39,7 @@ jobs:
       - name: upload artifacts
         uses: actions/upload-artifact@v3
         with:
+          name: Dynamicpixels Unity
           path: dynamicpixels-unity.zip
 
   release:
@@ -52,7 +53,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: dynamicpixels-unity.zip
+          name: Dynamicpixels Unity
 
       - name: Create GitHub Release
         id: create_release
