@@ -23,16 +23,6 @@ jobs:
           key: Library
           restore-keys: Library-
       
-      # Build
-      - name: Build project
-        uses: game-ci/unity-builder@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          targetPlatform: WebGL
-          
       - uses: montudor/action-zip@v1
         with:
           args: zip -qq -r dynamicpixels-unity.zip .
