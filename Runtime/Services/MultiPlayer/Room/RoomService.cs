@@ -44,7 +44,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         /// <returns>A task representing the asynchronous operation, with the created and opened room as the result.</returns>
         public Task<Room> CreateAndOpenRoom(CreateRoomParams input)
         {
-            input.State = RoomStatus.Open;
+            input.Status = RoomStatus.Open;
             return CreateRoom(input);
         }
 

@@ -97,7 +97,7 @@ namespace DynamicPixels.GameService.Utils.HttpClient
                 .AddJsonBody(body)
                 .Send(cancellationToken);
 
-            LogHelper.LogNormal<string>(DebugLocation.Http, "DoRequest", url);
+            LogHelper.LogNormal<string>(DebugLocation.Http, "DoRequest", $"{url} with body: {body}");
 
 
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
