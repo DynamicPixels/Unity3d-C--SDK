@@ -5,7 +5,7 @@ using DynamicPixels.GameService.Services.Chat.Repositories;
 
 namespace DynamicPixels.GameService.Services.Chat
 {
-    public interface IChat
+    public interface IChatService
     {
         public Task Send<T>(T param) where T : SendParams;
         public Task Subscribe<T>(T param) where T : SubscribeParams;

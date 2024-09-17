@@ -6,6 +6,7 @@ using DynamicPixels.GameService.Services.Leaderboard;
 using DynamicPixels.GameService.Services.MultiPlayer.Match;
 using DynamicPixels.GameService.Services.MultiPlayer.Room;
 using DynamicPixels.GameService.Services.Party;
+using DynamicPixels.GameService.Services.services;
 using DynamicPixels.GameService.Services.User;
 using DynamicPixels.GameService.Utils.WebsocketClient;
 
@@ -18,7 +19,7 @@ namespace DynamicPixels.GameService.Services.Table
         {
             Leaderboard = new LeaderboardService();
             Achievement = new AchievementService();
-            //Chats = new ChatService();
+            Chats = new ChatService(agent);
             Friendship = new FriendshipService();
             Party = new PartyService();
             Users = new UserService();
@@ -30,7 +31,7 @@ namespace DynamicPixels.GameService.Services.Table
 
         public ILeaderboard Leaderboard { get; private set; }
         public IAchievement Achievement { get; private set; }
-        public IChat Chats { get; private set; }
+        public IChatService Chats { get; private set; }
         public IFriendship Friendship { get; private set; }
         public IParty Party { get; private set; }
         public IUser Users { get; private set; }
