@@ -8,6 +8,6 @@ namespace DynamicPixels.GameService.Services.Friendship.Repositories
         public static string AcceptRequestUrl(int requestId) => $"/api/table/services/friendship/request/{requestId}";
         public static string RejectRequestUrl(int requestId) => $"/api/table/services/friendship/request/{requestId}";
         public const string RejectAllRequestsUrl = "/api/table/services/friendship/request";
-        public static string DeleteFriendUrl(int userId) => $"/api/table/services/friendship/${userId}";
+        public static string DeleteFriendUrl(int userId) => $"/api/table/services/friendship/{userId}";
     }
 }
