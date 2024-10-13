@@ -48,8 +48,8 @@ namespace DynamicPixels.GameService.Utils.WebsocketClient
             _ws.OnClose += OnClose;
             _ws.OnError += OnError;
             _ws.OnMessage += OnMessage;
-
-            ConnectAsync();
+            
+            _ws.ConnectAsync();
 
             return Task.CompletedTask;
         }
@@ -82,7 +82,6 @@ namespace DynamicPixels.GameService.Utils.WebsocketClient
                     e is ArgumentOutOfRangeException
                 ) return Task.CompletedTask;
                 _isAvailable = false;
-                _ws.ConnectAsync();
             }
 
             return Task.CompletedTask;
@@ -163,15 +162,15 @@ namespace DynamicPixels.GameService.Utils.WebsocketClient
                 _ws.ConnectAsync();
                 await Task.Delay((int)_reconnectDelay * 1000);
             }
-
+            if (_ws.ReadyState != WebSocketState.Open)
+                Disconnect();
             _reconnecting = false;
         }
 
         private void OnOpen(object sender, EventArgs e)
         {
             LogHelper.LogNormal<string>(DebugLocation.Connection, "Connect", "Connected to " + _endpoint);
-            _isAvailable = true;
-
+            _isAvailable = true;    
             _pingInterval = new System.Timers.Timer();
             _pingInterval.Interval = 10 * 1000;
             _pingInterval.AutoReset = true;
