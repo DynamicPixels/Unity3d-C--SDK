@@ -6,6 +6,7 @@ namespace DynamicPixels.GameService.Utils.WebsocketClient
 {
     public interface ISocketAgent
     {
+        void SetReconnectValues(float reconnectDelay, int maxAttempts);
         Task Connect(string endpoint, string token);
         void Disconnect();
         long GetPing();

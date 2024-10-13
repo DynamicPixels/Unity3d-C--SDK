@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using DynamicPixels.GameService.Models;
 using DynamicPixels.GameService.Utils.Logger;
@@ -17,12 +18,22 @@ namespace DynamicPixels.GameService.Utils.WebsocketClient
         private System.Timers.Timer _pingInterval;
         private long _lastPingSentTime;
         private long _ping;
+        private bool _disconnected;
+        private bool _reconnecting;
+        private float _reconnectDelay;
+        private int _maxAttempts;
         public event EventHandler<Request> OnMessageReceived;
         public event EventHandler OnDisconnect;
 
         public bool IsConnected()
         {
             return _ws != null && _isAvailable;
+        }
+
+        public void SetReconnectValues(float reconnectDelay, int maxAttempts)
+        {
+            _maxAttempts = maxAttempts;
+            _reconnectDelay = reconnectDelay;
         }
 
         public Task Connect(string endpoint, string token)
@@ -38,13 +49,14 @@ namespace DynamicPixels.GameService.Utils.WebsocketClient
             _ws.OnError += OnError;
             _ws.OnMessage += OnMessage;
 
-            _ws.ConnectAsync();
+            ConnectAsync();
 
             return Task.CompletedTask;
         }
 
         public void Disconnect()
         {
+            _disconnected = true;
             _ws.Close();
         }
 
@@ -69,8 +81,8 @@ namespace DynamicPixels.GameService.Utils.WebsocketClient
                     e is ObjectDisposedException ||
                     e is ArgumentOutOfRangeException
                 ) return Task.CompletedTask;
-
                 _isAvailable = false;
+                _ws.ConnectAsync();
             }
 
             return Task.CompletedTask;
@@ -116,12 +128,43 @@ namespace DynamicPixels.GameService.Utils.WebsocketClient
 
         private void OnClose(object sender, CloseEventArgs close)
         {
-            LogHelper.LogNormal<string>(DebugLocation.Connection, "Connect", "Disconnected from " + close.Reason);
-            _pingInterval.Dispose();
-            if (!_isAvailable || close.WasClean) return;
-            _isAvailable = false;
-            if (OnDisconnect != null)
-                OnDisconnect(this, null);
+            if (_reconnecting)
+                return;
+            if (_disconnected)
+            {
+                _disconnected = false;
+                LogHelper.LogNormal<string>(DebugLocation.Connection, "Connect", "Disconnected from " + close.Reason);
+                _pingInterval.Dispose();
+                if (!_isAvailable || close.WasClean) return;
+                _isAvailable = false;
+                if (OnDisconnect != null)
+                    OnDisconnect(this, null);
+            }
+            else
+            {
+                Task.Run(ConnectAsync);
+                
+            }
+            
+        }
+
+        private async Task ConnectAsync()
+        {
+            var attempts = 0;
+            _reconnecting = true;
+            while (attempts < _maxAttempts)
+            {
+                if (_ws.ReadyState == WebSocketState.Connecting)
+                    continue;
+                if (_ws.ReadyState == WebSocketState.Open)
+                    break;
+                Debug.Log("Reconnecting Attempt : " + attempts);
+                attempts++;
+                _ws.ConnectAsync();
+                await Task.Delay((int)_reconnectDelay * 1000);
+            }
+
+            _reconnecting = false;
         }
 
         private void OnOpen(object sender, EventArgs e)

@@ -37,7 +37,7 @@ namespace DynamicPixels.GameService
         public static Services.Table.Services Services;
 
         public static void Configure(string clientId, string clientSecret, SystemInfo systemInfo, bool debugMode,
-            bool developmentMode, bool verboseMode)
+            bool developmentMode, bool verboseMode, float reconnectDelay, int maxAttempts)
         {
             if (IsAvailable)
                 LogHelper.LogException<DynamicPixelsException>(
@@ -45,7 +45,8 @@ namespace DynamicPixels.GameService
                         "Sdk is already initialized, logout first"),
                     DebugLocation.All,
                     "Configure");
-
+            
+            Agent.SetReconnectValues(reconnectDelay, maxAttempts);
             ClientId = clientId;
             ClientSecret = clientSecret;
             DebugMode = debugMode;
