@@ -1,16 +1,17 @@
 using System;
+using DynamicPixels.GameService.Core.Messaging;
 using DynamicPixels.GameService.Models;
+using DynamicPixels.GameService.ModuleFramework.Messaging;
+using DynamicPixels.GameService.ModuleFramework.Messaging.Models;
 using DynamicPixels.GameService.Services.Authentication;
 using DynamicPixels.GameService.Services.Storage;
 using DynamicPixels.GameService.Services.Synchronise;
 using DynamicPixels.GameService.Services.Table;
 using DynamicPixels.GameService.Services.User.Models;
 using DynamicPixels.GameService.Utils.Logger;
-using DynamicPixels.GameService.Utils.WebsocketClient;
 
 namespace DynamicPixels.GameService
 {
-
     public static class ServiceHub
     {
         // configs
@@ -27,7 +28,7 @@ namespace DynamicPixels.GameService
 
         // transports
         // TODO: Realtime
-        internal static ISocketAgent Agent = new WebSocketAgent();
+        internal static IWebSocketService Agent = new WebSocketService();
 
         // services
         public static ISynchronise Synchronise;
@@ -37,7 +38,7 @@ namespace DynamicPixels.GameService
         public static Services.Table.Services Services;
 
         public static void Configure(string clientId, string clientSecret, SystemInfo systemInfo, bool debugMode,
-            bool developmentMode, bool verboseMode, float reconnectDelay, int maxAttempts)
+            bool developmentMode, bool verboseMode, short reconnectDelay, short maxAttempts)
         {
             if (IsAvailable)
                 LogHelper.LogException<DynamicPixelsException>(
@@ -45,8 +46,12 @@ namespace DynamicPixels.GameService
                         "Sdk is already initialized, logout first"),
                     DebugLocation.All,
                     "Configure");
-            
-            Agent.SetReconnectValues(reconnectDelay, maxAttempts);
+
+            Agent.Config(new WebSocketConfiguration()
+            {
+                WebSocketUrl = "wss://ws-europe.dynamicpixels.dev/ws", MaxReconnectAttempts = maxAttempts,
+                ReconnectDelay = reconnectDelay, PingInterval = 10
+            });
             ClientId = clientId;
             ClientSecret = clientSecret;
             DebugMode = debugMode;
@@ -55,7 +60,7 @@ namespace DynamicPixels.GameService
             SystemInfo = systemInfo;
 
             Authentication = new AuthenticationService();
-            Table = new TableService(Agent);
+            Table = new TableService();
             Storage = new StorageService();
             Synchronise = new SynchroniseService();
             Services = new Services.Table.Services(Agent);
@@ -69,6 +74,7 @@ namespace DynamicPixels.GameService
         public static void Dispose()
         {
             Authentication.Logout();
+            Agent.Dispose();
         }
 
         public static string Version()

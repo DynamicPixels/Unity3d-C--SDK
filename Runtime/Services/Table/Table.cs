@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using DynamicPixels.GameService.Models.outputs;
+using DynamicPixels.GameService.ModuleFramework.Messaging;
 using DynamicPixels.GameService.Services.Table.Models;
 using DynamicPixels.GameService.Services.Table.Repositories;
-using DynamicPixels.GameService.Utils.WebsocketClient;
 
 namespace DynamicPixels.GameService.Services.Table
 {
@@ -10,7 +10,7 @@ namespace DynamicPixels.GameService.Services.Table
     {
         private TableRepository _repository;
 
-        public TableService(ISocketAgent agent)
+        public TableService()
         {
             _repository = new TableRepository();
         }

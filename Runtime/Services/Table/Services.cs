@@ -1,4 +1,5 @@
 using adapters.services.table.services;
+using DynamicPixels.GameService.ModuleFramework.Messaging;
 using DynamicPixels.GameService.Services.Achievement;
 using DynamicPixels.GameService.Services.Chat;
 using DynamicPixels.GameService.Services.Device;
@@ -8,14 +9,13 @@ using DynamicPixels.GameService.Services.MultiPlayer.Match;
 using DynamicPixels.GameService.Services.MultiPlayer.Room;
 using DynamicPixels.GameService.Services.Party;
 using DynamicPixels.GameService.Services.User;
-using DynamicPixels.GameService.Utils.WebsocketClient;
 
 namespace DynamicPixels.GameService.Services.Table
 {
 
     public class Services
     {
-        public Services(ISocketAgent agent)
+        public Services(IWebSocketService agent)
         {
             Leaderboard = new LeaderboardService();
             Achievement = new AchievementService();
