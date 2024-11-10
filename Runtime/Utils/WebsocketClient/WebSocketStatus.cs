@@ -1,4 +1,4 @@
-﻿namespace DynamicPixels.GameService.ModuleFramework.Messaging.Models
+﻿namespace DynamicPixels.GameService.Utils.WebsocketClient
 {
     public enum WebSocketStatus
     {

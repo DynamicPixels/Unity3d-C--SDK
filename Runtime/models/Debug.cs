@@ -47,6 +47,11 @@ namespace DynamicPixels.GameService.Models
         ///     Happened In Social System
         /// </summary>
         Social,
+
+        /// <summary>
+        ///     Happened In WebSocket System
+        /// </summary>
+        WebSocket,
     }
     
     /// <summary>

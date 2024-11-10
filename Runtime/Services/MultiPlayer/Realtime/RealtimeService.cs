@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using DynamicPixels.GameService.Models;
-using DynamicPixels.GameService.ModuleFramework.Messaging;
+using DynamicPixels.GameService.Utils.WebsocketClient;
 
 namespace DynamicPixels.GameService.Services.MultiPlayer.Realtime
 {

@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using DynamicPixels.GameService.Models.outputs;
-using DynamicPixels.GameService.ModuleFramework.Messaging;
 using DynamicPixels.GameService.Services.Table.Models;
 using DynamicPixels.GameService.Services.Table.Repositories;
 

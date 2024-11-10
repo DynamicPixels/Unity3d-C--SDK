@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using DynamicPixels.GameService.Models;
 using Newtonsoft.Json;
-using DynamicPixels.GameService.ModuleFramework.Messaging;
-using DynamicPixels.GameService.ModuleFramework.Messaging.Models;
 
-namespace DynamicPixels.GameService.Core.Messaging
+namespace DynamicPixels.GameService.Utils.WebsocketClient
 {
     internal sealed class WebSocketService : IWebSocketService
     {

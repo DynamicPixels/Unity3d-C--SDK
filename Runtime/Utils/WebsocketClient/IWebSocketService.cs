@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DynamicPixels.GameService.Models;
-using DynamicPixels.GameService.ModuleFramework.Messaging.Models;
 
-namespace DynamicPixels.GameService.ModuleFramework.Messaging
+namespace DynamicPixels.GameService.Utils.WebsocketClient
 {
     public interface IWebSocketService
     {

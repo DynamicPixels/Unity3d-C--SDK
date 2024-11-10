@@ -1,14 +1,12 @@
 using System;
-using DynamicPixels.GameService.Core.Messaging;
 using DynamicPixels.GameService.Models;
-using DynamicPixels.GameService.ModuleFramework.Messaging;
-using DynamicPixels.GameService.ModuleFramework.Messaging.Models;
 using DynamicPixels.GameService.Services.Authentication;
 using DynamicPixels.GameService.Services.Storage;
 using DynamicPixels.GameService.Services.Synchronise;
 using DynamicPixels.GameService.Services.Table;
 using DynamicPixels.GameService.Services.User.Models;
 using DynamicPixels.GameService.Utils.Logger;
+using DynamicPixels.GameService.Utils.WebsocketClient;
 
 namespace DynamicPixels.GameService
 {

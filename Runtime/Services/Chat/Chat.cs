@@ -1,12 +1,10 @@
-
-
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DynamicPixels.GameService.Models;
-using DynamicPixels.GameService.ModuleFramework.Messaging;
 using DynamicPixels.GameService.Services.Chat;
 using DynamicPixels.GameService.Services.Chat.Models;
 using DynamicPixels.GameService.Services.Chat.Repositories;
+using DynamicPixels.GameService.Utils.WebsocketClient;
 
 namespace adapters.services.table.services
 {

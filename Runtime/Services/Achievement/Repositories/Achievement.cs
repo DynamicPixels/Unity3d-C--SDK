@@ -1,10 +1,7 @@
-using System.IO;
 using System.Threading.Tasks;
-using DynamicPixels.GameService.Models;
 using DynamicPixels.GameService.Models.outputs;
 using DynamicPixels.GameService.Services.Achievement.Models;
 using DynamicPixels.GameService.Utils.HttpClient;
-using Newtonsoft.Json;
 
 namespace DynamicPixels.GameService.Services.Achievement.Repositories
 {
