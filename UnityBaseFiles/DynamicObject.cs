@@ -1,30 +1,20 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using WebSocketSharp;
 
-namespace DynamicPixels
+namespace DynamicPixels.Services.MultiPlayer.Realtime
 {
-    public class DynamicObject : MonoBehaviour
+    public class DynamicObject : DynamicWrapper
     {
-        [FormerlySerializedAs("_guid")] [HideInInspector][SerializeField] private string guid;
         [SerializeField] private bool syncPosition;
         [SerializeField] private bool syncRotation;
         [SerializeField] private bool syncScale;
 
-        private void OnValidate()
+        private new void Start()
         {
-            if (guid.IsNullOrEmpty())
-            {
-                guid = Guid.NewGuid().ToString();
-            }
-            Debug.Log(guid);
-        }
-
-        private void Start()
-        {
+            base.Start();
             RealtimeObserver.Instance.TrackObject(this);
         }
 
@@ -38,11 +28,6 @@ namespace DynamicPixels
             if (syncScale)
                 result.Add(new SyncingMessagePart(){guid = guid, vector = transform.localScale, type = "Scale"});
             return result;
-        }
-
-        public string GetGuid()
-        {
-            return guid;
         }
     }
 }

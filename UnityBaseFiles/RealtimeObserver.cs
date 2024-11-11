@@ -7,12 +7,13 @@ using DynamicPixels.GameService.Services.User.Models;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace DynamicPixels
+namespace DynamicPixels.Services.MultiPlayer.Realtime
 {
     public class RealtimeObserver : MonoBehaviour
     {
         [SerializeField] private RealtimeSetting settings;
         private Dictionary<string, DynamicObject> _trackedObjects;
+        private Dictionary<Tuple<string, string>, DynamicVariableBase> _trackedVariables;
         private List<Action> _mainThreadActions;
         
         private User _user;
@@ -26,6 +27,7 @@ namespace DynamicPixels
         private void Awake()
         {
             _trackedObjects = new Dictionary<string, DynamicObject>();
+            _trackedVariables = new Dictionary<Tuple<string, string>, DynamicVariableBase>();
             _roomCoroutines = new Dictionary<Room, Coroutine>();
             _mainThreadActions = new List<Action>();
             _instance = this;
@@ -80,6 +82,8 @@ namespace DynamicPixels
                         break;
                 }
             }
+            foreach (var part in data.variables)
+                _mainThreadActions.Add(() => _trackedVariables[new Tuple<string, string>(part.guid, part.fieldName)].SetValueByDeserializedString(part.data));
         }  
 
         private IEnumerator StartSyncing(Room room)
@@ -91,6 +95,10 @@ namespace DynamicPixels
                 {
                     temp.messageParts.AddRange(_trackedObjects[obj].GetMessageParts());
                 }
+                foreach (var obj in _trackedVariables.Keys)
+                {
+                    temp.variables.Add(_trackedVariables[obj].GetVariablePart());
+                }
                 room.Broadcast(JsonConvert.SerializeObject(temp));
                 yield return new WaitForSecondsRealtime(1f / settings.dataTransferRate);
             }
@@ -100,6 +108,11 @@ namespace DynamicPixels
         public void TrackObject(DynamicObject dynamicObject)
         {
             _trackedObjects.Add(dynamicObject.GetGuid(), dynamicObject);
+        }
+
+        public void ObserveVariable(string guid, string fieldName, DynamicVariableBase variable)
+        {
+            _trackedVariables.Add(new Tuple<string, string>(guid, fieldName), variable);
         }
     }
 }
