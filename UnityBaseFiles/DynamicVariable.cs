@@ -20,9 +20,17 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
                 guid = Guid.NewGuid().ToString();
             }
         }
+
+        public void ResetGuid()
+        {
+            guid = "";
+            SetGuid();
+        }
         public void Start()
         {
-
+            if (guid.IsNullOrEmpty())
+                guid = Guid.NewGuid().ToString();
+            RealtimeObserver.Instance.AddDynamicWrapper(this);
             FieldInfo[] fields = GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
             foreach (var field in fields)
@@ -35,10 +43,30 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
             }
             
         }
-        
+
+        public void OnDestroy()
+        {
+            RealtimeObserver.Instance.RemoveDynamicWrapper(this);
+            FieldInfo[] fields = GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+            foreach (var field in fields)
+            {
+                if (field.FieldType.IsSubclassOf(typeof(DynamicVariableBase)))
+                {
+                    DynamicVariableBase value = (DynamicVariableBase)field.GetValue(this);
+                    value.StopTracking();
+                }
+            }
+        }
+
         public string GetGuid()
         {
             return guid;
+        }
+
+        public void SetGuid(string guidToSet = "")
+        {
+            guid = guidToSet.IsNullOrEmpty() ? Guid.NewGuid().ToString() : guidToSet;
         }
     }
 
@@ -51,11 +79,14 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
         public virtual void Initialize(RealtimeObserver observer, string fieldName) {}
 
         public virtual void SetValueByDeserializedString(string value){}
+        public virtual void StartTracking(){}
 
         public virtual SyncingVariable GetVariablePart()
         {
             return null;
         }
+
+        public virtual void StopTracking(){}
     }
     
     [Serializable]
@@ -74,7 +105,6 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
         {
             Observer = observer;
             FieldName = fieldName;
-            Observer.ObserveVariable(_parentGameObject.GetGuid(), fieldName, this);
         }
 
         public override void SetValueByDeserializedString(string value)
@@ -83,7 +113,17 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
             _value = JsonConvert.DeserializeObject<T>(value);
             OnValueChanged?.Invoke(temp, _value);
         }
-        
+
+        public override void StartTracking()
+        {
+            Observer.TrackVariable(_parentGameObject.GetGuid(), FieldName, this);
+        }
+
+        public override void StopTracking()
+        {
+            Observer.UnTrackVariable(_parentGameObject.GetGuid(), FieldName, this);
+        }
+
         public void ChangeValue(T value)
         {
             _value = value;

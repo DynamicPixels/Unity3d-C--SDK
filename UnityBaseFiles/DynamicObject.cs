@@ -17,7 +17,13 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
             base.Start();
             RealtimeObserver.Instance.TrackObject(this);
         }
-
+        
+        private new void OnDestroy()
+        {
+            base.OnDestroy();
+            RealtimeObserver.Instance.UnTrackObject(this);
+        }
+        
         public List<SyncingMessagePart> GetMessageParts()
         {
             var result = new List<SyncingMessagePart>();
