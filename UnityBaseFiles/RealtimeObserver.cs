@@ -7,6 +7,7 @@ using DynamicPixels.GameService.Services.User.Models;
 using DynamicPixelsInitializer;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DynamicPixels.Services.MultiPlayer.Realtime
 {
@@ -14,6 +15,8 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
     {
         [SerializeField] private RealtimeSetting settings;
         [SerializeField] private int observerId;
+        [SerializeField] private bool skipOutdatedPackets;
+        private int _lastPacketNumber;
         private Dictionary<string, DynamicWrapper> _dynamicWrappers;
         private Dictionary<string, DynamicObject> _trackedObjects;
         private Dictionary<Tuple<string, string>, DynamicVariableBase> _trackedVariables;
@@ -32,6 +35,7 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
             _dynamicWrappers = new Dictionary<string, DynamicWrapper>();
             _roomCoroutines = new Dictionary<Room, Coroutine>();
             _mainThreadActions = new List<Action>();
+            _lastPacketNumber = 0;
         }
 
         private void OnEnable()
@@ -71,6 +75,8 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
                 return;
             var intermediatePayload = JsonConvert.DeserializeObject<string>(e.Payload);
             var data = JsonConvert.DeserializeObject<RealtimeObservationModel>(intermediatePayload);
+            if (skipOutdatedPackets && _lastPacketNumber >= data.lastPacketObservation)
+                return;
             foreach (var instantiationModel in data.instantiations)
             {
                 if (instantiationModel.inScene)
@@ -115,6 +121,7 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
                 _mainThreadActions.Add(() => _trackedVariables[new Tuple<string, string>(part.guid, part.fieldName)].SetValueByDeserializedString(part.data));
             foreach (var part in data.destroys)
                 _mainThreadActions.Add(() => Destroy(_dynamicWrappers[part].gameObject));
+            _lastPacketNumber = data.lastPacketObservation;
         }  
 
         private IEnumerator StartSyncing(Room room)
@@ -134,6 +141,8 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
                 {
                     temp.variables.Add(_trackedVariables[obj].GetVariablePart());
                 }
+                temp.lastPacketObservation = _lastPacketNumber;
+                _lastPacketNumber++;
                 room.Broadcast(JsonConvert.SerializeObject(temp));
                 yield return new WaitForSecondsRealtime(1f / settings.dataTransferRate);
             }
