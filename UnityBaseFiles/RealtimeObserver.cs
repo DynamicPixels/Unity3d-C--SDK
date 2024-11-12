@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DynamicPixels.GameService.Models;
 using DynamicPixels.GameService.Services.MultiPlayer.Room;
 using DynamicPixels.GameService.Services.User.Models;
+using DynamicPixelsInitializer;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -12,20 +13,15 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
     public class RealtimeObserver : MonoBehaviour
     {
         [SerializeField] private RealtimeSetting settings;
+        [SerializeField] private int observerId;
         private Dictionary<string, DynamicWrapper> _dynamicWrappers;
         private Dictionary<string, DynamicObject> _trackedObjects;
         private Dictionary<Tuple<string, string>, DynamicVariableBase> _trackedVariables;
         private List<InstantiationModel> _objectsToInstantiate;
         private List<string> _objectsToDestroy;
         private List<Action> _mainThreadActions;
-        
         private User _user;
-        
-        private static RealtimeObserver _instance;
-
         private Dictionary<Room, Coroutine> _roomCoroutines;
-        
-        public static RealtimeObserver Instance => _instance;
 
         private void Awake()
         {
@@ -36,7 +32,11 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
             _dynamicWrappers = new Dictionary<string, DynamicWrapper>();
             _roomCoroutines = new Dictionary<Room, Coroutine>();
             _mainThreadActions = new List<Action>();
-            _instance = this;
+        }
+
+        private void OnEnable()
+        {
+            RealtimeObserversManager.Instance.AddObserver(this, observerId);
         }
 
         public void StartSync(Room room, User user, bool isSender)

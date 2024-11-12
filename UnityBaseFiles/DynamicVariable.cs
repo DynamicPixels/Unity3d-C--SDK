@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.Serialization;
+using DynamicPixelsInitializer;
 using Newtonsoft.Json;
 using UnityEngine;
 using WebSocketSharp;
@@ -12,6 +13,7 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
     public class DynamicWrapper : MonoBehaviour
     {
         [HideInInspector] [SerializeField] protected string guid; 
+        [SerializeField] protected int observerId;
         
         private void OnValidate()
         {
@@ -30,7 +32,7 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
         {
             if (guid.IsNullOrEmpty())
                 guid = Guid.NewGuid().ToString();
-            RealtimeObserver.Instance.AddDynamicWrapper(this);
+            RealtimeObserversManager.Instance.GetObserver(observerId).AddDynamicWrapper(this);
             FieldInfo[] fields = GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
             foreach (var field in fields)
@@ -38,7 +40,7 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
                 if (field.FieldType.IsSubclassOf(typeof(DynamicVariableBase)))
                 {
                     DynamicVariableBase value = (DynamicVariableBase)field.GetValue(this);
-                    value.Initialize(RealtimeObserver.Instance, field.Name);
+                    value.Initialize(RealtimeObserversManager.Instance.GetObserver(observerId), field.Name);
                 }
             }
             
@@ -46,7 +48,7 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
 
         public void OnDestroy()
         {
-            RealtimeObserver.Instance.RemoveDynamicWrapper(this);
+            RealtimeObserversManager.Instance.GetObserver(observerId).RemoveDynamicWrapper(this);
             FieldInfo[] fields = GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
             foreach (var field in fields)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DynamicPixelsInitializer;
 using UnityEngine;
 using UnityEngine.Serialization;
 using WebSocketSharp;
@@ -15,13 +16,13 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
         private new void Start()
         {
             base.Start();
-            RealtimeObserver.Instance.TrackObject(this);
+            RealtimeObserversManager.Instance.GetObserver(observerId).TrackObject(this);
         }
         
         private new void OnDestroy()
         {
             base.OnDestroy();
-            RealtimeObserver.Instance.UnTrackObject(this);
+            RealtimeObserversManager.Instance.GetObserver(observerId).UnTrackObject(this);
         }
         
         public List<SyncingMessagePart> GetMessageParts()
