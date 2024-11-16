@@ -1,24 +1,21 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using DynamicPixels.GameService.Models;
 using DynamicPixels.GameService.Models.outputs;
 using DynamicPixels.GameService.Services.MultiPlayer.Room.Models;
 using DynamicPixels.GameService.Utils.HttpClient;
 using DynamicPixels.GameService.Utils.WebsocketClient;
-using Newtonsoft.Json;
 
 namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 {
     public class RoomService : IRoomService
     {
-        private readonly ISocketAgent _socketAgent;
+        private readonly IWebSocketService _socketAgent;
 
         /// <summary>
         /// Initializes a new instance of the RoomService class with the specified socket agent.
         /// </summary>
         /// <param name="socketAgent">The socket agent used for real-time communication with the server.</param>
-        public RoomService(ISocketAgent socketAgent)
+        public RoomService(IWebSocketService socketAgent)
         {
             _socketAgent = socketAgent;
         }

@@ -15,7 +15,7 @@ namespace DynamicPixels.GameService.Services.Table
 
     public class Services
     {
-        public Services(ISocketAgent agent)
+        public Services(IWebSocketService agent)
         {
             Leaderboard = new LeaderboardService();
             Achievement = new AchievementService();

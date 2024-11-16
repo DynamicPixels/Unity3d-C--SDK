@@ -6,9 +6,9 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Realtime
 {
     public class RealtimeService : IRealtimeService
     {
-        private readonly ISocketAgent _socketAgent;
+        private readonly IWebSocketService _socketAgent;
 
-        public RealtimeService(ISocketAgent socketAgent)
+        public RealtimeService(IWebSocketService socketAgent)
         {
             _socketAgent = socketAgent;
         }
@@ -21,7 +21,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Realtime
                 Payload = message
             };
 
-            return _socketAgent.Send(packet);
+            return _socketAgent.SendAsync(packet);
         }
     }
 }

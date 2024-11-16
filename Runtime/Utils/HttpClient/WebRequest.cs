@@ -10,7 +10,6 @@ using DynamicPixels.GameService.Models;
 using DynamicPixels.GameService.Models.outputs;
 using DynamicPixels.GameService.Utils.Logger;
 using Newtonsoft.Json;
-using UnityEngine;
 
 namespace DynamicPixels.GameService.Utils.HttpClient
 {
@@ -97,7 +96,7 @@ namespace DynamicPixels.GameService.Utils.HttpClient
                 .AddJsonBody(body)
                 .Send(cancellationToken);
 
-            LogHelper.LogNormal<string>(DebugLocation.Http, "DoRequest", $"{url} with body: {body}");
+            LogHelper.LogNormal<string>(DebugLocation.WebSocket, "DoRequest", $"{url} with body: {body}");
 
 
             using var reader = new StreamReader(await response.Content.ReadAsStreamAsync());
@@ -106,7 +105,7 @@ namespace DynamicPixels.GameService.Utils.HttpClient
             if (response.IsSuccessStatusCode)
                 return result;
 
-            Debug.LogError($"Server Error: {result}");
+            LogHelper.LogError<string>(DebugLocation.WebSocket, "DoRequest", $"Server Error: {result}");
 
             // Deserialize the error response
             var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(result);

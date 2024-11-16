@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using DynamicPixels.GameService.Models;
-using DynamicPixels.GameService.Models.outputs;
 using DynamicPixels.GameService.Utils.HttpClient;
 using DynamicPixels.GameService.Utils.WebsocketClient;
 using Newtonsoft.Json;
@@ -12,7 +10,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 {
     public class Room
     {
-        private ISocketAgent _socketAgent;
+        private IWebSocketService _socketAgent;
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -67,7 +65,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         /// Initializes event handlers for message reception and disconnection.
         /// </summary>
         /// <param name="socketAgent">Socket agent used for communication.</param>
-        public void Config(ISocketAgent socketAgent)
+        public void Config(IWebSocketService socketAgent)
         {
             _socketAgent = socketAgent;
             _socketAgent.OnMessageReceived += OnMessage;
@@ -119,7 +117,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
                 Payload = JsonConvert.SerializeObject(payload)
             };
 
-            return _socketAgent.Send(packet);
+            return _socketAgent.SendAsync(packet);
         }
 
         /// <summary>
@@ -141,7 +139,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
                 Payload = JsonConvert.SerializeObject(payload)
             };
 
-            return _socketAgent.Send(packet);
+            return _socketAgent.SendAsync(packet);
         }
 
         /// <summary>

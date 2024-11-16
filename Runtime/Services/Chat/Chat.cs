@@ -1,5 +1,3 @@
-
-
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DynamicPixels.GameService.Models;
@@ -27,9 +25,9 @@ namespace adapters.services.table.services
     {
         // dependencies
         private IChatRepository _repository;
-        private readonly ISocketAgent _socketAgent;
+        private readonly IWebSocketService _socketAgent;
         
-        public ChatService(ISocketAgent socketAgent)
+        public ChatService(IWebSocketService socketAgent)
         {
             _repository = new ChatRepository();
             _socketAgent = socketAgent;
@@ -74,7 +72,7 @@ namespace adapters.services.table.services
         // interactions
         public Task Send<T>(T param) where T : SendParams
         {
-            _socketAgent.Send(new Request
+            _socketAgent.SendAsync(new Request
             {
                 Method = param.Type == ConversationType.Private ? MessageType.ChatSendPrivate: MessageType.ChatSendGroup,
                 ReceiverId = param.TargetUserId,
@@ -90,7 +88,7 @@ namespace adapters.services.table.services
 
         public Task Subscribe<T>(T param) where T : SubscribeParams
         {
-            _socketAgent.Send(new Request
+            _socketAgent.SendAsync(new Request
             {
                 Method = MessageType.ChatSubscribe,
                 Payload = new Payload
@@ -105,7 +103,7 @@ namespace adapters.services.table.services
 
         public Task Unsubscribe<T>(T param) where T : UnsubscribeParams
         {
-            _socketAgent.Send(new Request
+            _socketAgent.SendAsync(new Request
             {
                 Method = MessageType.ChatUnsubscribe,
                 Payload = new Payload
@@ -119,7 +117,7 @@ namespace adapters.services.table.services
         
         public Task EditMessage<T>(T param) where T : EditMessageParams
         {
-            _socketAgent.Send(new Request
+            _socketAgent.SendAsync(new Request
             {
                 Method = MessageType.ChatMessageEdit,
                 Payload = new Payload
@@ -135,7 +133,7 @@ namespace adapters.services.table.services
 
         public Task DeleteMessage<T>(T param) where T : DeleteMessageParams
         {
-            _socketAgent.Send(new Request
+            _socketAgent.SendAsync(new Request
             {
                 Method = MessageType.ChatMessageDelete,
                 Payload = new Payload {
@@ -149,7 +147,7 @@ namespace adapters.services.table.services
 
         public Task DeleteAllMessage<T>(T param) where T : DeleteAllMessageParams
         {
-            _socketAgent.Send(new Request
+            _socketAgent.SendAsync(new Request
             {
                 Method = MessageType.ChatMessageDeleteAll,
                 Payload = new Payload

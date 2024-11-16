@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using DynamicPixels.GameService.Models;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -13,8 +13,8 @@ namespace DynamicPixelsInitializer
     {
         public string clientId;
         public string clientSecret;
-        public float reconnectDelay = 5;
-        public int reconnectMaxAttempt = 10;
+        public short reconnectDelay = 5;
+        public short reconnectMaxAttempt = 10;
         public bool developmentMode;
         public bool debugMode = false;
         public bool verboseMode = false;
