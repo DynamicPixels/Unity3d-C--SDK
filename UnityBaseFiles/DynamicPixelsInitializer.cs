@@ -18,7 +18,7 @@ namespace DynamicPixelsInitializer
         public bool developmentMode;
         public bool debugMode = false;
         public bool verboseMode = false;
-        
+        private bool _scriptInitialized = false;
         private static bool _isInit = false;
 
         public void OnDisable()
@@ -29,7 +29,14 @@ namespace DynamicPixelsInitializer
         
         private void Awake()
         {
-            DontDestroyOnLoad(this);
+            if (_isInit)
+                Destroy(gameObject);
+            else
+            {
+                DontDestroyOnLoad(this);
+                _scriptInitialized = true;
+            }
+                
         }
 
         public void OnEnable()
@@ -56,7 +63,8 @@ namespace DynamicPixelsInitializer
             };
 
             // configure Sdk instance
-            ServiceHub.Configure(clientId, clientSecret, systemInfo, debugMode, developmentMode, verboseMode, reconnectDelay, reconnectMaxAttempt);
+            ServiceHub.Configure(clientId, clientSecret, systemInfo, debugMode, developmentMode, verboseMode,
+                reconnectDelay, reconnectMaxAttempt);
 
             LogHelper.OnDebugReceived += LoggerOnDebugReceived;
 
@@ -76,8 +84,8 @@ namespace DynamicPixelsInitializer
 
         private void DynamicPixelsDispose()
         {
-            if(!_isInit) return;
-            
+            if (!_isInit || !_scriptInitialized) return;
+
             _isInit = false;
 
             Debug.Log("DynamicPixels Disposed");
