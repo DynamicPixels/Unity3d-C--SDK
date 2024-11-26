@@ -3,13 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DynamicPixels
+namespace DynamicPixels.Services.MultiPlayer.Realtime
 {
+    public enum SyncType
+    {
+        Position,
+        Rotation,
+        Scale,
+        ActiveState
+    }
     [Serializable]
     public class SyncingMessagePart
     {
         public string guid;
-        public string type;
+        public SyncType type;
         public Vector3 vector;
     }
     

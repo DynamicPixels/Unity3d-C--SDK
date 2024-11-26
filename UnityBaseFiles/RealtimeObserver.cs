@@ -53,7 +53,7 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
             _mainThreadActions = new List<Action>();
             _lastPacketNumber = 0;
         }
-        private void OnEnable()
+        private void Start()
         {
             RealtimeObserversManager.Instance.AddObserver(this, observerId);
         }
@@ -120,14 +120,17 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
             {
                 switch (part.type)
                 {
-                    case "Position":
+                    case SyncType.Position:
                         _mainThreadActions.Add(() => _trackedObjects[part.guid].transform.position = part.vector);
                         break;
-                    case "Rotation":
+                    case SyncType.Rotation:
                         _mainThreadActions.Add(() => _trackedObjects[part.guid].transform.rotation = Quaternion.Euler(part.vector));
                         break;
-                    case "Scale":
+                    case SyncType.Scale:
                         _mainThreadActions.Add(() => _trackedObjects[part.guid].transform.localScale = part.vector);
+                        break;
+                    case SyncType.ActiveState:
+                        _mainThreadActions.Add(() => _trackedObjects[part.guid].gameObject.SetActive(part.vector == Vector3.one));
                         break;
                 }
             }

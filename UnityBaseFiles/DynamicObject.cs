@@ -26,15 +26,31 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
         /// Indicates whether the object's scale should be synchronized.
         /// </summary>
         [SerializeField] private bool syncScale;
+        
+        /// <summary>
+        /// Indicates whether the game object's Enable/Disable state should be synchronized.
+        /// </summary>
+        [SerializeField] private bool syncGameObjectActiveState;
+
+        private bool _init;
         private new void Start()
         {
             base.Start();
-            RealtimeObserversManager.Instance.GetObserver(observerId).TrackObject(this);
+            _init = false;
+            
         }
         private new void OnDestroy()
         {
             base.OnDestroy();
             RealtimeObserversManager.Instance.GetObserver(observerId).UnTrackObject(this);
+        }
+
+        private new void Update()
+        {
+            base.Update();
+            if (_init) return;
+            RealtimeObserversManager.Instance.GetObserver(observerId).TrackObject(this);
+            _init = true;
         }
 
         /// <summary>
@@ -45,11 +61,13 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
         {
             var result = new List<SyncingMessagePart>();
             if (syncPosition)
-                result.Add(new SyncingMessagePart() { guid = guid, vector = transform.position, type = "Position" });
+                result.Add(new SyncingMessagePart() { guid = guid, vector = transform.position, type = SyncType.Position });
             if (syncRotation)
-                result.Add(new SyncingMessagePart() { guid = guid, vector = transform.rotation.eulerAngles, type = "Rotation" });
+                result.Add(new SyncingMessagePart() { guid = guid, vector = transform.rotation.eulerAngles, type = SyncType.Rotation });
             if (syncScale)
-                result.Add(new SyncingMessagePart() { guid = guid, vector = transform.localScale, type = "Scale" });
+                result.Add(new SyncingMessagePart() { guid = guid, vector = transform.localScale, type = SyncType.Scale });
+            if (syncGameObjectActiveState)
+                result.Add(new SyncingMessagePart() { guid = guid, vector = gameObject.activeSelf ? Vector3.one : Vector3.zero, type = SyncType.ActiveState });
             return result;
         }
     }

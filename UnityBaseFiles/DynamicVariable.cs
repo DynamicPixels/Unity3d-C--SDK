@@ -13,7 +13,7 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
     /// Represents a MonoBehaviour that manages synchronization and tracking of dynamic variables
     /// in a real-time multiplayer environment.
     /// Every class that contains a dynamic variable must inherit from this class.
-    /// Also note that you should not override the Start and OnDestroy function unless you call the base.Start() and base.OnDestroy functions in them.
+    /// Also note that you should not override the Start, OnDestroy and Update function unless you call the base.Start(), base.OnDestroy() and base.Update() functions in them.
     /// </summary>
     public class DynamicWrapper : MonoBehaviour
     {
@@ -26,6 +26,8 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
         /// The ID of the observer associated with this object.
         /// </summary>
         [SerializeField] protected int observerId;
+        
+         private bool _initialized = false;
 
         /// <summary>
         /// Ensures the GUID is valid and generates a new one if empty during the Unity editor's validation phase.
@@ -55,8 +57,6 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
             if (guid.IsNullOrEmpty())
                 guid = Guid.NewGuid().ToString();
 
-            RealtimeObserversManager.Instance.GetObserver(observerId).AddDynamicWrapper(this);
-
             FieldInfo[] fields =
                 GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -68,6 +68,13 @@ namespace DynamicPixels.Services.MultiPlayer.Realtime
                     value.Initialize(RealtimeObserversManager.Instance.GetObserver(observerId), field.Name);
                 }
             }
+        }
+
+        public void Update()
+        {
+            if(_initialized) return;
+            RealtimeObserversManager.Instance.GetObserver(observerId).AddDynamicWrapper(this);
+            _initialized = true;
         }
 
         /// <summary>
