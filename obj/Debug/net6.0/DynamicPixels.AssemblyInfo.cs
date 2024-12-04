@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DynamicPixels")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c3d984975fc1fb363f92cf3bb97266d844d65a4")]
 [assembly: System.Reflection.AssemblyProductAttribute("DynamicPixels")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DynamicPixels")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

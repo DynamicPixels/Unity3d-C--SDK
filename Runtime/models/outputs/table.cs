@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Numerics;
-using models.dto;
+using DynamicPixels.GameService.Services.Table;
 using Newtonsoft.Json;
 
-namespace models.outputs
+namespace DynamicPixels.GameService.Models.outputs
 {
     public class RowListResponse
     {
         [JsonProperty("list")]
         public List<Row> List { get; set; } = new List<Row>();
+
         [JsonProperty("totalCount")]
         public Int64 TotalCount { get; set; }
     }
@@ -18,6 +18,7 @@ namespace models.outputs
     {
         [JsonProperty("list")]
         public List<T> List { get; set; } = new List<T>();
+
         [JsonProperty("totalCount")]
         public Int64 TotalCount { get; set; }
     }

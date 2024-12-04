@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace models.dto
+namespace DynamicPixels.GameService.Models
 {
     /// <summary>
     ///     Represents System Info In DynamicPixels

@@ -1,6 +1,6 @@
 using System;
 
-namespace models.dto
+namespace DynamicPixels.GameService.Models
 {
     
     /// <summary>
@@ -47,6 +47,11 @@ namespace models.dto
         ///     Happened In Social System
         /// </summary>
         Social,
+
+        /// <summary>
+        ///     Happened In WebSocket System
+        /// </summary>
+        WebSocket,
     }
     
     /// <summary>
