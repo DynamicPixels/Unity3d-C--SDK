@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DynamicPixels.GameService.Models;
 using DynamicPixels.GameService.Models.outputs;
+using DynamicPixels.GameService.Services.Leaderboard.Models;
 using DynamicPixels.GameService.Services.MultiPlayer.Room.Models;
 using DynamicPixels.GameService.Utils.HttpClient;
 using DynamicPixels.GameService.Utils.WebsocketClient;
@@ -26,11 +29,27 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         /// </summary>
         /// <param name="input">The parameters required to create the room.</param>
         /// <returns>A task representing the asynchronous operation, with the created room as the result.</returns>
-        public async Task<Room> CreateRoom(CreateRoomParams input)
+        public async Task<RowResponse<Room>> CreateRoom(CreateRoomParams input, Action<Room> successfulCallback = null,
+            Action<ErrorCode, string> failedCallback = null)
         {
-            var room = await WebRequest.Post<Room>(UrlMap.CreateRoomUrl, input.ToString());
-            room.Config(_socketAgent);
-            return room;
+            var result = await WebRequest.Post<Room>(UrlMap.CreateRoomUrl, input.ToString());
+            result.Result.Config(_socketAgent);
+            if (result.Successful)
+            {
+                successfulCallback?.Invoke(result.Result);
+            }
+            else
+            {
+                failedCallback?.Invoke(result.ErrorCode, result.ErrorMessage);
+            }
+
+            return new RowResponse<Room>()
+            {
+                Row = result.Result,
+                Successful = result.Successful,
+                ErrorCode = result.ErrorCode,
+                ErrorMessage = result.ErrorMessage
+            };
         }
 
         /// <summary>
@@ -39,7 +58,8 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         /// </summary>
         /// <param name="input">The parameters required to create and open the room.</param>
         /// <returns>A task representing the asynchronous operation, with the created and opened room as the result.</returns>
-        public Task<Room> CreateAndOpenRoom(CreateRoomParams input)
+        public Task<RowResponse<Room>> CreateAndOpenRoom(CreateRoomParams input, Action<Room> successfulCallback = null,
+            Action<ErrorCode, string> failedCallback = null)
         {
             input.Status = RoomStatus.Open;
             return CreateRoom(input);
@@ -50,10 +70,26 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         /// </summary>
         /// <param name="inputParams">The parameters used to filter the rooms.</param>
         /// <returns>A task representing the asynchronous operation, with a collection of rooms as the result.</returns>
-        public async Task<IEnumerable<Room>> GetAllRooms(GetAllRoomsParams inputParams)
+        public async Task<RowListResponse<Room>> GetAllRooms(GetAllRoomsParams inputParams, Action<List<Room>> successfulCallback = null,
+            Action<ErrorCode, string> failedCallback = null)
         {
             var response = await WebRequest.Get<List<Room>>(UrlMap.GetAllRoomsUrl);
-            return response!;
+            if (response.Successful)
+            {
+                successfulCallback?.Invoke(response.Result);
+            }
+            else
+            {
+                failedCallback?.Invoke(response.ErrorCode, response.ErrorMessage);
+            }
+            return new RowListResponse<Room>()
+            {
+                List = response.Result,
+                ErrorCode = response.ErrorCode,
+                ErrorMessage = response.ErrorMessage,
+                Successful = response.Successful,
+
+            };
         }
 
         /// <summary>
@@ -61,10 +97,22 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         /// </summary>
         /// <param name="inputParams">The parameters used to match the rooms.</param>
         /// <returns>A task representing the asynchronous operation, with a collection of matched rooms as the result.</returns>
-        public async Task<IEnumerable<Room>> GetAllMatchedRooms(GetAllRoomsParams inputParams)
+        public async Task<RowListResponse<Room>> GetAllMatchedRooms(GetAllRoomsParams inputParams, Action<List<Room>> successfulCallback = null,
+            Action<ErrorCode, string> failedCallback = null )
         {
             var response = await WebRequest.Get<RowListResponse<Room>>(UrlMap.GetAllMatchedRoomsUrl);
-            return response!.List;
+            response.Result.Successful = response.Successful;
+            response.Result.ErrorCode = response.ErrorCode;
+            response.Result.ErrorMessage = response.ErrorMessage;
+            if (response.Successful)
+            {
+                successfulCallback?.Invoke(response.Result.List);
+            }
+            else
+            {
+                failedCallback?.Invoke(response.ErrorCode, response.ErrorMessage);
+            }
+            return response.Result;
         }
 
         /// <summary>
@@ -72,11 +120,27 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         /// </summary>
         /// <param name="roomId">The unique identifier of the room.</param>
         /// <returns>A task representing the asynchronous operation, with the retrieved room as the result.</returns>
-        public async Task<Room> GetRoomById(int roomId)
+        public async Task<RowResponse<Room>> GetRoomById(int roomId, Action<Room> successfulCallback = null,
+            Action<ErrorCode, string> failedCallback = null)
         {
-            var room = await WebRequest.Get<Room>(UrlMap.GetRoomByIdUrl(roomId));
-            room.Config(_socketAgent);
-            return room;
+            var result = await WebRequest.Get<Room>(UrlMap.GetRoomByIdUrl(roomId));
+            result.Result.Config(_socketAgent);
+            if (result.Successful)
+            {
+                successfulCallback?.Invoke(result.Result);
+            }
+            else
+            {
+                failedCallback?.Invoke(result.ErrorCode, result.ErrorMessage);
+            }
+
+            return new RowResponse<Room>()
+            {
+                Row = result.Result,
+                Successful = result.Successful,
+                ErrorCode = result.ErrorCode,
+                ErrorMessage = result.ErrorMessage
+            };
         }
 
         /// <summary>
@@ -84,11 +148,27 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         /// </summary>
         /// <param name="name">The name of the room.</param>
         /// <returns>A task representing the asynchronous operation, with the retrieved room as the result.</returns>
-        public async Task<Room> GetRoomByName(string name)
+        public async Task<RowResponse<Room>> GetRoomByName(string name, Action<Room> successfulCallback = null,
+            Action<ErrorCode, string> failedCallback = null)
         {
-            var room = await WebRequest.Get<Room>(UrlMap.GetRoomByNameUrl(name));
-            room.Config(_socketAgent);
-            return room;
+            var result = await WebRequest.Get<Room>(UrlMap.GetRoomByNameUrl(name));
+            result.Result.Config(_socketAgent);
+            if (result.Successful)
+            {
+                successfulCallback?.Invoke(result.Result);
+            }
+            else
+            {
+                failedCallback?.Invoke(result.ErrorCode, result.ErrorMessage);
+            }
+
+            return new RowResponse<Room>()
+            {
+                Row = result.Result,
+                Successful = result.Successful,
+                ErrorCode = result.ErrorCode,
+                ErrorMessage = result.ErrorMessage
+            };
         }
 
         /// <summary>
@@ -96,11 +176,27 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         /// </summary>
         /// <param name="roomId">The unique identifier of the room to join.</param>
         /// <returns>A task representing the asynchronous operation, with the joined room as the result.</returns>
-        public async Task<Room> Join(int roomId)
+        public async Task<RowResponse<Room>> Join(int roomId, Action<Room> successfulCallback = null,
+            Action<ErrorCode, string> failedCallback = null)
         {
-            var room = await WebRequest.Post<Room>(UrlMap.JoinToRoomByIdUrl(roomId));
-            room.Config(_socketAgent);
-            return room;
+            var result = await WebRequest.Post<Room>(UrlMap.JoinToRoomByIdUrl(roomId));
+            result.Result.Config(_socketAgent);
+            if (result.Successful)
+            {
+                successfulCallback?.Invoke(result.Result);
+            }
+            else
+            {
+                failedCallback?.Invoke(result.ErrorCode, result.ErrorMessage);
+            }
+
+            return new RowResponse<Room>()
+            {
+                Row = result.Result,
+                Successful = result.Successful,
+                ErrorCode = result.ErrorCode,
+                ErrorMessage = result.ErrorMessage
+            };
         }
 
         /// <summary>
@@ -108,22 +204,54 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         /// </summary>
         /// <param name="roomName">The name of the room to join.</param>
         /// <returns>A task representing the asynchronous operation, with the joined room as the result.</returns>
-        public async Task<Room> Join(string roomName)
+        public async Task<RowResponse<Room>> Join(string roomName, Action<Room> successfulCallback = null,
+            Action<ErrorCode, string> failedCallback = null)
         {
-            var room = await WebRequest.Post<Room>(UrlMap.JoinToRoomByNameUrl(roomName));
-            room.Config(_socketAgent);
-            return room;
+            var result = await WebRequest.Post<Room>(UrlMap.JoinToRoomByNameUrl(roomName));
+            result.Result.Config(_socketAgent);
+            if (result.Successful)
+            {
+                successfulCallback?.Invoke(result.Result);
+            }
+            else
+            {
+                failedCallback?.Invoke(result.ErrorCode, result.ErrorMessage);
+            }
+
+            return new RowResponse<Room>()
+            {
+                Row = result.Result,
+                Successful = result.Successful,
+                ErrorCode = result.ErrorCode,
+                ErrorMessage = result.ErrorMessage
+            };
         }
 
         /// <summary>
         /// Automatically matches the user with a room.
         /// </summary>
         /// <returns>A task representing the asynchronous operation, with the matched room as the result.</returns>
-        public async Task<Room> AutoMatch()
+        public async Task<RowResponse<Room>> AutoMatch(Action<Room> successfulCallback = null,
+            Action<ErrorCode, string> failedCallback = null)
         {
-            var room = await WebRequest.Post<Room>(UrlMap.AutoMatchUrl);
-            room.Config(_socketAgent);
-            return room;
+            var result = await WebRequest.Post<Room>(UrlMap.AutoMatchUrl);
+            result.Result.Config(_socketAgent);
+            if (result.Successful)
+            {
+                successfulCallback?.Invoke(result.Result);
+            }
+            else
+            {
+                failedCallback?.Invoke(result.ErrorCode, result.ErrorMessage);
+            }
+
+            return new RowResponse<Room>()
+            {
+                Row = result.Result,
+                Successful = result.Successful,
+                ErrorCode = result.ErrorCode,
+                ErrorMessage = result.ErrorMessage
+            };
         }
 
         /// <summary>

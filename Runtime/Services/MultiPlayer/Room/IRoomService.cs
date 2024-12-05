@@ -1,20 +1,23 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DynamicPixels.GameService.Models;
+using DynamicPixels.GameService.Models.outputs;
 using DynamicPixels.GameService.Services.MultiPlayer.Room.Models;
 
 namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 {
     public interface IRoomService
     {
-        Task<Room> CreateRoom(CreateRoomParams input);
-        Task<Room> CreateAndOpenRoom(CreateRoomParams input);
-        Task<IEnumerable<Room>> GetAllRooms(GetAllRoomsParams inputParams);
-        Task<IEnumerable<Room>> GetAllMatchedRooms(GetAllRoomsParams inputParams);
-        Task<Room> GetRoomById(int roomId);
-        Task<Room> GetRoomByName(string name);
-        Task<Room> Join(int roomId);
-        Task<Room> Join(string roomName);
-        Task<Room> AutoMatch();
+        Task<RowResponse<Room>> CreateRoom(CreateRoomParams input, Action<Room> successfulCallback = null, Action<ErrorCode, string> failedCallback = null);
+        Task<RowResponse<Room>> CreateAndOpenRoom(CreateRoomParams input, Action<Room> successfulCallback = null, Action<ErrorCode, string> failedCallback = null);
+        Task<RowListResponse<Room>> GetAllRooms(GetAllRoomsParams inputParams, Action<List<Room>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null);
+        Task<RowListResponse<Room>> GetAllMatchedRooms(GetAllRoomsParams inputParams, Action<List<Room>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null);
+        Task<RowResponse<Room>> GetRoomById(int roomId, Action<Room> successfulCallback = null, Action<ErrorCode, string> failedCallback = null);
+        Task<RowResponse<Room>> GetRoomByName(string name, Action<Room> successfulCallback = null, Action<ErrorCode, string> failedCallback = null);
+        Task<RowResponse<Room>> Join(int roomId, Action<Room> successfulCallback = null, Action<ErrorCode, string> failedCallback = null);
+        Task<RowResponse<Room>> Join(string roomName, Action<Room> successfulCallback = null, Action<ErrorCode, string> failedCallback = null);
+        Task<RowResponse<Room>> AutoMatch(Action<Room> successfulCallback = null, Action<ErrorCode, string> failedCallback = null);
         Task Leave(int roomId);
         Task DeleteRoom(int roomId);
     }
