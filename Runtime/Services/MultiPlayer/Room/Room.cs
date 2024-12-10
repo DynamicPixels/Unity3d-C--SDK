@@ -58,6 +58,8 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         /// Event triggered when a message is received from the server.
         /// </summary>
         public event EventHandler<Request> OnMessageReceived;
+        public event EventHandler<RoomPlayer> OnUserOnline;
+        public event EventHandler<RoomPlayer> OnUserOffline;
 
 
         /// <summary>
@@ -181,6 +183,12 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
                 case MessageType.UserLeftRoomMessage:
                     UserLeftListenerAction(packet.Payload);
                     break;
+                case MessageType.UserOnlineMessage:
+                    OnUserOnline?.Invoke(this, JsonConvert.DeserializeObject<RoomPlayer>(packet.Payload));
+                    break;
+                case MessageType.UserOfflineMessage:
+                    OnUserOffline?.Invoke(this, JsonConvert.DeserializeObject<RoomPlayer>(packet.Payload));
+                    break;
             }
         }
         private void Disconnect(object sender, EventArgs e)
@@ -218,7 +226,9 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         public const string RoomCreatedMessage = "room:created";
         public const string RoomDeletedMessage = "room:deleted";
         public const string UserJoinedToRoomMessage = "room:user-joined";
-        public const string UserLeftRoomMessage = "room:leave";
+        public const string UserLeftRoomMessage = "room:user-left";
+        public const string UserOnlineMessage = "user:online";
+        public const string UserOfflineMessage = "user:offline";
     }
     internal class SendToRoomInputDto
     {

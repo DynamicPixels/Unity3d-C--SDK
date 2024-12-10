@@ -13,8 +13,24 @@ using Newtonsoft.Json;
 
 namespace DynamicPixels.GameService.Utils.HttpClient
 {
-    internal static class WebRequest
+    public static class WebRequest
     {
+        private class RequestResponse
+        {
+            public string Data;
+            public bool Successful;
+            public ErrorCode ErrorCode;
+            public string ErrorMessage;
+        }
+
+        public class ResponseWrapper<T>
+        {
+            public bool Successful;
+            public ErrorCode ErrorCode;
+            public string ErrorMessage;
+            public T Result;
+        }
+
         private static readonly string _baseUrl = ServiceHub.DevelopmentMode
             ? $"http://localhost:5286/game/{ServiceHub.ClientId}"
             : $"https://link.dynamicpixels.dev/game/{ServiceHub.ClientId}";
@@ -22,17 +38,25 @@ namespace DynamicPixels.GameService.Utils.HttpClient
         private static System.Net.Http.HttpClient _client = new() { Timeout = TimeSpan.FromSeconds(15) };
         private static readonly string _userAgent = "UnitySDK-" + ServiceHub.Version();
 
-        internal static async Task<T> Get<T>(string url, Dictionary<string, string> headers = null)
+        internal static async Task<ResponseWrapper<T>> Get<T>(string url, Dictionary<string, string> headers = null)
         {
             var result = await DoRequest(url, HttpMethod.Get, null, headers);
-            return JsonConvert.DeserializeObject<T>(result);
+            return new ResponseWrapper<T>()
+            {
+                Result = JsonConvert.DeserializeObject<T>(result.Data), Successful = result.Successful,
+                ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage
+            };
         }
 
-        internal static async Task<T> Put<T>(string url, string body = null,
+        internal static async Task<ResponseWrapper<T>> Put<T>(string url, string body = null,
             Dictionary<string, string> headers = null)
         {
             var result = await DoRequest(url, HttpMethod.Put, body, headers);
-            return JsonConvert.DeserializeObject<T>(result);
+            return new ResponseWrapper<T>()
+            {
+                Result = JsonConvert.DeserializeObject<T>(result.Data), Successful = result.Successful,
+                ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage
+            };
         }
 
         internal static async Task Put(string url, string body = null,
@@ -41,11 +65,15 @@ namespace DynamicPixels.GameService.Utils.HttpClient
             await DoRequest(url, HttpMethod.Put, body, headers);
         }
 
-        internal static async Task<T> Patch<T>(string url, string body = null,
+        internal static async Task<ResponseWrapper<T>> Patch<T>(string url, string body = null,
             Dictionary<string, string> headers = null)
         {
             var result = await DoRequest(url, HttpMethod.Patch, body, headers);
-            return JsonConvert.DeserializeObject<T>(result);
+            return new ResponseWrapper<T>()
+            {
+                Result = JsonConvert.DeserializeObject<T>(result.Data), Successful = result.Successful,
+                ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage
+            };
         }
 
         internal static async Task Patch(string url, string body = null,
@@ -54,12 +82,15 @@ namespace DynamicPixels.GameService.Utils.HttpClient
             await DoRequest(url, HttpMethod.Patch, body, headers);
         }
 
-        internal static async Task<T> Post<T>(string url, string body = null,
+        internal static async Task<ResponseWrapper<T>> Post<T>(string url, string body = null,
             Dictionary<string, string> headers = null)
         {
             var result = await DoRequest(url, HttpMethod.Post, body, headers);
-            return JsonConvert.DeserializeObject<T>(result);
-
+            return new ResponseWrapper<T>()
+            {
+                Result = JsonConvert.DeserializeObject<T>(result.Data), Successful = result.Successful,
+                ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage
+            };
         }
 
         internal static async Task Post(string url, string body = null,
@@ -68,11 +99,14 @@ namespace DynamicPixels.GameService.Utils.HttpClient
             await DoRequest(url, HttpMethod.Post, body, headers);
         }
 
-        internal static async Task<T> Delete<T>(string url, Dictionary<string, string> headers = null)
+        internal static async Task<ResponseWrapper<T>> Delete<T>(string url, Dictionary<string, string> headers = null)
         {
             var result = await DoRequest(url, HttpMethod.Delete, null, headers);
-            return JsonConvert.DeserializeObject<T>(result);
-
+            return new ResponseWrapper<T>()
+            {
+                Result = JsonConvert.DeserializeObject<T>(result.Data), Successful = result.Successful,
+                ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage
+            };
         }
 
         internal static async Task Delete(string url, Dictionary<string, string> headers = null)
@@ -80,7 +114,7 @@ namespace DynamicPixels.GameService.Utils.HttpClient
             await DoRequest(url, HttpMethod.Delete, null, headers);
         }
 
-        private static async Task<string> DoRequest(
+        private static async Task<RequestResponse> DoRequest(
             string url,
             HttpMethod method,
             string body = null,
@@ -103,7 +137,7 @@ namespace DynamicPixels.GameService.Utils.HttpClient
             var result = await reader.ReadToEndAsync();
 
             if (response.IsSuccessStatusCode)
-                return result;
+                return new RequestResponse() { Data = result, Successful = true };
 
             LogHelper.LogError<string>(DebugLocation.WebSocket, "DoRequest", $"Server Error: {result}");
 
@@ -112,12 +146,14 @@ namespace DynamicPixels.GameService.Utils.HttpClient
 
             // Get the corresponding ErrorCode from the error message
             var errorCode = ErrorMapper.GetErrorCode(errorResponse?.Message ?? string.Empty);
-            
+
             if (errorCode == ErrorCode.UnknownError)
-                throw new DynamicPixelsException(errorCode, response.ToString());
+                return new RequestResponse()
+                    { Data = "", ErrorCode = errorCode, ErrorMessage = response.ToString(), Successful = false };
 
             // Throw the DynamicPixelsException with the ErrorCode
-            throw new DynamicPixelsException(errorCode, errorResponse?.Message);
+            return new RequestResponse()
+                { Data = "", ErrorCode = errorCode, ErrorMessage = errorResponse?.Message, Successful = false };
 
             //var content = await responseMessage.Content.ReadAsStringAsync();
             //var problemDetails = string.IsNullOrWhiteSpace(content)
@@ -126,7 +162,7 @@ namespace DynamicPixels.GameService.Utils.HttpClient
 
             //throw new RestApiClientException(problemDetails);
         }
-        
+
         //internal static async Task<HttpResponseMessage> DoMultiPartPost(string url, byte[] data,
         //    Dictionary<string, string> headers = null)
         //{
@@ -153,6 +189,7 @@ namespace DynamicPixels.GameService.Utils.HttpClient
 
             return request;
         }
+
         private static HttpRequestMessage AddJsonBody(this HttpRequestMessage request, string body)
         {
             if (body is null)
