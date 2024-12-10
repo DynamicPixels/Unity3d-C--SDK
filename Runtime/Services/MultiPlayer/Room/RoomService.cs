@@ -7,12 +7,16 @@ using DynamicPixels.GameService.Services.Leaderboard.Models;
 using DynamicPixels.GameService.Services.MultiPlayer.Room.Models;
 using DynamicPixels.GameService.Utils.HttpClient;
 using DynamicPixels.GameService.Utils.WebsocketClient;
+using Newtonsoft.Json;
+using Request = UnityEditor.PackageManager.Requests.Request;
 
 namespace DynamicPixels.GameService.Services.MultiPlayer.Room
 {
     public class RoomService : IRoomService
     {
         private readonly IWebSocketService _socketAgent;
+        public event EventHandler<Room> OnRoomCreated;
+        public event EventHandler<int> OnRoomRemoved;
 
         /// <summary>
         /// Initializes a new instance of the RoomService class with the specified socket agent.
@@ -21,6 +25,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         public RoomService(IWebSocketService socketAgent)
         {
             _socketAgent = socketAgent;
+            _socketAgent.OnMessageReceived += OnMessageReceived;
         }
 
         /// <summary>
@@ -252,6 +257,19 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage
             };
+        }
+
+        public void OnMessageReceived(object sender, GameService.Models.Request request)
+        {
+            switch (request.Method)
+            {
+                case MessageType.RoomCreatedMessage:
+                    OnRoomCreated?.Invoke(this, JsonConvert.DeserializeObject<Room>(request.Payload));
+                    break;
+                case MessageType.RoomDeletedMessage:
+                    OnRoomRemoved?.Invoke(this, JsonConvert.DeserializeObject<int>(request.Payload));
+                    break;
+            }
         }
 
         /// <summary>

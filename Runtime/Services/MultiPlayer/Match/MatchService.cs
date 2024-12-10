@@ -116,6 +116,27 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
             };
         }
 
+        public async Task<RowResponse<Match>> LoadMatchByRoomId(int roomId, Action<Match> successfulCallback = null, Action<ErrorCode, string> failedCallback = null)
+        {
+            var result = await WebRequest.Get<Match>(UrlMap.LoadMatchByRoomId(roomId));
+            if (result.Successful)
+            {
+                successfulCallback?.Invoke(result.Result);
+            }
+            else
+            {
+                failedCallback?.Invoke(result.ErrorCode, result.ErrorMessage);
+            }
+
+            return new RowResponse<Match>()
+            {
+                Successful = result.Successful,
+                ErrorCode = result.ErrorCode,
+                ErrorMessage = result.ErrorMessage,
+                Row = result.Result,
+            };
+        }
+
         /// <summary>
         /// Retrieves a list of matches associated with the current user.
         /// </summary>
