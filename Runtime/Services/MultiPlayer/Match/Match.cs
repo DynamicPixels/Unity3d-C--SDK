@@ -40,7 +40,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage,
                 Row = result.Result,
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
             };
         }
 
@@ -50,10 +50,25 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
         /// <param name="key">The key identifying the state.</param>
         /// <param name="value">The value of the state to be saved.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        public Task SaveState(string key, string value)
+        public async Task<BaseResponse> SaveState(string key, string value, Action successfulCallback = null, Action<ErrorCode, string> failedCallback = null)
         {
             var data = new { StateData = value };
-            return WebRequest.Put(UrlMap.SaveState(Id, key), JsonConvert.SerializeObject(data));
+            var result = await WebRequest.Put(UrlMap.SaveState(Id, key), JsonConvert.SerializeObject(data));
+            if (result.Successful)
+            {
+                successfulCallback?.Invoke();
+            }
+            else
+            {
+                failedCallback?.Invoke(result.ErrorCode, result.ErrorMessage);
+            }
+
+            return new BaseResponse()
+            {
+                ErrorCode = result.ErrorCode,
+                ErrorMessage = result.ErrorMessage,
+                IsSuccessful = result.Successful,
+            };
         }
 
         /// <summary>
@@ -77,7 +92,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage,
                 Row = result.Result.StateData,
-                Successful = result.Successful
+                IsSuccessful = result.Successful
             };
         }
 
@@ -104,7 +119,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage,
                 Row = result.Result,
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
             };
         }
 
@@ -115,7 +130,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
         public async Task<RowResponse<Match>> Start(Action<Match> successfulCallback = null, Action<ErrorCode, string> failedCallback = null)
         {
             var result = await UpdateStatus(MatchStatus.Started);
-            if (result.Successful)
+            if (result.IsSuccessful)
             {
                 successfulCallback?.Invoke(result.Row);
             }
@@ -134,10 +149,10 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
         public async Task<RowResponse<Match>> Pause(string metadata, Action<Match> successfulCallback = null, Action<ErrorCode, string> failedCallback = null)
         {
             var result = await Save(metadata);
-            if (result.Successful)
+            if (result.IsSuccessful)
             {
                 var response = await UpdateStatus(MatchStatus.Paused);
-                if (response.Successful)
+                if (response.IsSuccessful)
                 {
                     successfulCallback?.Invoke(response.Row);
                 }
@@ -159,7 +174,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
         public async Task<RowResponse<Match>> Resume(Action<Match> successfulCallback = null, Action<ErrorCode, string> failedCallback = null)
         {
             var result = await UpdateStatus(MatchStatus.Resumed);
-            if (result.Successful)
+            if (result.IsSuccessful)
             {
                 successfulCallback?.Invoke(result.Row);
             }
@@ -174,18 +189,46 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
         /// Finishes the match by sending a request to the server to update the match status to "Finished".
         /// </summary>
         /// <returns>A task representing the asynchronous operation.</returns>
-        public Task Finish()
+        public async Task<BaseResponse> Finish(Action successfulCallback = null, Action<ErrorCode, string> failedCallback = null)
         {
-            return WebRequest.Patch(UrlMap.FinishMatchUrl(Id));
+            var result = await WebRequest.Patch(UrlMap.FinishMatchUrl(Id));
+            if (result.Successful)
+            {
+                successfulCallback?.Invoke();
+            }
+            else
+            {
+                failedCallback?.Invoke(result.ErrorCode, result.ErrorMessage);
+            }
+            return new BaseResponse()
+            {
+                ErrorCode = result.ErrorCode,
+                ErrorMessage = result.ErrorMessage,
+                IsSuccessful = result.Successful,
+            };
         }
 
         /// <summary>
         /// Leaves the match and aborts it by sending a request to the server to update the match status to "Aborted".
         /// </summary>
         /// <returns>A task representing the asynchronous operation.</returns>
-        public Task LeaveAndAbort()
+        public async Task<BaseResponse> LeaveAndAbort(Action successfulCallback = null, Action<ErrorCode, string> failedCallback = null)
         {
-            return WebRequest.Delete(UrlMap.LeaveAndAbortUrl(Id));
+            var result = await WebRequest.Delete(UrlMap.LeaveAndAbortUrl(Id));
+            if (result.Successful)
+            {
+                successfulCallback?.Invoke();
+            }
+            else
+            {
+                failedCallback?.Invoke(result.ErrorCode, result.ErrorMessage);
+            }
+            return new BaseResponse()
+            {
+                ErrorCode = result.ErrorCode,
+                ErrorMessage = result.ErrorMessage,
+                IsSuccessful = result.Successful,
+            };
         }
 
         /// <summary>
@@ -209,7 +252,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
             {
                 ErrorCode = response.ErrorCode,
                 ErrorMessage = response.ErrorMessage,
-                Successful = response.Successful,
+                IsSuccessful = response.Successful,
                 Row = response.Result,
             };
         }

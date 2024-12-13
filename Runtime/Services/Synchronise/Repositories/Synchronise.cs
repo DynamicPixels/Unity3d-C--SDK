@@ -24,7 +24,7 @@ namespace DynamicPixels.GameService.Services.Synchronise.Repositories
                 ErrorCode = response.ErrorCode,
                 ErrorMessage = response.ErrorMessage,
                 Row = ConvertUnixTimestampToDateTime(response.Result.Row),
-                Successful = response.Successful
+                IsSuccessful = response.Successful
             };
             
         }

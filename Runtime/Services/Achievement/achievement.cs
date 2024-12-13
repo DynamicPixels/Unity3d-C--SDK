@@ -27,7 +27,7 @@ namespace DynamicPixels.GameService.Services.Achievement
         public async Task<RowListResponse<Models.Achievement>> GetAchievements<T>(T param, Action<List<Models.Achievement>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : GetAchievementParams
         {
             var result = await _repository.GetAchievements(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -49,7 +49,7 @@ namespace DynamicPixels.GameService.Services.Achievement
         public async Task<RowResponse<Unlock>> UnlockAchievement<T>(T param, Action<Unlock> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : UnlockAchievementParams
         {
             var result = await _repository.UnlockAchievement(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)

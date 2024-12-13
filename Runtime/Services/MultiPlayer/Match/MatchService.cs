@@ -44,7 +44,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
 
             return new RowResponse<Match>()
             {
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage,
                 Row = result.Result,
@@ -81,7 +81,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
 
             return new RowResponse<Match>()
             {
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage,
                 Row = result.Result,
@@ -109,7 +109,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
 
             return new RowResponse<Match>()
             {
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage,
                 Row = result.Result,
@@ -130,7 +130,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
 
             return new RowResponse<Match>()
             {
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage,
                 Row = result.Result,
@@ -157,7 +157,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Match
 
             return new RowListResponse<MatchSummary>()
             {
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage,
                 List = result.Result,

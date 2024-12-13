@@ -31,7 +31,7 @@ namespace DynamicPixels.GameService.Services.Device
         public async Task<RowListResponse<User.Models.Device>> FindMyDevices<T>(T input, Action<List<User.Models.Device>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : FindMyDeviceParams
         {
             var result = await _repository.FindMyDevices(input);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -67,7 +67,7 @@ namespace DynamicPixels.GameService.Services.Device
             return new RowResponse<bool>()
             {
                 Row = result.Result.Affected > 0,
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage,
             };

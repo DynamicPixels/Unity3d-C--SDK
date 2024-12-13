@@ -51,7 +51,7 @@ namespace DynamicPixels.GameService.Services.Authentication
         public async Task<LoginResponse> RegisterWithEmail<T>(T input, Action<LoginResponse> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : RegisterWithEmailParams
         {
             var result = await _repository.RegisterWithEmail(input);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -75,7 +75,7 @@ namespace DynamicPixels.GameService.Services.Authentication
         public async Task<LoginResponse> LoginWithEmail<T>(T input, Action<LoginResponse> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : LoginWithEmailParams
         {
             var result = await _repository.LoginWithEmail(input);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -99,7 +99,7 @@ namespace DynamicPixels.GameService.Services.Authentication
         public async Task<LoginResponse> LoginWithGoogle<T>(T input, Action<LoginResponse> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : LoginWithGoogleParams
         {
             var result = await _repository.LoginWithGoogle(input);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -123,7 +123,7 @@ namespace DynamicPixels.GameService.Services.Authentication
         public async Task<LoginResponse> LoginAsGuest<T>(T input, Action<LoginResponse> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : LoginAsGuestParams
         {
             var result = await _repository.LoginAsGuest(input);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -147,7 +147,7 @@ namespace DynamicPixels.GameService.Services.Authentication
         public async Task<LoginResponse> LoginWithToken<T>(T input, Action<LoginResponse> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : LoginWithTokenParams
         {
             var result = await _repository.LoginWithToken(input);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -184,7 +184,7 @@ namespace DynamicPixels.GameService.Services.Authentication
             return new RowResponse<bool>()
             {
                 Row = result.Result,
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage,
             };
@@ -212,7 +212,7 @@ namespace DynamicPixels.GameService.Services.Authentication
             return new RowResponse<bool>()
             {
                 Row = result.Result.Affected > 0,
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage,
             };
@@ -227,7 +227,7 @@ namespace DynamicPixels.GameService.Services.Authentication
         public async Task<LoginResponse> VerifyOtaToken<T>(T input, Action<LoginResponse> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : VerifyOtaTokenParams
         {
             var result = await _repository.VerifyOtaToken(input);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)

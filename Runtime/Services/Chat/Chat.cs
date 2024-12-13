@@ -165,7 +165,7 @@ namespace adapters.services.table.services
         public async Task<List<Conversation>> GetSubscribedConversations<T>(T param, Action<List<Conversation>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : GetSubscribedConversationsParams
         {
             var conversations = await this._repository.GetSubscribedConversations(param);
-            conversations.Result.Successful = conversations.Successful;
+            conversations.Result.IsSuccessful = conversations.Successful;
             conversations.Result.ErrorCode = conversations.ErrorCode;
             conversations.Result.ErrorMessage = conversations.ErrorMessage;
             if (conversations.Successful)
@@ -182,7 +182,7 @@ namespace adapters.services.table.services
         public async Task<List<Message>> GetConversationMessages<T>(T param, Action<List<Message>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : GetConversationMessagesParams
         {
             var messages = await this._repository.GetConversationMessages(param);
-            messages.Result.Successful = messages.Successful;
+            messages.Result.IsSuccessful = messages.Successful;
             messages.Result.ErrorCode = messages.ErrorCode;
             messages.Result.ErrorMessage = messages.ErrorMessage;
             if (messages.Successful)
@@ -199,7 +199,7 @@ namespace adapters.services.table.services
         public async Task<List<ConversationMember>> GetConversationMembers<T>(T param, Action<List<ConversationMember>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : GetConversationMembersParams
         {
             var members = await this._repository.GetConversationMembers(param);
-            members.Result.Successful = members.Successful;
+            members.Result.IsSuccessful = members.Successful;
             members.Result.ErrorCode = members.ErrorCode;
             members.Result.ErrorMessage = members.ErrorMessage;
             if (members.Successful)

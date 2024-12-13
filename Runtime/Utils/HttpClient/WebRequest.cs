@@ -30,6 +30,12 @@ namespace DynamicPixels.GameService.Utils.HttpClient
             public string ErrorMessage;
             public T Result;
         }
+        public class ResponseWrapper
+        {
+            public bool Successful;
+            public ErrorCode ErrorCode;
+            public string ErrorMessage;
+        }
 
         private static readonly string _baseUrl = ServiceHub.DevelopmentMode
             ? $"http://localhost:5286/game/{ServiceHub.ClientId}"
@@ -59,10 +65,15 @@ namespace DynamicPixels.GameService.Utils.HttpClient
             };
         }
 
-        internal static async Task Put(string url, string body = null,
+        internal static async Task<ResponseWrapper> Put(string url, string body = null,
             Dictionary<string, string> headers = null)
         {
-            await DoRequest(url, HttpMethod.Put, body, headers);
+            var result = await DoRequest(url, HttpMethod.Put, body, headers);
+            return new ResponseWrapper()
+            {
+                Successful = result.Successful,
+                ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage
+            };
         }
 
         internal static async Task<ResponseWrapper<T>> Patch<T>(string url, string body = null,
@@ -76,10 +87,15 @@ namespace DynamicPixels.GameService.Utils.HttpClient
             };
         }
 
-        internal static async Task Patch(string url, string body = null,
+        internal static async Task<ResponseWrapper> Patch(string url, string body = null,
             Dictionary<string, string> headers = null)
         {
-            await DoRequest(url, HttpMethod.Patch, body, headers);
+            var result = await DoRequest(url, HttpMethod.Patch, body, headers);
+            return new ResponseWrapper()
+            {
+                Successful = result.Successful,
+                ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage
+            };
         }
 
         internal static async Task<ResponseWrapper<T>> Post<T>(string url, string body = null,
@@ -93,10 +109,15 @@ namespace DynamicPixels.GameService.Utils.HttpClient
             };
         }
 
-        internal static async Task Post(string url, string body = null,
+        internal static async Task<ResponseWrapper> Post(string url, string body = null,
             Dictionary<string, string> headers = null)
         {
-            await DoRequest(url, HttpMethod.Post, body, headers);
+            var result = await DoRequest(url, HttpMethod.Post, body, headers);
+            return new ResponseWrapper()
+            {
+                Successful = result.Successful,
+                ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage
+            };
         }
 
         internal static async Task<ResponseWrapper<T>> Delete<T>(string url, Dictionary<string, string> headers = null)
@@ -109,9 +130,14 @@ namespace DynamicPixels.GameService.Utils.HttpClient
             };
         }
 
-        internal static async Task Delete(string url, Dictionary<string, string> headers = null)
+        internal static async Task<ResponseWrapper> Delete(string url, Dictionary<string, string> headers = null)
         {
-            await DoRequest(url, HttpMethod.Delete, null, headers);
+            var result = await DoRequest(url, HttpMethod.Delete, null, headers);
+            return new ResponseWrapper()
+            {
+                Successful = result.Successful,
+                ErrorCode = result.ErrorCode, ErrorMessage = result.ErrorMessage
+            };
         }
 
         private static async Task<RequestResponse> DoRequest(

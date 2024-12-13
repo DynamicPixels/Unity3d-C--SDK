@@ -24,7 +24,7 @@ namespace DynamicPixels.GameService.Services.Leaderboard
         public async Task<RowListResponse<Models.Leaderboard>> GetLeaderboards<T>(T param, Action<List<Models.Leaderboard>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : GetLeaderboardsParams
         {
             var result = await _repository.GetLeaderBoards(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -47,7 +47,7 @@ namespace DynamicPixels.GameService.Services.Leaderboard
         public async Task<RowListResponse<TOutput>> GetPartiesScores<TInput, TOutput>(TInput param, Action<List<TOutput>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where TInput : GetScoresParams where TOutput : PartyScore
         {
             var result = await _repository.GetPartiesScores<TInput, TOutput>(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -70,7 +70,7 @@ namespace DynamicPixels.GameService.Services.Leaderboard
         public async Task<RowListResponse<TOutput>> GetUsersScores<TInput, TOutput>(TInput param, Action<List<TOutput>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where TInput : GetScoresParams where TOutput : UserScore
         {
             var result = await _repository.GetUsersScores<TInput, TOutput>(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -92,7 +92,7 @@ namespace DynamicPixels.GameService.Services.Leaderboard
         public async Task<RowListResponse<UserScore>> GetFriendsScores<T>(T param, Action<List<UserScore>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : GetFriendsScoresParams
         {
             var result = await _repository.GetFriendsScores(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -115,7 +115,7 @@ namespace DynamicPixels.GameService.Services.Leaderboard
         public async Task<RowResponse<TOutput>> GetMyScore<TInput, TOutput>(TInput param, Action<TOutput> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where TInput : GetCurrentUserScoreParams where TOutput : UserScore
         {
             var result = await _repository.GetCurrentUserScore<TInput, TOutput>(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -138,7 +138,7 @@ namespace DynamicPixels.GameService.Services.Leaderboard
         public async Task<RowResponse<TOutput>> SubmitScore<TInput, TOutput>(TInput param, Action<TOutput> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where TInput : SubmitScoreParams where TOutput : UserScore
         {
             var result = await _repository.SubmitScore<TInput, TOutput>(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)

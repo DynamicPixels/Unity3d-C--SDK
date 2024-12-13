@@ -19,7 +19,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         Task<RowResponse<Room>> Join(string roomName, Action<Room> successfulCallback = null, Action<ErrorCode, string> failedCallback = null);
         Task<RowResponse<Room>> AutoMatch(Action<Room> successfulCallback = null, Action<ErrorCode, string> failedCallback = null);
         void OnMessageReceived(object sender, Request request);
-        Task Leave(int roomId);
-        Task DeleteRoom(int roomId);
+        Task<BaseResponse> Leave(int roomId, Action successfulCallback = null, Action<ErrorCode, string> failedCallback = null);
+        Task<BaseResponse> DeleteRoom(int roomId, Action successfulCallback = null, Action<ErrorCode, string> failedCallback = null);
     }
 }

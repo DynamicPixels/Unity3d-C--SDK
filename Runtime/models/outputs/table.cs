@@ -11,7 +11,7 @@ namespace DynamicPixels.GameService.Models.outputs
     {
         public ErrorCode ErrorCode;
         public string ErrorMessage;
-        public bool Successful;
+        public bool IsSuccessful;
     }
     public class RowListResponse : BaseResponse
     {

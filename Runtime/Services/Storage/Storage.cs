@@ -37,7 +37,7 @@ namespace DynamicPixels.GameService.Services.Storage
             where TInput : FileMetaForUpload
         {
             var result = await _repository.UploadFile(param);
-            if (result.Successful)
+            if (result.IsSuccessful)
             {
                 successfulCallback?.Invoke(result.Row);
             }

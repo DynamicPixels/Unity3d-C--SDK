@@ -24,7 +24,7 @@ namespace DynamicPixels.GameService.Services.Friendship
         public async Task<RowListResponse<Models.Friendship>> GetMyFriends<T>(T input, Action<List<Models.Friendship>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : GetMyFriendsParams
         {
             var result = await _repository.GetMyFriends(input);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -46,7 +46,7 @@ namespace DynamicPixels.GameService.Services.Friendship
         public async Task<RowListResponse<Models.Friendship>> GetMyFriendshipRequests<T>(T input, Action<List<Models.Friendship>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : GetMyFriendshipRequestsParams
         {
             var result = await _repository.GetMyFriendshipRequests(input);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -68,7 +68,7 @@ namespace DynamicPixels.GameService.Services.Friendship
         public async Task<RowResponse<Models.Friendship>> RequestFriendship<T>(T input, Action<Models.Friendship> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : RequestFriendshipParams
         {
             var result = await _repository.RequestFriendship(input);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -90,7 +90,7 @@ namespace DynamicPixels.GameService.Services.Friendship
         public async Task<RowResponse<Models.Friendship>> AcceptRequest<T>(T input, Action<Models.Friendship> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : AcceptRequestParams
         {
             var result = await _repository.AcceptRequest(input);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -112,7 +112,7 @@ namespace DynamicPixels.GameService.Services.Friendship
         public async Task<RowResponse<Models.Friendship>> RejectRequest<T>(T input, Action<Models.Friendship> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : RejectRequestParams
         {
             var result = await _repository.RejectRequest(input);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -146,7 +146,7 @@ namespace DynamicPixels.GameService.Services.Friendship
             return new RowResponse<int>()
             {
                 Row = result.Result.Affected,
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage,
             };
@@ -171,7 +171,7 @@ namespace DynamicPixels.GameService.Services.Friendship
             return new RowResponse<bool>()
             {
                 Row = result.Result.Affected > 0,
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage,
             };

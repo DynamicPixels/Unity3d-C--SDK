@@ -51,7 +51,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
             return new RowResponse<Room>()
             {
                 Row = result.Result,
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage
             };
@@ -92,7 +92,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
                 List = response.Result,
                 ErrorCode = response.ErrorCode,
                 ErrorMessage = response.ErrorMessage,
-                Successful = response.Successful,
+                IsSuccessful = response.Successful,
 
             };
         }
@@ -106,7 +106,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
             Action<ErrorCode, string> failedCallback = null )
         {
             var response = await WebRequest.Get<RowListResponse<Room>>(UrlMap.GetAllMatchedRoomsUrl);
-            response.Result.Successful = response.Successful;
+            response.Result.IsSuccessful = response.Successful;
             response.Result.ErrorCode = response.ErrorCode;
             response.Result.ErrorMessage = response.ErrorMessage;
             if (response.Successful)
@@ -142,7 +142,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
             return new RowResponse<Room>()
             {
                 Row = result.Result,
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage
             };
@@ -170,7 +170,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
             return new RowResponse<Room>()
             {
                 Row = result.Result,
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage
             };
@@ -198,7 +198,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
             return new RowResponse<Room>()
             {
                 Row = result.Result,
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage
             };
@@ -226,7 +226,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
             return new RowResponse<Room>()
             {
                 Row = result.Result,
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage
             };
@@ -253,7 +253,7 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
             return new RowResponse<Room>()
             {
                 Row = result.Result,
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage
             };
@@ -277,9 +277,23 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         /// </summary>
         /// <param name="roomId">The unique identifier of the room to leave.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        public Task Leave(int roomId)
+        public async Task<BaseResponse> Leave(int roomId, Action successfulCallback = null, Action<ErrorCode, string> failedCallback = null)
         {
-            return WebRequest.Delete(UrlMap.LeaveRoomUrl(roomId));
+            var result = await WebRequest.Delete(UrlMap.LeaveRoomUrl(roomId));
+            if (result.Successful)
+            {
+                successfulCallback?.Invoke();
+            }
+            else
+            {
+                failedCallback?.Invoke(result.ErrorCode, result.ErrorMessage);
+            }
+            return new BaseResponse()
+            {
+                ErrorCode = result.ErrorCode,
+                ErrorMessage = result.ErrorMessage,
+                IsSuccessful = result.Successful,
+            };
         }
 
         /// <summary>
@@ -288,9 +302,23 @@ namespace DynamicPixels.GameService.Services.MultiPlayer.Room
         /// </summary>
         /// <param name="roomId">The unique identifier of the room to delete.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        public Task DeleteRoom(int roomId)
+        public async Task<BaseResponse> DeleteRoom(int roomId, Action successfulCallback = null, Action<ErrorCode, string> failedCallback = null)
         {
-            return WebRequest.Delete(UrlMap.DeleteRoomUrl(roomId));
+            var result = await WebRequest.Delete(UrlMap.DeleteRoomUrl(roomId));
+            if (result.Successful)
+            {
+                successfulCallback?.Invoke();
+            }
+            else
+            {
+                failedCallback?.Invoke(result.ErrorCode, result.ErrorMessage);
+            }
+            return new BaseResponse()
+            {
+                ErrorCode = result.ErrorCode,
+                ErrorMessage = result.ErrorMessage,
+                IsSuccessful = result.Successful,
+            };
         }
     }
 }

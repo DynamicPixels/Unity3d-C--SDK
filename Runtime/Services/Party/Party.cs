@@ -25,7 +25,7 @@ namespace DynamicPixels.GameService.Services.Party
             Action<ErrorCode, string> failedCallback = null) where T : GetPartiesParams
         {
             var result = await _repository.GetParties(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -49,7 +49,7 @@ namespace DynamicPixels.GameService.Services.Party
             Action<ErrorCode, string> failedCallback = null) where T : CreatePartyParams
         {
             var result = await _repository.CreateParty(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -72,7 +72,7 @@ namespace DynamicPixels.GameService.Services.Party
             Action<ErrorCode, string> failedCallback = null) where T : GetSubscribedPartiesParams
         {
             var result = await _repository.GetSubscribedParties(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -95,7 +95,7 @@ namespace DynamicPixels.GameService.Services.Party
             Action<ErrorCode, string> failedCallback = null) where T : JoinToPartyParams
         {
             var result = await _repository.JoinToParty(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -129,7 +129,7 @@ namespace DynamicPixels.GameService.Services.Party
             return new RowResponse<bool>()
             {
                 Row = result.Result.Affected > 0,
-                Successful = result.Successful,
+                IsSuccessful = result.Successful,
                 ErrorCode = result.ErrorCode,
                 ErrorMessage = result.ErrorMessage,
             };
@@ -144,7 +144,7 @@ namespace DynamicPixels.GameService.Services.Party
             Action<ErrorCode, string> failedCallback = null) where T : GetPartyByIdParams
         {
             var result = await _repository.GetPartyById(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -167,7 +167,7 @@ namespace DynamicPixels.GameService.Services.Party
             Action<ErrorCode, string> failedCallback = null) where T : GetPartyMembersParams
         {
             var result = await _repository.GetPartyMembers(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -201,7 +201,7 @@ namespace DynamicPixels.GameService.Services.Party
             Action<ErrorCode, string> failedCallback = null) where T : GetPartyWaitingMembersParams
         {
             var result = await _repository.GetPartyWaitingMembers(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -224,7 +224,7 @@ namespace DynamicPixels.GameService.Services.Party
             Action<ErrorCode, string> failedCallback = null) where T : EditPartyParams
         {
             var result = await _repository.EditParty(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -247,7 +247,7 @@ namespace DynamicPixels.GameService.Services.Party
             Action<ErrorCode, string> failedCallback = null) where T : AcceptJoiningParams
         {
             var result = await _repository.AcceptJoining(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -270,7 +270,7 @@ namespace DynamicPixels.GameService.Services.Party
             Action<ErrorCode, string> failedCallback = null) where T : RejectJoiningParams
         {
             var result = await _repository.RejectJoining(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)

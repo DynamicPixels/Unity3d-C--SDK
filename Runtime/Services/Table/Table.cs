@@ -32,7 +32,7 @@ namespace DynamicPixels.GameService.Services.Table
         public async Task<RowListResponse<TY>> Find<TY, T>(T param, Action<RowListResponse<TY>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : FindParams where TY : BaseTableModel
         {
             var result = await _repository.Find<TY, T>(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -56,7 +56,7 @@ namespace DynamicPixels.GameService.Services.Table
         public async Task<RowResponse<TY>> FindById<TY, T>(T param, Action<RowResponse<TY>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : FindByIdParams where TY : BaseTableModel
         {
             var result = await _repository.FindById<TY, T>(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -80,7 +80,7 @@ namespace DynamicPixels.GameService.Services.Table
         public async Task<RowResponse<TY>> FindByIdAndDelete<TY, T>(T param, Action<RowResponse<TY>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : FindByIdAndDeleteParams where TY : BaseTableModel
         {
             var result = await _repository.FindByIdAndDelete<TY, T>(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -104,7 +104,7 @@ namespace DynamicPixels.GameService.Services.Table
         public async Task<RowResponse<TY>> FindByIdAndUpdate<TY, T>(T param, Action<RowResponse<TY>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : FindByIdAndUpdateParams where TY : BaseTableModel
         {
             var result = await _repository.FindByIdAndUpdate<TY, T>(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -128,7 +128,7 @@ namespace DynamicPixels.GameService.Services.Table
         public async Task<RowResponse<TY>> Insert<TY, T>(T param, Action<RowResponse<TY>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : InsertParams where TY : BaseTableModel
         {
             var result = await _repository.Insert<TY, T>(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -152,7 +152,7 @@ namespace DynamicPixels.GameService.Services.Table
         public async Task<RowResponse<TY>> InsertMany<TY, T>(T param, Action<RowResponse<TY>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : InsertManyParams where TY : BaseTableModel
         {
             var result = await _repository.InsertMany<TY, T>(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -175,7 +175,7 @@ namespace DynamicPixels.GameService.Services.Table
         public async Task<ActionResponse> UpdateMany<T>(T param, Action<ActionResponse> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : UpdateManyParams
         {
             var result = await _repository.UpdateMany(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -198,7 +198,7 @@ namespace DynamicPixels.GameService.Services.Table
         public async Task<ActionResponse> Delete<T>(T param, Action<ActionResponse> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : DeleteParams
         {
             var result = await _repository.Delete(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -221,7 +221,7 @@ namespace DynamicPixels.GameService.Services.Table
         public async Task<ActionResponse> DeleteMany<T>(T param, Action<ActionResponse> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : DeleteManyParams
         {
             var result = await _repository.DeleteMany(param);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)

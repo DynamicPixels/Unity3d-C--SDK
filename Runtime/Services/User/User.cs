@@ -28,7 +28,7 @@ namespace DynamicPixels.GameService.Services.User
         public async Task<List<Models.User>> Find<T>(T input, Action<List<Models.User>> successfulCallback = null, Action<ErrorCode, string> failedCallback = null) where T : FindUserParams
         {
             var result = await _repository.Find(input);
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -52,7 +52,7 @@ namespace DynamicPixels.GameService.Services.User
             {
                 UserId = ServiceHub.User.Id
             });
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -79,7 +79,7 @@ namespace DynamicPixels.GameService.Services.User
             {
                 UserId = input.UserId
             });
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -105,7 +105,7 @@ namespace DynamicPixels.GameService.Services.User
             {
                 Data = input.Data
             });
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)
@@ -131,7 +131,7 @@ namespace DynamicPixels.GameService.Services.User
             {
                 UserId = input.UserId
             });
-            result.Result.Successful = result.Successful;
+            result.Result.IsSuccessful = result.Successful;
             result.Result.ErrorCode = result.ErrorCode;
             result.Result.ErrorMessage = result.ErrorMessage;
             if (result.Successful)

@@ -49,7 +49,7 @@ namespace DynamicPixels.GameService.Services.Storage.Repositories
 
                 return new RowResponse<FileMetaForUpload>()
                 {
-                    Successful = result.Successful,
+                    IsSuccessful = result.Successful,
                     ErrorCode = result.ErrorCode,
                     ErrorMessage = result.ErrorMessage,
                     Row = result.Result,
@@ -58,7 +58,7 @@ namespace DynamicPixels.GameService.Services.Storage.Repositories
             failedCallback?.Invoke(response.ErrorCode, response.ErrorMessage);
             return new RowResponse<FileMetaForUpload>()
             {
-                Successful = response.Successful,
+                IsSuccessful = response.Successful,
                 ErrorCode = response.ErrorCode,
                 ErrorMessage = response.ErrorMessage,
                 Row = null,
